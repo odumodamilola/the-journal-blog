@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+
+<html class="h-full" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Secure Administrator Login — The Journal</title>
+<!-- Material Symbols & Typography -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;1,6..72,400&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS with custom configuration -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "inverse-on-surface": "#f2f1ee",
+            "on-surface": "#1a1c1a",
+            "surface-container-high": "#e9e8e5",
+            "outline": "#6f7a73",
+            "on-secondary": "#ffffff",
+            "tertiary-fixed": "#dae5dd",
+            "on-error": "#ffffff",
+            "on-tertiary-container": "#dbe7de",
+            "outline-variant": "#bec9c1",
+            "background": "#faf9f6",
+            "on-primary": "#ffffff",
+            "secondary-fixed": "#d9e6dc",
+            "secondary-container": "#d9e6dc",
+            "surface": "#faf9f6",
+            "primary": "#00593f",
+            "tertiary-fixed-dim": "#bec9c1",
+            "on-surface-variant": "#3f4943",
+            "on-tertiary-fixed-variant": "#3f4943",
+            "error": "#ba1a1a",
+            "surface-bright": "#faf9f6",
+            "surface-tint": "#166b4f",
+            "on-secondary-fixed": "#131e18",
+            "on-secondary-container": "#5b6760",
+            "surface-container-lowest": "#ffffff",
+            "error-container": "#ffdad6",
+            "secondary": "#55615a",
+            "on-secondary-fixed-variant": "#3e4942",
+            "on-error-container": "#93000a",
+            "on-primary-container": "#a4f4cf",
+            "surface-container-low": "#f4f3f0",
+            "surface-container": "#efeeeb",
+            "primary-fixed": "#a4f3ce",
+            "inverse-primary": "#88d6b3",
+            "tertiary": "#45504a",
+            "on-primary-fixed": "#002115",
+            "on-background": "#1a1c1a",
+            "surface-dim": "#dbdad7",
+            "on-tertiary": "#ffffff",
+            "inverse-surface": "#2f312f",
+            "primary-container": "#207255",
+            "surface-container-highest": "#e3e2df",
+            "on-primary-fixed-variant": "#005139",
+            "tertiary-container": "#5d6861",
+            "secondary-fixed-dim": "#bdcac0",
+            "on-tertiary-fixed": "#141e19",
+            "surface-variant": "#e3e2df",
+            "primary-fixed-dim": "#88d6b3"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "full": "9999px"
+          },
+          "spacing": {
+            "space-2xl": "4rem",
+            "space-xs": "0.25rem",
+            "space-md": "1rem",
+            "margin-desktop": "3.5rem",
+            "space-lg": "1.5rem",
+            "space-xl": "2.5rem",
+            "margin-tablet": "2rem",
+            "margin": "1rem",
+            "gutter": "1.5rem",
+            "gutter-desktop": "2.5rem",
+            "space-sm": "0.5rem"
+          },
+          "fontFamily": {
+            "body-lg": ["Newsreader", "serif"],
+            "body-sm": ["Inter", "sans-serif"],
+            "body-md": ["Inter", "sans-serif"],
+            "headline-sm": ["Newsreader", "serif"],
+            "label-md": ["Inter", "sans-serif"],
+            "label-sm": ["Inter", "sans-serif"],
+            "display-hero": ["Newsreader", "serif"],
+            "headline-lg": ["Newsreader", "serif"],
+            "editorial-lead": ["Newsreader", "serif"],
+            "headline-lg-mobile": ["Newsreader", "serif"],
+            "headline-md": ["Newsreader", "serif"],
+            "label-lg": ["Inter", "sans-serif"],
+            "display-hero-mobile": ["Newsreader", "serif"]
+          },
+          "fontSize": {
+            "body-lg": ["20px", { "lineHeight": "34px", "fontWeight": "400" }],
+            "body-sm": ["13px", { "lineHeight": "20px", "fontWeight": "400" }],
+            "body-md": ["15px", { "lineHeight": "24px", "fontWeight": "400" }],
+            "headline-sm": ["22px", { "lineHeight": "30px", "letterSpacing": "-0.005em", "fontWeight": "500" }],
+            "label-md": ["12px", { "lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "500" }],
+            "label-sm": ["11px", { "lineHeight": "14px", "letterSpacing": "0.04em", "fontWeight": "600" }],
+            "display-hero": ["56px", { "lineHeight": "64px", "letterSpacing": "-0.02em", "fontWeight": "400" }],
+            "headline-lg": ["40px", { "lineHeight": "48px", "letterSpacing": "-0.015em", "fontWeight": "400" }],
+            "editorial-lead": ["24px", { "lineHeight": "36px", "fontWeight": "300" }],
+            "headline-lg-mobile": ["30px", { "lineHeight": "38px", "letterSpacing": "-0.01em", "fontWeight": "400" }],
+            "headline-md": ["28px", { "lineHeight": "36px", "letterSpacing": "-0.01em", "fontWeight": "500" }],
+            "label-lg": ["14px", { "lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600" }],
+            "display-hero-mobile": ["38px", { "lineHeight": "46px", "letterSpacing": "-0.015em", "fontWeight": "400" }]
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="h-full bg-surface text-on-surface antialiased overflow-x-hidden selection:bg-primary selection:text-on-primary">
+<div class="min-h-screen w-full flex flex-col md:flex-row">
+<!-- Left Column: Editorial Brand Panel (50% desktop) -->
+<div class="relative w-full md:w-1/2 bg-[#18231D] text-inverse-on-surface flex flex-col justify-between p-space-lg md:p-space-xl lg:p-margin-desktop overflow-hidden border-b md:border-b-0 md:border-r border-outline/20">
+<!-- Architectural Framing / Geometric accents -->
+<div class="absolute inset-0 pointer-events-none opacity-40">
+<div class="absolute inset-space-lg md:inset-space-xl border border-primary-container/20"></div>
+<div class="absolute top-0 right-0 w-96 h-96 bg-primary-container/10 rounded-full blur-3xl -mr-24 -mt-24"></div>
+<div class="absolute bottom-0 left-0 w-80 h-80 bg-primary/20 rounded-full blur-2xl -ml-20 -mb-20"></div>
+</div>
+<!-- Top Header / Monogram -->
+<div class="relative z-10 flex items-center gap-space-md">
+<div class="w-12 h-12 rounded-lg bg-surface-container-lowest/10 p-1.5 flex items-center justify-center border border-outline/30 backdrop-blur-sm">
+<img alt="The Journal Wordmark" class="w-full h-full object-contain filter invert opacity-95" src="https://lh3.googleusercontent.com/aida/AEtjO1WCnLDISF1B4DOE2WOWVf8o8J1lRGqXM2LX58nL2LAKLggO2Ap5nktLM6rPIg4KCvnMUYTx2BVHWvSxPVsrxw5B5PraRCu5iENa99OBBf8maQLPHFACYEWtC2ABRic3X8PWEaLKnaVm28288EcxNU_GMHfSoTfvItBfaRS6rWjuI66C49hQt0AcNwG9YsELkruxLz31NE0U5AYvHSNLiNvUA6aIxfx4f8reiV9re2deizaQD2e6nnNWYQg"/>
+</div>
+<div>
+<span class="font-headline-sm text-headline-sm font-medium tracking-tight text-surface">The Journal</span>
+<span class="block font-label-sm text-label-sm text-outline-variant font-normal tracking-wider">EDITORIAL ATELIER</span>
+</div>
+</div>
+<!-- Center Feature: Editorial Typography & Micro Quote Card -->
+<div class="relative z-10 my-space-xl max-w-xl">
+<div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary-container/25 border border-primary-fixed-dim/30 text-primary-fixed mb-space-md">
+<span class="w-1.5 h-1.5 rounded-full bg-primary-fixed animate-pulse"></span>
+<span class="font-label-sm text-label-sm tracking-widest uppercase">Admin Terminal</span>
+</div>
+<h1 class="font-headline-lg text-headline-lg md:font-display-hero md:text-display-hero text-surface leading-tight tracking-tight mb-space-md">
+          Every great story starts somewhere.
+        </h1>
+<p class="font-editorial-lead text-editorial-lead text-inverse-on-surface/80 font-light mb-space-xl max-w-lg">
+          Your ideas, your voice, your space to publish.
+        </p>
+<!-- Archival print-maker card -->
+<div class="border-l-2 border-primary-container pl-space-md py-space-xs bg-surface-container-lowest/5 rounded-r-lg pr-space-md backdrop-blur-xs">
+<div class="flex items-center justify-between text-outline-variant font-label-md text-label-md mb-1">
+<span class="italic font-body-lg">“Quiet minds craft enduring literature.”</span>
+<span class="font-label-sm text-label-sm text-primary-fixed/80">№ 09</span>
+</div>
+<p class="font-label-sm text-label-sm text-outline-variant tracking-wider uppercase">
+            Volume IX · Autumn Edition
+          </p>
+</div>
+</div>
+<!-- Bottom Panel Note -->
+<div class="relative z-10 pt-space-md border-t border-outline/20 flex flex-col sm:flex-row items-start sm:items-center justify-between text-outline-variant text-label-sm font-label-sm gap-2">
+<span>The Journal Editorial Content Engine</span>
+<span class="inline-flex items-center gap-1.5 text-primary-fixed/90">
+<span class="material-symbols-outlined text-[14px]">terminal</span>
+          Single Author Protocol
+        </span>
+</div>
+</div>
+<!-- Right Column: Login Form Canvas (50% desktop) -->
+<div class="w-full md:w-1/2 bg-surface flex flex-col justify-between p-space-md sm:p-space-lg md:p-space-xl lg:p-margin-desktop">
+<!-- Top Bar: Return Link -->
+<div class="flex justify-between items-center w-full">
+<a class="inline-flex items-center gap-space-xs font-label-md text-label-md text-on-surface-variant hover:text-primary transition-colors py-1 group" href="/">
+<span class="material-symbols-outlined text-[18px] transition-transform group-hover:-translate-x-1">arrow_back</span>
+<span>Back to the Journal</span>
+</a>
+<div class="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-surface-container text-on-surface-variant border border-outline-variant/30 text-label-sm font-label-sm">
+<span class="w-2 h-2 rounded-full bg-emerald-600"></span>
+<span>System Live</span>
+</div>
+</div>
+<!-- Centered Card Container (max-width: 420px) -->
+<div class="w-full max-w-[420px] mx-auto my-auto py-space-xl">
+<!-- Header Section -->
+<div class="mb-space-lg text-left">
+<h2 class="font-headline-md text-headline-md text-on-surface mb-2 font-medium">
+            Welcome back
+          </h2>
+<p class="font-body-md text-body-md text-on-surface-variant">
+            Sign in to manage your journal.
+          </p>
+</div>
+<!-- Form Elements -->
+<form class="space-y-space-md" id="admin-login-form" onsubmit="event.preventDefault();">
+<!-- Email Field -->
+<div class="space-y-1.5 text-left">
+<label class="block font-label-lg text-label-lg text-on-surface" for="email">
+              Email Address
+            </label>
+<div class="relative">
+<input class="w-full bg-surface-container-lowest border border-outline-variant/60 rounded-lg px-3.5 py-2.5 font-body-md text-body-md text-on-surface placeholder:text-outline/60 focus:outline-none focus:border-primary-container focus:ring-1 focus:ring-primary-container transition-all" id="email" name="email" placeholder="editor@thejournal.press" required="" type="email" value="editor@thejournal.press"/>
+</div>
+<div class="flex items-center gap-1 text-on-surface-variant text-label-sm font-label-sm pl-0.5">
+<span class="material-symbols-outlined text-[14px]">info</span>
+<span>Use your registered publication credentials</span>
+</div>
+</div>
+<!-- Password Field with Visibility Toggle -->
+<div class="space-y-1.5 text-left">
+<div class="flex justify-between items-center">
+<label class="block font-label-lg text-label-lg text-on-surface" for="password">
+                Password
+              </label>
+<a class="font-label-sm text-label-sm text-primary hover:underline" href="#">
+                Forgot password?
+              </a>
+</div>
+<div class="relative flex items-center">
+<input class="w-full bg-surface-container-lowest border border-outline-variant/60 rounded-lg pl-3.5 pr-10 py-2.5 font-body-md text-body-md text-on-surface placeholder:text-outline/60 focus:outline-none focus:border-primary-container focus:ring-1 focus:ring-primary-container transition-all tracking-wider" id="password" name="password" required="" type="password" value="••••••••••••••••"/>
+<button aria-label="Toggle password visibility" class="absolute right-2.5 p-1 text-on-surface-variant hover:text-on-surface focus:outline-none transition-colors" id="toggle-password" onclick="togglePassword()" type="button">
+<span class="material-symbols-outlined text-[20px]" id="eye-icon">visibility</span>
+</button>
+</div>
+</div>
+<!-- Remember Session Row -->
+<div class="flex items-center justify-between pt-1">
+<label class="flex items-center gap-2 cursor-pointer select-none">
+<input checked="" class="w-4 h-4 rounded border-outline-variant text-primary-container focus:ring-primary-container" type="checkbox"/>
+<span class="font-label-md text-label-md text-on-surface-variant">Stay signed in for 30 days</span>
+</label>
+</div>
+<!-- Primary CTA Button (48px height, rounded-xl, #207255) -->
+<div class="pt-2">
+<button class="w-full h-12 bg-primary-container hover:bg-[#17573F] active:scale-[0.99] text-on-primary font-label-lg text-label-lg rounded-xl flex items-center justify-center gap-2 transition-all shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-container" type="submit">
+<span class="material-symbols-outlined text-[18px]">lock</span>
+<span>Sign In</span>
+</button>
+</div>
+</form>
+<!-- Security Badge Indicator -->
+<div class="mt-space-lg pt-space-md border-t border-outline-variant/30 flex items-center justify-center gap-2 text-on-surface-variant">
+<span class="material-symbols-outlined text-[18px] text-primary" data-weight="fill" style="font-variation-settings: 'FILL' 1;">verified_user</span>
+<span class="font-label-sm text-label-sm tracking-tight text-center">
+            Protected by Supabase Server-Side Authorization
+          </span>
+</div>
+</div>
+<!-- Form Footer Copyright / Quiet meta -->
+<div class="w-full text-center text-outline text-label-sm font-label-sm pt-space-md">
+        © 2025 The Journal Publishing Co. Dedicated editorial workspace.
+      </div>
+</div>
+</div>
+<!-- Micro-interactions Script -->
+<script>
+    function togglePassword() {
+      const pwdInput = document.getElementById('password');
+      const eyeIcon = document.getElementById('eye-icon');
+      
+      if (pwdInput.type === 'password') {
+        pwdInput.type = 'text';
+        pwdInput.value = 'WinterSolstice#2025';
+        eyeIcon.textContent = 'visibility_off';
+      } else {
+        pwdInput.type = 'password';
+        pwdInput.value = '••••••••••••••••';
+        eyeIcon.textContent = 'visibility';
+      }
+    }
+  </script>
+</body></html>

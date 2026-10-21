@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>The Journal — Ideas worth sharing. Stories worth reading.</title>
+<!-- Material Symbols Outlined -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Google Fonts: Newsreader & Inter -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,300;1,6..72,400&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "inverse-on-surface": "#f2f1ee",
+            "on-surface": "#1a1c1a",
+            "surface-container-high": "#e9e8e5",
+            "outline": "#6f7a73",
+            "on-secondary": "#ffffff",
+            "tertiary-fixed": "#dae5dd",
+            "on-error": "#ffffff",
+            "on-tertiary-container": "#dbe7de",
+            "outline-variant": "#bec9c1",
+            "background": "#faf9f6",
+            "on-primary": "#ffffff",
+            "secondary-fixed": "#d9e6dc",
+            "secondary-container": "#d9e6dc",
+            "surface": "#faf9f6",
+            "primary": "#00593f",
+            "tertiary-fixed-dim": "#bec9c1",
+            "on-surface-variant": "#3f4943",
+            "on-tertiary-fixed-variant": "#3f4943",
+            "error": "#ba1a1a",
+            "surface-bright": "#faf9f6",
+            "surface-tint": "#166b4f",
+            "on-secondary-fixed": "#131e18",
+            "on-secondary-container": "#5b6760",
+            "surface-container-lowest": "#ffffff",
+            "error-container": "#ffdad6",
+            "secondary": "#55615a",
+            "on-secondary-fixed-variant": "#3e4942",
+            "on-error-container": "#93000a",
+            "on-primary-container": "#a4f4cf",
+            "surface-container-low": "#f4f3f0",
+            "surface-container": "#efeeeb",
+            "primary-fixed": "#a4f3ce",
+            "inverse-primary": "#88d6b3",
+            "tertiary": "#45504a",
+            "on-primary-fixed": "#002115",
+            "on-background": "#1a1c1a",
+            "surface-dim": "#dbdad7",
+            "on-tertiary": "#ffffff",
+            "inverse-surface": "#2f312f",
+            "primary-container": "#207255",
+            "surface-container-highest": "#e3e2df",
+            "on-primary-fixed-variant": "#005139",
+            "tertiary-container": "#5d6861",
+            "secondary-fixed-dim": "#bdcac0",
+            "on-tertiary-fixed": "#141e19",
+            "surface-variant": "#e3e2df",
+            "primary-fixed-dim": "#88d6b3"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "full": "9999px"
+          },
+          "spacing": {
+            "space-2xl": "4rem",
+            "space-xs": "0.25rem",
+            "space-md": "1rem",
+            "margin-desktop": "3.5rem",
+            "space-lg": "1.5rem",
+            "space-xl": "2.5rem",
+            "margin-tablet": "2rem",
+            "margin": "1rem",
+            "gutter": "1.5rem",
+            "gutter-desktop": "2.5rem",
+            "space-sm": "0.5rem"
+          },
+          "fontFamily": {
+            "body-lg": ["Newsreader"],
+            "body-sm": ["Inter"],
+            "body-md": ["Inter"],
+            "headline-sm": ["Newsreader"],
+            "label-md": ["Inter"],
+            "label-sm": ["Inter"],
+            "display-hero": ["Newsreader"],
+            "headline-lg": ["Newsreader"],
+            "editorial-lead": ["Newsreader"],
+            "headline-lg-mobile": ["Newsreader"],
+            "headline-md": ["Newsreader"],
+            "label-lg": ["Inter"],
+            "display-hero-mobile": ["Newsreader"]
+          },
+          "fontSize": {
+            "body-lg": ["20px", { "lineHeight": "34px", "fontWeight": "400" }],
+            "body-sm": ["13px", { "lineHeight": "20px", "fontWeight": "400" }],
+            "body-md": ["15px", { "lineHeight": "24px", "fontWeight": "400" }],
+            "headline-sm": ["22px", { "lineHeight": "30px", "letterSpacing": "-0.005em", "fontWeight": "500" }],
+            "label-md": ["12px", { "lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "500" }],
+            "label-sm": ["11px", { "lineHeight": "14px", "letterSpacing": "0.04em", "fontWeight": "600" }],
+            "display-hero": ["56px", { "lineHeight": "64px", "letterSpacing": "-0.02em", "fontWeight": "400" }],
+            "headline-lg": ["40px", { "lineHeight": "48px", "letterSpacing": "-0.015em", "fontWeight": "400" }],
+            "editorial-lead": ["24px", { "lineHeight": "36px", "fontWeight": "300" }],
+            "headline-lg-mobile": ["30px", { "lineHeight": "38px", "letterSpacing": "-0.01em", "fontWeight": "400" }],
+            "headline-md": ["28px", { "lineHeight": "36px", "letterSpacing": "-0.01em", "fontWeight": "500" }],
+            "label-lg": ["14px", { "lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600" }],
+            "display-hero-mobile": ["38px", { "lineHeight": "46px", "letterSpacing": "-0.015em", "fontWeight": "400" }]
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="bg-surface text-on-surface antialiased selection:bg-primary-fixed selection:text-on-primary-fixed">
+<!-- 1. Top Navigation Bar -->
+<header class="bg-surface dark:bg-inverse-surface border-b border-outline-variant/40 dark:border-outline/20 docked full-width top-0 sticky z-40">
+<div class="flex justify-between items-center w-full max-w-7xl mx-auto px-margin md:px-margin-desktop py-space-sm h-[76px]">
+<!-- Wordmark & Emblem -->
+<a class="flex items-center gap-space-sm group" href="#">
+<img alt="The Journal Wordmark" class="w-9 h-9 object-contain rounded-lg" src="https://lh3.googleusercontent.com/aida/AEtjO1WCnLDISF1B4DOE2WOWVf8o8J1lRGqXM2LX58nL2LAKLggO2Ap5nktLM6rPIg4KCvnMUYTx2BVHWvSxPVsrxw5B5PraRCu5iENa99OBBf8maQLPHFACYEWtC2ABRic3X8PWEaLKnaVm28288EcxNU_GMHfSoTfvItBfaRS6rWjuI66C49hQt0AcNwG9YsELkruxLz31NE0U5AYvHSNLiNvUA6aIxfx4f8reiV9re2deizaQD2e6nnNWYQg"/>
+<span class="font-headline-md text-headline-md font-medium tracking-tight text-on-surface dark:text-inverse-on-surface">The Journal</span>
+</a>
+<!-- Navigation Links -->
+<nav class="hidden md:flex items-center gap-space-xl">
+<a class="relative text-primary dark:text-primary-fixed pb-1 font-label-lg text-label-lg flex items-center gap-1.5" href="#home">
+          Home
+          <span class="w-1.5 h-1.5 rounded-full bg-primary-container"></span>
+</a>
+<a class="text-on-surface-variant dark:text-outline-variant hover:text-on-surface dark:hover:text-inverse-on-surface pb-1 font-label-lg text-label-lg transition-colors" href="#articles">Articles</a>
+<a class="text-on-surface-variant dark:text-outline-variant hover:text-on-surface dark:hover:text-inverse-on-surface pb-1 font-label-lg text-label-lg transition-colors" href="#categories">Categories</a>
+</nav>
+<!-- Trailing Action Cluster -->
+<div class="flex items-center gap-space-md">
+<button aria-label="Search articles" class="w-10 h-10 flex items-center justify-center rounded-lg text-on-surface-variant hover:text-primary hover:bg-surface-container transition-colors duration-150" type="button">
+<span class="material-symbols-outlined text-[20px]">search</span>
+</button>
+<a class="hidden sm:inline-flex items-center gap-2 bg-primary-container hover:bg-primary text-on-primary font-label-lg text-label-lg px-space-lg py-2.5 rounded-full shadow-sm hover:shadow transition-all duration-150 active:scale-[0.98]" href="#articles">
+<span>Explore Articles</span>
+<span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+</a>
+</div>
+</div>
+</header>
+<main>
+<!-- 2. Hero Section -->
+<section class="w-full max-w-7xl mx-auto px-margin md:px-margin-desktop pt-space-xl md:pt-space-2xl pb-space-2xl" id="home">
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-space-xl lg:gap-gutter-desktop items-center">
+<!-- Left: 55% Text composition -->
+<div class="lg:col-span-7 flex flex-col items-start pr-0 lg:pr-space-lg">
+<div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-surface-container border border-outline-variant/40 mb-space-lg">
+<span class="w-1.5 h-1.5 rounded-full bg-primary-container"></span>
+<span class="font-label-sm text-label-sm tracking-widest text-on-surface-variant">THE JOURNAL — THOUGHTS, IDEAS &amp; PERSPECTIVES</span>
+</div>
+<h1 class="font-display-hero text-display-hero-mobile md:text-display-hero text-on-surface mb-space-lg leading-tight">
+            Good ideas deserve a place to grow.
+          </h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-xl mb-space-xl">
+            A space for thoughtful writing on technology, creativity, personal growth, and the ideas shaping tomorrow.
+          </p>
+<div class="flex flex-wrap items-center gap-space-lg">
+<a class="inline-flex items-center gap-2 bg-primary-container hover:bg-primary text-on-primary font-label-lg text-label-lg px-space-lg py-3 rounded-full transition-all duration-150 active:scale-[0.98]" href="#articles">
+<span>Explore Articles</span>
+<span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+</a>
+<a class="inline-flex items-center gap-1.5 text-on-surface font-label-lg text-label-lg hover:text-primary pb-0.5 border-b border-transparent hover:border-primary transition-all duration-150" href="#featured">
+<span>Read the latest story</span>
+<span class="material-symbols-outlined text-[16px]">north_east</span>
+</a>
+</div>
+</div>
+<!-- Right: 45% Curated visual card composition -->
+<div class="lg:col-span-5 relative">
+<div class="relative bg-surface-container-lowest rounded-xl border border-outline-variant/30 overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-300">
+<div class="relative h-[420px] w-full overflow-hidden">
+<img class="w-full h-full object-cover transition-transform duration-700 hover:scale-105" data-alt="A clean architectural photography frame of modern brutalist concrete structures intermingled with soft natural diffused morning light, fine grain texture, deep charcoal shadows and subtle olive botanical green foliage accentuating the tactile minimalist paper-like aesthetic of a high-end literary journal." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCYwmMPNzRl1FsR5WVg-y0V00QtRKqN9KtkTIyhLdQMsSIXEzC7TjYZ9DeHW-jcmI_BzbDEESg8YTz5UGUHYx2cGTsHqJ3q9hWWNMdiN01nks7cplZirnWjFEcqae1AU0qdRwIH8QJo0fmhsFSbgLdKjGHj8Ltwwdjm8V7Z1kfu8Dg8sQTnOklceblVQ33s-evYrMWZSQ1niAmSoAYsjcDki6f1oX42_ej9n2ZHpmZcZ755viuz6eJy3A"/>
+<div class="absolute inset-0 bg-gradient-to-t from-inverse-surface/80 via-inverse-surface/20 to-transparent"></div>
+<!-- Floating Badge -->
+<div class="absolute top-space-md left-space-md">
+<span class="inline-flex items-center px-3 py-1 rounded-full bg-surface-container-lowest/90 backdrop-blur text-on-surface font-label-sm text-label-sm tracking-wider border border-outline-variant/40">
+                  SOFTWARE ARCHITECTURE · 7 MIN READ
+                </span>
+</div>
+<!-- Overlay Headline -->
+<div class="absolute bottom-space-lg left-space-lg right-space-lg">
+<h3 class="font-headline-sm text-headline-sm text-inverse-on-surface mb-space-xs font-normal">
+                  The Architecture of Serenity in Systems
+                </h3>
+<p class="font-body-sm text-body-sm text-tertiary-fixed font-light">
+                  Exploring the psychological resonance between built environments and distributed backend pipelines.
+                </p>
+</div>
+</div>
+</div>
+<!-- Background Decorative Offset Shape -->
+<div class="absolute -bottom-3 -right-3 w-full h-full rounded-xl border border-outline-variant/40 -z-10 bg-surface-container-low hidden sm:block"></div>
+</div>
+</div>
+</section>
+<!-- 3. Featured Story Section -->
+<section class="w-full bg-surface-container-low py-space-2xl border-y border-outline-variant/30" id="featured">
+<div class="max-w-7xl mx-auto px-margin md:px-margin-desktop">
+<div class="mb-space-lg">
+<span class="font-label-sm text-label-sm tracking-widest text-primary font-semibold">FEATURED STORY</span>
+<h2 class="font-headline-lg text-headline-lg-mobile md:text-headline-lg text-on-surface mt-1">A good place to begin.</h2>
+</div>
+<article class="bg-surface-container-lowest rounded-xl border border-outline-variant/30 overflow-hidden shadow-sm hover:shadow-md transition-all duration-300">
+<div class="grid grid-cols-1 lg:grid-cols-12">
+<!-- Cover Photo (55%) -->
+<div class="lg:col-span-7 h-72 lg:h-auto min-h-[360px] relative overflow-hidden bg-surface-container">
+<img class="w-full h-full object-cover transition-transform duration-700 hover:scale-102" data-alt="A deliberate editorial composition showcasing a bespoke mahogany writing bureau adorned with archival paper notebooks, a vintage brass mechanical fountain pen, and soft directional daylight casting long rhythmic shadows across a warm textured stone background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA5Ux8PGA2M_iF07OPb9IODhtM_9y1eaQF9GAF56ncn4Z5fnq2c091URA2jsrWpsD0sv39MxdbEqkWkY-JS7mOQuDa1kpwq1jKH6DUm3cbZrbRgT3Swq2ZnUzXUcwkOGaEYiMyVRFKx3fPoY0iSpV-Nxn-0HRD92EY9r-O6BTjs3RV1ezJJs4qepvBe7NEQtxwz0IDhH7hJScsz7z-yO9KiAYPP0Dlz2ff0fu5m-c0RKMgnKNlEBk-VZw"/>
+</div>
+<!-- Content Panel (45%) -->
+<div class="lg:col-span-5 p-space-lg md:p-space-xl flex flex-col justify-between">
+<div>
+<div class="flex items-center gap-space-md mb-space-md">
+<span class="px-2.5 py-1 rounded-full bg-surface-container text-on-surface-variant font-label-sm text-label-sm tracking-wider border border-outline-variant/40">SOFTWARE ENGINEERING</span>
+<span class="font-body-sm text-body-sm text-secondary">October 24, 2026</span>
+</div>
+<h3 class="font-headline-md text-headline-md text-on-surface mb-space-md hover:text-primary transition-colors cursor-pointer leading-tight">
+                  Building Better Software Starts With Better Thinking
+                </h3>
+<p class="font-body-md text-body-md text-on-surface-variant mb-space-lg leading-relaxed">
+                  Why understanding the problem deeply matters far more than rushing into code syntax. A meditative essay on cognitive clarity, deliberate modeling, and engineering longevity.
+                </p>
+</div>
+<div class="flex items-center justify-between pt-space-md border-t border-outline-variant/30">
+<div class="flex items-center gap-2 text-secondary font-body-sm text-body-sm">
+<span class="material-symbols-outlined text-[16px]">schedule</span>
+<span>6 min read</span>
+</div>
+<a class="inline-flex items-center gap-1.5 font-label-lg text-label-lg text-primary hover:text-on-primary-fixed-variant transition-colors group" href="#">
+<span>Read Story</span>
+<span class="material-symbols-outlined text-[18px] group-hover:translate-x-1 transition-transform">arrow_forward</span>
+</a>
+</div>
+</div>
+</div>
+</article>
+</div>
+</section>
+<!-- 5. Explore by Interest (Categories) -->
+<section class="w-full max-w-7xl mx-auto px-margin md:px-margin-desktop pt-space-2xl pb-space-md" id="categories">
+<div class="flex flex-col md:flex-row md:items-end justify-between mb-space-lg gap-4">
+<div>
+<span class="font-label-sm text-label-sm tracking-widest text-primary font-semibold">TAXONOMY</span>
+<h2 class="font-headline-md text-headline-md text-on-surface mt-1">Explore by Interest</h2>
+</div>
+<p class="font-body-sm text-body-sm text-secondary max-w-md">Filter across deliberate essays, system architectures, and practical technical field-notes.</p>
+</div>
+<!-- Category Filter Pills -->
+<div class="flex flex-wrap items-center gap-space-sm pb-space-sm border-b border-outline-variant/30">
+<button class="px-space-md py-1.5 rounded-full bg-primary-container text-on-primary font-label-md text-label-md shadow-sm" type="button">
+          All
+        </button>
+<button class="px-space-md py-1.5 rounded-full bg-surface-container-lowest text-on-surface-variant hover:text-on-surface hover:bg-surface-container border border-outline-variant/40 font-label-md text-label-md transition-colors" type="button">
+          Technology
+        </button>
+<button class="px-space-md py-1.5 rounded-full bg-surface-container-lowest text-on-surface-variant hover:text-on-surface hover:bg-surface-container border border-outline-variant/40 font-label-md text-label-md transition-colors" type="button">
+          Software Engineering
+        </button>
+<button class="px-space-md py-1.5 rounded-full bg-surface-container-lowest text-on-surface-variant hover:text-on-surface hover:bg-surface-container border border-outline-variant/40 font-label-md text-label-md transition-colors" type="button">
+          Tutorials
+        </button>
+<button class="px-space-md py-1.5 rounded-full bg-surface-container-lowest text-on-surface-variant hover:text-on-surface hover:bg-surface-container border border-outline-variant/40 font-label-md text-label-md transition-colors" type="button">
+          Career
+        </button>
+<button class="px-space-md py-1.5 rounded-full bg-surface-container-lowest text-on-surface-variant hover:text-on-surface hover:bg-surface-container border border-outline-variant/40 font-label-md text-label-md transition-colors" type="button">
+          Personal Notes
+        </button>
+</div>
+</section>
+<!-- 4. Latest Articles Grid ("Fresh off the press") -->
+<section class="w-full max-w-7xl mx-auto px-margin md:px-margin-desktop py-space-xl" id="articles">
+<div class="flex flex-col md:flex-row md:items-end justify-between mb-space-xl">
+<div>
+<span class="font-label-sm text-label-sm tracking-widest text-primary font-semibold">FRESH OFF THE PRESS</span>
+<h2 class="font-headline-lg text-headline-lg-mobile md:text-headline-lg text-on-surface mt-1">Latest Articles</h2>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant mt-2 md:mt-0">Explore the newest stories and perspectives.</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-gutter-desktop">
+<!-- Card 1: Technology -->
+<article class="bg-surface-container-lowest rounded-xl border border-outline-variant/30 overflow-hidden flex flex-col justify-between hover:-translate-y-1 hover:shadow-md transition-all duration-200">
+<div>
+<div class="h-52 w-full overflow-hidden bg-surface-container">
+<img class="w-full h-full object-cover transition-transform duration-500 hover:scale-105" data-alt="An abstract visualization of digital silicon microchips with copper and dark green circuit paths softly illuminated under studio macro photography, symbolizing deliberate hardware engineering and deep system design." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCjv9Q862MsSJ7wlHqy6jDHsDQqrd-5uxP_r0QXZ5T5YVKLlxMenbWo8R4uTQgjmP3fLfVuyIAU7uHaSvgNYehK0fYBf-r0p_CX-wrHk0RZPSbFkOesI5HJd4od4ohwhwCBRILuSZZmrkUwAmDBOQLvJ44HIl_FVa6N6dmPrZkdiO81cavkUi8SNECE0IP0ksR-999342S4zaYv6opBbF3OsqF6Y0VWLyuiIaGBF0Ma8W3IcfRmJ01Tbg"/>
+</div>
+<div class="p-space-lg">
+<div class="flex items-center gap-space-sm mb-space-sm">
+<span class="px-2 py-0.5 rounded-full bg-surface-container text-on-surface-variant font-label-sm text-label-sm border border-outline-variant/40">Technology</span>
+<span class="font-body-sm text-body-sm text-secondary">3 days ago</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface mb-space-sm hover:text-primary transition-colors cursor-pointer">
+                The Renaissance of Local-First Web Applications
+              </h3>
+<p class="font-body-md text-body-md text-on-surface-variant line-clamp-2">
+                Why moving data sovereignty back to user machines is redefining latency, resilience, and software trust.
+              </p>
+</div>
+</div>
+<div class="px-space-lg pb-space-lg pt-space-xs flex items-center justify-between border-t border-outline-variant/20 mt-space-sm">
+<span class="font-body-sm text-body-sm text-secondary">5 min read</span>
+<a class="inline-flex items-center gap-1 font-label-md text-label-md text-primary hover:text-on-primary-fixed-variant transition-colors" href="#">
+              Read <span class="material-symbols-outlined text-[14px]">arrow_forward</span>
+</a>
+</div>
+</article>
+<!-- Card 2: Tutorials -->
+<article class="bg-surface-container-lowest rounded-xl border border-outline-variant/30 overflow-hidden flex flex-col justify-between hover:-translate-y-1 hover:shadow-md transition-all duration-200">
+<div>
+<div class="h-52 w-full overflow-hidden bg-surface-container">
+<img class="w-full h-full object-cover transition-transform duration-500 hover:scale-105" data-alt="Close up still life of a sleek dark ceramic cup beside an open mechanical drawing notebook on a calm oak desk, lit with quiet natural diffused light expressing structured and disciplined focus." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCsYv1pw284tnSDkXJJNqGK0NIaF13zQxbTRf0qMYdhPnCKONaCN_vR4QNxC7OU1XcOhswnUAbHbjMbgX4E1o_dRO5VXzo37RNzgE2-r1nNuQnBD_mad7biRAfWtOAvWaGvqpFlXzP89hz6JWGAWNn3yIP-XitsfrU-wgQab6ApSoOQO39XAohxYFKWttBYq12iU_4cVpJl6u5G0Ruqg5z3FXdsL2vTWI6VH2jxZNVOBR1HU4dYz4KSmQ"/>
+</div>
+<div class="p-space-lg">
+<div class="flex items-center gap-space-sm mb-space-sm">
+<span class="px-2 py-0.5 rounded-full bg-surface-container text-on-surface-variant font-label-sm text-label-sm border border-outline-variant/40">Tutorials</span>
+<span class="font-body-sm text-body-sm text-secondary">October 18, 2026</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface mb-space-sm hover:text-primary transition-colors cursor-pointer">
+                Designing Zero-Latency Offline Sync Engines
+              </h3>
+<p class="font-body-md text-body-md text-on-surface-variant line-clamp-2">
+                A step-by-step primer on conflict-free replicated data types and event logs for modern digital canvases.
+              </p>
+</div>
+</div>
+<div class="px-space-lg pb-space-lg pt-space-xs flex items-center justify-between border-t border-outline-variant/20 mt-space-sm">
+<span class="font-body-sm text-body-sm text-secondary">9 min read</span>
+<a class="inline-flex items-center gap-1 font-label-md text-label-md text-primary hover:text-on-primary-fixed-variant transition-colors" href="#">
+              Read <span class="material-symbols-outlined text-[14px]">arrow_forward</span>
+</a>
+</div>
+</article>
+<!-- Card 3: Career -->
+<article class="bg-surface-container-lowest rounded-xl border border-outline-variant/30 overflow-hidden flex flex-col justify-between hover:-translate-y-1 hover:shadow-md transition-all duration-200">
+<div>
+<div class="h-52 w-full overflow-hidden bg-surface-container">
+<img class="w-full h-full object-cover transition-transform duration-500 hover:scale-105" data-alt="Monochrome minimalist architectural interior of an airy library gallery with towering dark shelves, polished concrete floors, and a solitary wooden reader desk drenched in serene daylight." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBwVEHEYYrK1iFVxZusZtRgr26OR-5GhDYDFHs_E81kej6wkXeOfH7_FIpRCdP-kTsUyw_2hYEC1qLzwrL4xCMSvJl_kFLb5dx2rrGcvz-nrJqbIO43AghmUgT90bo0wuNw3PJPoRHw_6q-y-lQuzFcNxsXoJbradPKMxYVRlMkuH3xJZKt0_5rULCN4i8uQ8g-ah2_B0etypb73p6iUbBB6jWYRUAnjHrzpu98alMNjAvMGvv0AzVkiw"/>
+</div>
+<div class="p-space-lg">
+<div class="flex items-center gap-space-sm mb-space-sm">
+<span class="px-2 py-0.5 rounded-full bg-surface-container text-on-surface-variant font-label-sm text-label-sm border border-outline-variant/40">Career</span>
+<span class="font-body-sm text-body-sm text-secondary">October 11, 2026</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface mb-space-sm hover:text-primary transition-colors cursor-pointer">
+                The Quiet Path: Cultivating Mastery Over Velocity
+              </h3>
+<p class="font-body-md text-body-md text-on-surface-variant line-clamp-2">
+                Examining why sustained attention and deep craftsmanship beat reactionary technical sprints every time.
+              </p>
+</div>
+</div>
+<div class="px-space-lg pb-space-lg pt-space-xs flex items-center justify-between border-t border-outline-variant/20 mt-space-sm">
+<span class="font-body-sm text-body-sm text-secondary">4 min read</span>
+<a class="inline-flex items-center gap-1 font-label-md text-label-md text-primary hover:text-on-primary-fixed-variant transition-colors" href="#">
+              Read <span class="material-symbols-outlined text-[14px]">arrow_forward</span>
+</a>
+</div>
+</article>
+</div>
+<!-- Bottom Grid CTA -->
+<div class="mt-space-2xl text-center">
+<a class="inline-flex items-center gap-2 border border-outline-variant/50 hover:border-primary text-on-surface hover:text-primary font-label-lg text-label-lg px-space-xl py-3 rounded-full bg-surface-container-lowest hover:bg-surface-container transition-all duration-150" href="#articles">
+<span>View All Articles</span>
+<span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+</a>
+</div>
+</section>
+<!-- 6. Closing Editorial Callout -->
+<section class="w-full bg-surface-container-low border-t border-outline-variant/30 py-space-2xl my-space-xl">
+<div class="max-w-3xl mx-auto px-margin text-center">
+<span class="font-label-sm text-label-sm tracking-widest text-primary font-semibold">DELIBERATE INQUIRY</span>
+<h2 class="font-headline-lg text-headline-lg-mobile md:text-headline-lg text-on-surface mt-2 mb-space-md">
+          There's always something new to learn.
+        </h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant mb-space-xl">
+          Thoughtful articles, useful insights, and stories to keep you curious. Delivered with typographic reverence and intellectual rigor.
+        </p>
+<a class="inline-flex items-center gap-2 bg-primary-container hover:bg-primary text-on-primary font-label-lg text-label-lg px-space-xl py-3.5 rounded-full shadow-sm hover:shadow transition-all duration-150" href="#articles">
+<span>Browse the Journal</span>
+<span class="material-symbols-outlined text-[18px]">menu_book</span>
+</a>
+</div>
+</section>
+</main>
+<!-- 7. Footer -->
+<footer class="w-full bg-surface-container-low border-t border-outline-variant/30 dark:border-outline/20">
+<div class="w-full max-w-7xl mx-auto px-margin md:px-margin-desktop py-space-xl flex flex-col md:flex-row justify-between items-center gap-space-md">
+<!-- Brand & Copyright -->
+<div class="flex flex-col md:flex-row items-center gap-space-md text-center md:text-left">
+<div class="flex items-center gap-2">
+<img alt="The Journal Wordmark" class="w-6 h-6 object-contain rounded" src="https://lh3.googleusercontent.com/aida/AEtjO1WCnLDISF1B4DOE2WOWVf8o8J1lRGqXM2LX58nL2LAKLggO2Ap5nktLM6rPIg4KCvnMUYTx2BVHWvSxPVsrxw5B5PraRCu5iENa99OBBf8maQLPHFACYEWtC2ABRic3X8PWEaLKnaVm28288EcxNU_GMHfSoTfvItBfaRS6rWjuI66C49hQt0AcNwG9YsELkruxLz31NE0U5AYvHSNLiNvUA6aIxfx4f8reiV9re2deizaQD2e6nnNWYQg"/>
+<span class="font-headline-sm text-headline-sm font-normal text-on-surface dark:text-inverse-on-surface">The Journal</span>
+</div>
+<p class="font-body-sm text-body-sm text-secondary">
+          © 2026 The Journal Publishing Co. Crafted for deliberate reading and thoughtful authorship.
+        </p>
+</div>
+<!-- Masthead Links -->
+<nav class="flex flex-wrap justify-center items-center gap-space-md md:gap-space-lg">
+<a class="text-on-surface-variant dark:text-outline-variant font-label-md text-label-md hover:text-on-surface dark:hover:text-inverse-on-surface transition-colors" href="#home">Home</a>
+<a class="text-on-surface-variant dark:text-outline-variant font-label-md text-label-md hover:text-on-surface dark:hover:text-inverse-on-surface transition-colors" href="#articles">Articles</a>
+<a class="text-on-surface-variant dark:text-outline-variant font-label-md text-label-md hover:text-on-surface dark:hover:text-inverse-on-surface transition-colors" href="#featured">Archive</a>
+<a class="text-on-surface-variant dark:text-outline-variant font-label-md text-label-md hover:text-on-surface dark:hover:text-inverse-on-surface transition-colors" href="#">Editorial Charter</a>
+<a class="inline-flex items-center gap-1 text-primary hover:underline font-label-md text-label-md" href="#">
+<span>Admin Access</span>
+<span class="material-symbols-outlined text-[13px]">lock</span>
+</a>
+</nav>
+</div>
+</footer>
+</body></html>

@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+
+<html class="scroll-smooth" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>The Archive — The Journal</title>
+<!-- Material Symbols Outlined -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Google Fonts: Newsreader and Inter -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "inverse-on-surface": "#f2f1ee",
+            "on-surface": "#1a1c1a",
+            "surface-container-high": "#e9e8e5",
+            "outline": "#6f7a73",
+            "on-secondary": "#ffffff",
+            "tertiary-fixed": "#dae5dd",
+            "on-error": "#ffffff",
+            "on-tertiary-container": "#dbe7de",
+            "outline-variant": "#bec9c1",
+            "background": "#faf9f6",
+            "on-primary": "#ffffff",
+            "secondary-fixed": "#d9e6dc",
+            "secondary-container": "#d9e6dc",
+            "surface": "#faf9f6",
+            "primary": "#00593f",
+            "tertiary-fixed-dim": "#bec9c1",
+            "on-surface-variant": "#3f4943",
+            "on-tertiary-fixed-variant": "#3f4943",
+            "error": "#ba1a1a",
+            "surface-bright": "#faf9f6",
+            "surface-tint": "#166b4f",
+            "on-secondary-fixed": "#131e18",
+            "on-secondary-container": "#5b6760",
+            "surface-container-lowest": "#ffffff",
+            "error-container": "#ffdad6",
+            "secondary": "#55615a",
+            "on-secondary-fixed-variant": "#3e4942",
+            "on-error-container": "#93000a",
+            "on-primary-container": "#a4f4cf",
+            "surface-container-low": "#f4f3f0",
+            "surface-container": "#efeeeb",
+            "primary-fixed": "#a4f3ce",
+            "inverse-primary": "#88d6b3",
+            "tertiary": "#45504a",
+            "on-primary-fixed": "#002115",
+            "on-background": "#1a1c1a",
+            "surface-dim": "#dbdad7",
+            "on-tertiary": "#ffffff",
+            "inverse-surface": "#2f312f",
+            "primary-container": "#207255",
+            "surface-container-highest": "#e3e2df",
+            "on-primary-fixed-variant": "#005139",
+            "tertiary-container": "#5d6861",
+            "secondary-fixed-dim": "#bdcac0",
+            "on-tertiary-fixed": "#141e19",
+            "surface-variant": "#e3e2df",
+            "primary-fixed-dim": "#88d6b3"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "full": "9999px"
+          },
+          "spacing": {
+            "space-2xl": "4rem",
+            "space-xs": "0.25rem",
+            "space-md": "1rem",
+            "margin-desktop": "3.5rem",
+            "space-lg": "1.5rem",
+            "space-xl": "2.5rem",
+            "margin-tablet": "2rem",
+            "margin": "1rem",
+            "gutter": "1.5rem",
+            "gutter-desktop": "2.5rem",
+            "space-sm": "0.5rem"
+          },
+          "fontFamily": {
+            "body-lg": ["Newsreader"],
+            "body-sm": ["Inter"],
+            "body-md": ["Inter"],
+            "headline-sm": ["Newsreader"],
+            "label-md": ["Inter"],
+            "label-sm": ["Inter"],
+            "display-hero": ["Newsreader"],
+            "headline-lg": ["Newsreader"],
+            "editorial-lead": ["Newsreader"],
+            "headline-lg-mobile": ["Newsreader"],
+            "headline-md": ["Newsreader"],
+            "label-lg": ["Inter"],
+            "display-hero-mobile": ["Newsreader"]
+          },
+          "fontSize": {
+            "body-lg": ["20px", {"lineHeight": "34px", "fontWeight": "400"}],
+            "body-sm": ["13px", {"lineHeight": "20px", "fontWeight": "400"}],
+            "body-md": ["15px", {"lineHeight": "24px", "fontWeight": "400"}],
+            "headline-sm": ["22px", {"lineHeight": "30px", "letterSpacing": "-0.005em", "fontWeight": "500"}],
+            "label-md": ["12px", {"lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "500"}],
+            "label-sm": ["11px", {"lineHeight": "14px", "letterSpacing": "0.04em", "fontWeight": "600"}],
+            "display-hero": ["56px", {"lineHeight": "64px", "letterSpacing": "-0.02em", "fontWeight": "400"}],
+            "headline-lg": ["40px", {"lineHeight": "48px", "letterSpacing": "-0.015em", "fontWeight": "400"}],
+            "editorial-lead": ["24px", {"lineHeight": "36px", "fontWeight": "300"}],
+            "headline-lg-mobile": ["30px", {"lineHeight": "38px", "letterSpacing": "-0.01em", "fontWeight": "400"}],
+            "headline-md": ["28px", {"lineHeight": "36px", "letterSpacing": "-0.01em", "fontWeight": "500"}],
+            "label-lg": ["14px", {"lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600"}],
+            "display-hero-mobile": ["38px", {"lineHeight": "46px", "letterSpacing": "-0.015em", "fontWeight": "400"}]
+          }
+        }
+      }
+    }
+  </script>
+<style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      display: inline-block;
+      vertical-align: middle;
+      line-height: 1;
+    }
+    .card-lift {
+      transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .card-lift:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 20px -2px rgba(24, 35, 29, 0.05);
+    }
+  </style>
+</head>
+<body class="bg-background text-on-surface antialiased min-h-screen flex flex-col font-body-md selection:bg-primary-fixed selection:text-on-primary-fixed">
+<!-- 1. Top Public Navigation Bar (Shared Component: TopNavBar) -->
+<header class="bg-surface docked full-width top-0 sticky z-40 border-b border-outline-variant/40">
+<div class="flex justify-between items-center w-full max-w-7xl mx-auto px-margin md:px-margin-desktop py-space-sm">
+<!-- Brand & Wordmark Logo -->
+<div class="flex items-center gap-space-sm">
+<a class="flex items-center gap-space-sm group" href="#">
+<img alt="The Journal Wordmark" class="w-8 h-8 rounded-lg object-cover ring-1 ring-outline-variant/30 group-hover:scale-105 transition-transform" src="https://lh3.googleusercontent.com/aida/AEtjO1WCnLDISF1B4DOE2WOWVf8o8J1lRGqXM2LX58nL2LAKLggO2Ap5nktLM6rPIg4KCvnMUYTx2BVHWvSxPVsrxw5B5PraRCu5iENa99OBBf8maQLPHFACYEWtC2ABRic3X8PWEaLKnaVm28288EcxNU_GMHfSoTfvItBfaRS6rWjuI66C49hQt0AcNwG9YsELkruxLz31NE0U5AYvHSNLiNvUA6aIxfx4f8reiV9re2deizaQD2e6nnNWYQg"/>
+<span class="font-headline-md text-headline-md font-medium tracking-tight text-on-surface">The Journal</span>
+</a>
+</div>
+<!-- Navigation Links (Active: Archive) -->
+<nav class="hidden md:flex items-center gap-space-lg">
+<a class="text-on-surface-variant hover:text-on-surface pb-1 font-label-lg text-label-lg transition-colors" href="#">Dispatches</a>
+<a class="text-on-surface-variant hover:text-on-surface pb-1 font-label-lg text-label-lg transition-colors" href="#">Essays</a>
+<a class="text-primary border-b-2 border-primary pb-1 font-label-lg text-label-lg" href="#">Archive</a>
+<a class="text-on-surface-variant hover:text-on-surface pb-1 font-label-lg text-label-lg transition-colors" href="#">Studio</a>
+</nav>
+<!-- Trailing Action Cluster & Search -->
+<div class="flex items-center gap-space-md">
+<!-- Trailing Icon Actions -->
+<button aria-label="Search" class="p-1.5 text-on-surface-variant hover:text-primary transition-colors duration-150" type="button">
+<span class="material-symbols-outlined" data-icon="search">search</span>
+</button>
+<button aria-label="Bookmarks" class="p-1.5 text-on-surface-variant hover:text-primary transition-colors duration-150" type="button">
+<span class="material-symbols-outlined" data-icon="bookmark">bookmark</span>
+</button>
+<div class="h-4 w-px bg-outline-variant/50 hidden sm:block"></div>
+<!-- Trailing Secondary & Primary Actions -->
+<a class="hidden sm:inline-block text-on-surface-variant hover:text-on-surface font-label-lg text-label-lg transition-colors" href="#">
+          Sign In
+        </a>
+<a class="inline-flex items-center gap-1.5 bg-primary-container text-on-primary px-3.5 py-1.5 rounded-lg font-label-lg text-label-lg hover:bg-primary active:scale-[0.99] transition-all duration-150" href="#">
+<span class="material-symbols-outlined text-[18px]">edit_square</span>
+<span>Write</span>
+</a>
+</div>
+</div>
+</header>
+<!-- Main Content Container -->
+<main class="flex-grow w-full max-w-7xl mx-auto px-margin md:px-margin-desktop py-space-xl">
+<!-- 2. Page Header / The Archive -->
+<section class="max-w-3xl mb-space-xl">
+<!-- Eyebrow with accent line -->
+<div class="flex items-center gap-space-sm mb-space-sm">
+<span class="w-6 h-0.5 bg-primary-container"></span>
+<span class="font-label-sm text-label-sm text-primary tracking-widest uppercase">THE ARCHIVE</span>
+</div>
+<!-- Main Heading in Newsreader -->
+<h1 class="font-display-hero-mobile md:font-display-hero text-display-hero-mobile md:text-display-hero text-on-surface tracking-tight mb-space-sm">
+        Explore the Journal
+      </h1>
+<!-- Subtitle -->
+<p class="font-editorial-lead text-editorial-lead text-on-surface-variant">
+        Thoughts, tutorials, and perspectives on building, learning, and everything in between.
+      </p>
+</section>
+<!-- 3. Search and Filter Toolbar -->
+<section class="mb-space-lg">
+<div class="bg-surface-container-lowest border border-outline-variant/40 rounded-xl p-space-md flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-space-md">
+<!-- Search Input -->
+<div class="relative flex-1 max-w-lg">
+<div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-secondary">
+<span class="material-symbols-outlined text-[20px]" data-icon="search">search</span>
+</div>
+<input class="w-full pl-10 pr-9 py-2 bg-surface text-on-surface font-body-md text-body-md placeholder:text-secondary/70 border border-outline-variant/50 rounded-lg focus:outline-none focus:border-primary-container transition-colors" id="archive-search" placeholder="Search articles by title or keyword..." type="text"/>
+<button aria-label="Clear search" class="absolute inset-y-0 right-0 pr-3 flex items-center text-outline hover:text-on-surface transition-colors" id="search-clear-btn" type="button">
+<span class="material-symbols-outlined text-[18px]">close</span>
+</button>
+</div>
+<!-- Category Filter Pills -->
+<div class="flex items-center gap-space-xs overflow-x-auto pb-1 lg:pb-0 scrollbar-none" id="filter-pills">
+<button class="filter-pill shrink-0 px-3.5 py-1.5 rounded-full font-label-md text-label-md bg-primary-container text-on-primary transition-colors shadow-sm" data-category="all" type="button">
+            All Articles
+          </button>
+<button class="filter-pill shrink-0 px-3.5 py-1.5 rounded-full font-label-md text-label-md bg-surface-container-low text-secondary hover:text-on-surface border border-outline-variant/40 transition-colors" data-category="technology" type="button">
+            Technology
+          </button>
+<button class="filter-pill shrink-0 px-3.5 py-1.5 rounded-full font-label-md text-label-md bg-surface-container-low text-secondary hover:text-on-surface border border-outline-variant/40 transition-colors" data-category="software-engineering" type="button">
+            Software Engineering
+          </button>
+<button class="filter-pill shrink-0 px-3.5 py-1.5 rounded-full font-label-md text-label-md bg-surface-container-low text-secondary hover:text-on-surface border border-outline-variant/40 transition-colors" data-category="tutorials" type="button">
+            Tutorials
+          </button>
+<button class="filter-pill shrink-0 px-3.5 py-1.5 rounded-full font-label-md text-label-md bg-surface-container-low text-secondary hover:text-on-surface border border-outline-variant/40 transition-colors" data-category="career" type="button">
+            Career
+          </button>
+<button class="filter-pill shrink-0 px-3.5 py-1.5 rounded-full font-label-md text-label-md bg-surface-container-low text-secondary hover:text-on-surface border border-outline-variant/40 transition-colors" data-category="personal-notes" type="button">
+            Personal Notes
+          </button>
+</div>
+</div>
+<!-- Live Results Metadata Indicator -->
+<div class="flex items-center justify-between mt-space-sm px-1 text-on-surface-variant font-body-sm text-body-sm">
+<div class="flex items-center gap-2">
+<span class="inline-block w-2 h-2 rounded-full bg-primary-container"></span>
+<span id="results-count">Showing 8 articles in <strong>All Topics</strong></span>
+</div>
+<button class="text-primary hover:underline font-label-sm text-label-sm flex items-center gap-1 transition-all" id="reset-filter-btn" type="button">
+<span class="material-symbols-outlined text-[14px]">refresh</span>
+<span>Reset filters</span>
+</button>
+</div>
+</section>
+<!-- 4. 3-Column Editorial Article Grid (8 realistic articles) -->
+<section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-space-lg mb-space-xl" id="article-grid">
+<!-- Article 1 -->
+<article class="card-lift bg-surface-container-lowest border border-outline-variant/40 rounded-xl overflow-hidden flex flex-col justify-between group" data-category="software-engineering">
+<div>
+<div class="relative w-full h-48 overflow-hidden bg-surface-container">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" data-alt="A clean, minimalist developer studio desk bathed in morning sunlight, showcasing a modern laptop with an open code editor rendering TypeScript types. Soft geometric shadows fall across warm off-white linen desk surfaces, framed by archival notebook pages and botanical accents in muted forest green tones." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB-Iw-U8uQXbIsz7esh2sWAPCUdBda1juqKfQyVTga6JjoqSAhZDj0jJYA_Ki3rEE9voK3-AomicTq52QbvQTO89lBQMGITfnz-clmNT7oYInjgiyX2lIEf5wo1yzxLjT12FOHL7AKZ3rg1Ds1hHjsuBz2ObGsgw_6I8DrqVG9b7ffVDJPXlo9z7Hlt37T6oy1oDvZ3Vk34NPY66pv9f9dHO2ZXrEs8MveP4QsbfxysNVM2jJ9VoBpgxw"/>
+<div class="absolute top-3 left-3">
+<span class="px-2.5 py-1 rounded-full bg-surface-container-lowest/90 backdrop-blur-sm border border-outline-variant/40 font-label-sm text-label-sm text-on-surface">
+                Software Engineering
+              </span>
+</div>
+</div>
+<div class="p-space-lg">
+<div class="flex items-center gap-2 text-secondary font-label-sm text-label-sm mb-2">
+<time datetime="2026-10-28">Oct 28, 2026</time>
+<span>·</span>
+<span>8 min read</span>
+</div>
+<h2 class="font-headline-sm text-headline-sm text-on-surface group-hover:text-primary transition-colors line-clamp-2 mb-2">
+              Designing Resilient Distributed State in TypeScript
+            </h2>
+<p class="font-body-md text-body-md text-on-surface-variant line-clamp-2">
+              Exploring state synchronisation primitives, monotonic counters, and conflict resolution across complex disconnected client architectures.
+            </p>
+</div>
+</div>
+<div class="px-space-lg pb-space-lg pt-0">
+<a class="inline-flex items-center gap-1 font-label-md text-label-md text-primary font-medium hover:gap-2 transition-all" href="#">
+<span>Read dispatch</span>
+<span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+</a>
+</div>
+</article>
+<!-- Article 2 -->
+<article class="card-lift bg-surface-container-lowest border border-outline-variant/40 rounded-xl overflow-hidden flex flex-col justify-between group" data-category="personal-notes">
+<div>
+<div class="relative w-full h-48 overflow-hidden bg-surface-container">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" data-alt="An atmospheric overhead shot of an uncluttered oak writing desk featuring a ceramic tea cup, fountain pen, and a closed leather journal. Diffused natural sunlight pours through tall arched library windows, illuminating subtle paper textures and a peaceful architectural reading corner." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAtuoi1m7DtenT_vaw96PTd9FtMYnVZi8AnpqwYa0Qp8BVoK6pQ0RA5a3RZLeifzL-t5CxmstZdRuuj6MNhRlMorvkC19MASju5H56xXR2XASvqOVmzk0duwk6swPdkUNDsr7GFeUIKw-vfSG-zmCCEs6beZ6GVSkTbbzeequmc_8w_0Vw0ojphJXid1ye7F3NRgg24ZGM2Koj9lpPR2hVee4g7rP7GFUX6nVXmFwIFZ4G2R56omWu7kA"/>
+<div class="absolute top-3 left-3">
+<span class="px-2.5 py-1 rounded-full bg-surface-container-lowest/90 backdrop-blur-sm border border-outline-variant/40 font-label-sm text-label-sm text-on-surface">
+                Personal Notes
+              </span>
+</div>
+</div>
+<div class="p-space-lg">
+<div class="flex items-center gap-2 text-secondary font-label-sm text-label-sm mb-2">
+<time datetime="2026-10-25">Oct 25, 2026</time>
+<span>·</span>
+<span>5 min read</span>
+</div>
+<h2 class="font-headline-sm text-headline-sm text-on-surface group-hover:text-primary transition-colors line-clamp-2 mb-2">
+              The Psychology of Deep Work in an Era of Infinite Pings
+            </h2>
+<p class="font-body-md text-body-md text-on-surface-variant line-clamp-2">
+              How intentional cognitive boundaries and sensory reduction rituals protect original craft from modern micro-interruptions.
+            </p>
+</div>
+</div>
+<div class="px-space-lg pb-space-lg pt-0">
+<a class="inline-flex items-center gap-1 font-label-md text-label-md text-primary font-medium hover:gap-2 transition-all" href="#">
+<span>Read dispatch</span>
+<span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+</a>
+</div>
+</article>
+<!-- Article 3 -->
+<article class="card-lift bg-surface-container-lowest border border-outline-variant/40 rounded-xl overflow-hidden flex flex-col justify-between group" data-category="technology">
+<div>
+<div class="relative w-full h-48 overflow-hidden bg-surface-container">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" data-alt="An abstract typographic visualization of server network paths and edge cache nodes rendered in serene emerald green and botanical charcoal over archival off-white background. The aesthetic is clean, technical, high contrast, and minimalist with fine hairline diagram vectors." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB1bTATu2um2DcHa0i5MLPF4WuhHS0o_4lHoIWqRM4i4Rse5zIN1yuNUAXu_HbCyqZwaGj5Bu3emJ7qbXZMBBKTjdg-oZuz__1ju7RAhGdVcP_W8eqvbk4VybVedhtNGbNFPBcla3jk6W8-XM814OM4um9fCRcru3Kub7rPZt3-jwy9JX3G5nMofTfQbFCU1lJPqd0N5ACkg6Jgnq3TMNF62SA-smHTKHVaG4qMWCYQWElLqLcqugPoPw"/>
+<div class="absolute top-3 left-3">
+<span class="px-2.5 py-1 rounded-full bg-surface-container-lowest/90 backdrop-blur-sm border border-outline-variant/40 font-label-sm text-label-sm text-on-surface">
+                Technology
+              </span>
+</div>
+</div>
+<div class="p-space-lg">
+<div class="flex items-center gap-2 text-secondary font-label-sm text-label-sm mb-2">
+<time datetime="2026-10-22">Oct 22, 2026</time>
+<span>·</span>
+<span>11 min read</span>
+</div>
+<h2 class="font-headline-sm text-headline-sm text-on-surface group-hover:text-primary transition-colors line-clamp-2 mb-2">
+              How We Scaled Next.js App Router for 10M Pageviews
+            </h2>
+<p class="font-body-md text-body-md text-on-surface-variant line-clamp-2">
+              Real-world telemetry, selective revalidation recipes, and streaming edge caching lessons gathered from high-load editorial launches.
+            </p>
+</div>
+</div>
+<div class="px-space-lg pb-space-lg pt-0">
+<a class="inline-flex items-center gap-1 font-label-md text-label-md text-primary font-medium hover:gap-2 transition-all" href="#">
+<span>Read dispatch</span>
+<span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+</a>
+</div>
+</article>
+<!-- Article 4 -->
+<article class="card-lift bg-surface-container-lowest border border-outline-variant/40 rounded-xl overflow-hidden flex flex-col justify-between group" data-category="software-engineering">
+<div>
+<div class="relative w-full h-48 overflow-hidden bg-surface-container">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" data-alt="A tranquil architectural model layout on an architect drafting board, featuring miniature concrete columns, precision brass calipers, and drafted blueprints. High key diffused lighting highlights tactile paper grain and disciplined editorial precision in deep charcoal and muted off-white tones." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBPn24SH6s_2mwMX8Jwrj2DFe5zDwdZp8ucVfkk4C-W2L9yBDi8RXwT969sxrcdhsUM4D6G7dKyBOvvnc_GIsGn0qh-06beJj1EaqwL2DzDOg12-bGDR0fcC9tNEAPMORGwp3A1XnVctI3VRYT7aUCiJh4_bkY0Nwmn7BHNm5ya5Ug3Z1plrF9L4363EjYJfCroFFJ3uFPV2ocBku5hkClXUMO0yld0cAjC0WAYOUcTg5O7kU5XrHO1AA"/>
+<div class="absolute top-3 left-3">
+<span class="px-2.5 py-1 rounded-full bg-surface-container-lowest/90 backdrop-blur-sm border border-outline-variant/40 font-label-sm text-label-sm text-on-surface">
+                Software Engineering
+              </span>
+</div>
+</div>
+<div class="p-space-lg">
+<div class="flex items-center gap-2 text-secondary font-label-sm text-label-sm mb-2">
+<time datetime="2026-10-20">Oct 20, 2026</time>
+<span>·</span>
+<span>6 min read</span>
+</div>
+<h2 class="font-headline-sm text-headline-sm text-on-surface group-hover:text-primary transition-colors line-clamp-2 mb-2">
+              Building Better Software Starts With Better Thinking
+            </h2>
+<p class="font-body-md text-body-md text-on-surface-variant line-clamp-2">
+              Why problem formulation, clear prose specifications, and domain taxonomy outshine hasty code implementation every single time.
+            </p>
+</div>
+</div>
+<div class="px-space-lg pb-space-lg pt-0">
+<a class="inline-flex items-center gap-1 font-label-md text-label-md text-primary font-medium hover:gap-2 transition-all" href="#">
+<span>Read dispatch</span>
+<span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+</a>
+</div>
+</article>
+<!-- Article 5 -->
+<article class="card-lift bg-surface-container-lowest border border-outline-variant/40 rounded-xl overflow-hidden flex flex-col justify-between group" data-category="tutorials">
+<div>
+<div class="relative w-full h-48 overflow-hidden bg-surface-container">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" data-alt="A modern cryptographic padlock emblem engraved on textured brushed dark titanium, surrounded by delicate laser-etched database relational schemas. Crisp directional lighting casts soft shadows across paper textures, radiating quiet security and deliberate software craftsmanship." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCW-X6b7dLrhJig1LoTzz4nVLGT0qvX4na5ZaUgHye_j9M4ZUxwefHF773Z0TAzQG8ANh18f_mTVHfk07bqBqu4ekF2LWAyPfnI2GBbll0nYauR1CtJNuZIBdTjWvdMv0JkI61hWtVDjGhdnOd9g25CFVHBFrtWa0YgIkFBBUvtlOtpS9f3Xst7zs_zYJwXu8YXieP3EeVuV_4RB1jY0IVT05kumyFJilmzUIzaciulZMzXiOtrg2uyGw"/>
+<div class="absolute top-3 left-3">
+<span class="px-2.5 py-1 rounded-full bg-surface-container-lowest/90 backdrop-blur-sm border border-outline-variant/40 font-label-sm text-label-sm text-on-surface">
+                Tutorials
+              </span>
+</div>
+</div>
+<div class="p-space-lg">
+<div class="flex items-center gap-2 text-secondary font-label-sm text-label-sm mb-2">
+<time datetime="2026-10-17">Oct 17, 2026</time>
+<span>·</span>
+<span>9 min read</span>
+</div>
+<h2 class="font-headline-sm text-headline-sm text-on-surface group-hover:text-primary transition-colors line-clamp-2 mb-2">
+              A Practical Primer on PostgreSQL RLS and Security
+            </h2>
+<p class="font-body-md text-body-md text-on-surface-variant line-clamp-2">
+              A comprehensive hands-on walkthrough implementing Row-Level Security policies with Supabase authentication and automated testing suites.
+            </p>
+</div>
+</div>
+<div class="px-space-lg pb-space-lg pt-0">
+<a class="inline-flex items-center gap-1 font-label-md text-label-md text-primary font-medium hover:gap-2 transition-all" href="#">
+<span>Read dispatch</span>
+<span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+</a>
+</div>
+</article>
+<!-- Article 6 -->
+<article class="card-lift bg-surface-container-lowest border border-outline-variant/40 rounded-xl overflow-hidden flex flex-col justify-between group" data-category="career">
+<div>
+<div class="relative w-full h-48 overflow-hidden bg-surface-container">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" data-alt="An expansive modern corporate atrium viewed from an upper gallery, featuring warm natural birch wood beams, a serene reading mezzanine, and solitary engineers engaged in focused conversations. Warm afternoon light creates a tranquil and dignified professional atmosphere." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBBBz3SebNce98AINV-8-aDSQF8DBktUMVoxfJ9knMV-CdZUKV89ZXwP6DEF842cr80qdNIMmcqyUlbMZR8HMRF6dEtui0-XXGxLQ_VTtVkXD1u_92WOo-svBhpP2EZH3Qh-gaFWXkdt_sQWAjkay9kVJUIaOWBiPRYj0hPstSuELEEKWi1-KIzdjigSTuRqtW-aZcCUEggIlAJ8iUwqJE99jPqLBk7x8VQfgr9vtdF203LlkgdkO2xAA"/>
+<div class="absolute top-3 left-3">
+<span class="px-2.5 py-1 rounded-full bg-surface-container-lowest/90 backdrop-blur-sm border border-outline-variant/40 font-label-sm text-label-sm text-on-surface">
+                Career
+              </span>
+</div>
+</div>
+<div class="p-space-lg">
+<div class="flex items-center gap-2 text-secondary font-label-sm text-label-sm mb-2">
+<time datetime="2026-10-14">Oct 14, 2026</time>
+<span>·</span>
+<span>7 min read</span>
+</div>
+<h2 class="font-headline-sm text-headline-sm text-on-surface group-hover:text-primary transition-colors line-clamp-2 mb-2">
+              Navigating the First 90 Days as a Staff Engineer
+            </h2>
+<p class="font-body-md text-body-md text-on-surface-variant line-clamp-2">
+              Balancing technical sponsorship, organizational empathy, and architectural leverage without burning out early in the senior track.
+            </p>
+</div>
+</div>
+<div class="px-space-lg pb-space-lg pt-0">
+<a class="inline-flex items-center gap-1 font-label-md text-label-md text-primary font-medium hover:gap-2 transition-all" href="#">
+<span>Read dispatch</span>
+<span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+</a>
+</div>
+</article>
+<!-- Article 7 -->
+<article class="card-lift bg-surface-container-lowest border border-outline-variant/40 rounded-xl overflow-hidden flex flex-col justify-between group" data-category="technology">
+<div>
+<div class="relative w-full h-48 overflow-hidden bg-surface-container">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" data-alt="A refined composition of Swiss typography books arranged on an off-white stone table, accompanied by a matte metal typographic ruler and fine lead pencil. Soft overhead studio lighting emphasizes tactile paper edges, perfect kerning, and classic minimalist layout design." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBxyeuvjb-wP-s3NP3f8Y_h3BMtB3SSS8s2KFetvDRRozCk03hkYELvcpL3nYE8dQA1KJElAAe7s5WLNY5388vk2ae56MIXqAUN6lZ7gR2VVMI-QWK-vJN4iCvzICBfUySc04vKaXvk-04hi8uYi45h36ufa5ouMvsGCKDBRlClMZUrBX2RzpClw9C2fn8DH1IMiLrcj9Ae3ngsJhRx60PFFfJEP4_QG6ZZZB2NhjGp0vgcBbPodo_pZA"/>
+<div class="absolute top-3 left-3">
+<span class="px-2.5 py-1 rounded-full bg-surface-container-lowest/90 backdrop-blur-sm border border-outline-variant/40 font-label-sm text-label-sm text-on-surface">
+                Technology
+              </span>
+</div>
+</div>
+<div class="p-space-lg">
+<div class="flex items-center gap-2 text-secondary font-label-sm text-label-sm mb-2">
+<time datetime="2026-10-10">Oct 10, 2026</time>
+<span>·</span>
+<span>4 min read</span>
+</div>
+<h2 class="font-headline-sm text-headline-sm text-on-surface group-hover:text-primary transition-colors line-clamp-2 mb-2">
+              The Lost Art of Crafting Clean Interfaces
+            </h2>
+<p class="font-body-md text-body-md text-on-surface-variant line-clamp-2">
+              Rediscovering the enduring power of restraint, deliberate typography, and tactile negative space against trendy visual bloat.
+            </p>
+</div>
+</div>
+<div class="px-space-lg pb-space-lg pt-0">
+<a class="inline-flex items-center gap-1 font-label-md text-label-md text-primary font-medium hover:gap-2 transition-all" href="#">
+<span>Read dispatch</span>
+<span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+</a>
+</div>
+</article>
+<!-- Article 8 -->
+<article class="card-lift bg-surface-container-lowest border border-outline-variant/40 rounded-xl overflow-hidden flex flex-col justify-between group" data-category="personal-notes">
+<div>
+<div class="relative w-full h-48 overflow-hidden bg-surface-container">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" data-alt="A vintage letterpress printing machine in a serene Parisian print shop, bathed in soft afternoon window light. Heavy cardstock prints with crisp black serif type rest on drying racks with rich forest green accents and warm textured shadows." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDJCagpVeRiHvOyp65CXrjKCKw1lMyVyhLyHUdridCNVObHNw33A3w6UIG1_W1CXF_JVflHZneAdawKy31_jrdkUwjtsFdUILblySf5LhEzNeO5IfEByN64nkkzuyE1mTBxdoq11P2qq8Dv2pdXydyZHE_fHCae2HEIdw6HKYtPgeli4TTiqBQ_s3JiqPswhNM65SanAb2g5qiMtjKPJian_fU_9KRentm1PCEq52P6CgKOuCUx81sO2g"/>
+<div class="absolute top-3 left-3">
+<span class="px-2.5 py-1 rounded-full bg-surface-container-lowest/90 backdrop-blur-sm border border-outline-variant/40 font-label-sm text-label-sm text-on-surface">
+                Personal Notes
+              </span>
+</div>
+</div>
+<div class="p-space-lg">
+<div class="flex items-center gap-2 text-secondary font-label-sm text-label-sm mb-2">
+<time datetime="2026-10-05">Oct 05, 2026</time>
+<span>·</span>
+<span>5 min read</span>
+</div>
+<h2 class="font-headline-sm text-headline-sm text-on-surface group-hover:text-primary transition-colors line-clamp-2 mb-2">
+              Reflections on Single-Author Publishing
+            </h2>
+<p class="font-body-md text-body-md text-on-surface-variant line-clamp-2">
+              A five-year post-mortem on running an independent digital periodical without advertising, sponsors, or algorithmic compromise.
+            </p>
+</div>
+</div>
+<div class="px-space-lg pb-space-lg pt-0">
+<a class="inline-flex items-center gap-1 font-label-md text-label-md text-primary font-medium hover:gap-2 transition-all" href="#">
+<span>Read dispatch</span>
+<span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+</a>
+</div>
+</article>
+</section>
+<!-- 5. Pagination / Load More Section -->
+<nav aria-label="Pagination Navigation" class="flex flex-col sm:flex-row items-center justify-between gap-space-md border-t border-outline-variant/30 pt-space-lg">
+<div class="text-secondary font-body-sm text-body-sm">
+        Showing <span class="font-medium text-on-surface">1–8</span> of <span class="font-medium text-on-surface">24</span> archived entries
+      </div>
+<div class="flex items-center gap-space-sm">
+<button class="px-3.5 py-2 rounded-lg border border-outline-variant/40 text-outline cursor-not-allowed opacity-50 font-label-md text-label-md flex items-center gap-1" disabled="" type="button">
+<span class="material-symbols-outlined text-[16px]">arrow_back</span>
+<span>Previous</span>
+</button>
+<span class="px-3 py-1 font-label-md text-label-md text-on-surface-variant">
+          Page 1 of 3
+        </span>
+<button class="px-3.5 py-2 rounded-lg border border-outline-variant/50 text-on-surface hover:bg-surface-container font-label-md text-label-md flex items-center gap-1 transition-colors" type="button">
+<span>Next Page</span>
+<span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+</button>
+</div>
+</nav>
+</main>
+<!-- 6. Standard Editorial Footer (Shared Component: Footer) -->
+<footer class="bg-surface-container-low border-t border-outline-variant/30 w-full mt-space-2xl">
+<div class="w-full max-w-7xl mx-auto px-margin md:px-margin-desktop py-space-xl flex flex-col md:flex-row justify-between items-center gap-space-md">
+<!-- Brand & Copyright -->
+<div class="flex flex-col sm:flex-row items-center gap-space-md text-center sm:text-left">
+<span class="font-headline-sm text-headline-sm font-normal text-on-surface">The Journal</span>
+<span class="hidden sm:inline-block text-outline-variant">|</span>
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+          © 2025 The Journal Publishing Co. Crafted for deliberate reading and thoughtful authorship.
+        </p>
+</div>
+<!-- Links & RSS indicator -->
+<div class="flex flex-wrap items-center justify-center gap-x-space-md gap-y-space-xs">
+<a class="text-on-surface-variant font-label-md text-label-md hover:text-on-surface transition-colors" href="#">Editorial Charter</a>
+<a class="text-on-surface-variant font-label-md text-label-md hover:text-on-surface transition-colors" href="#">Masthead</a>
+<a class="text-on-surface-variant font-label-md text-label-md hover:text-on-surface transition-colors" href="#">Submissions</a>
+<a class="text-primary font-label-md text-label-md" href="#">Archive Index</a>
+<a class="text-on-surface-variant font-label-md text-label-md hover:text-on-surface transition-colors" href="#">Style Guide</a>
+<a class="text-on-surface-variant font-label-md text-label-md hover:text-on-surface transition-colors" href="#">Privacy &amp; Terms</a>
+<a class="inline-flex items-center gap-1 text-primary hover:text-primary-container font-label-md text-label-md transition-colors" href="#" title="RSS Feed">
+<span class="material-symbols-outlined text-[14px]">rss_feed</span>
+<span>RSS</span>
+</a>
+</div>
+</div>
+</footer>
+<!-- Micro-interactions Script for Search and Filtering -->
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const searchInput = document.getElementById('archive-search');
+      const clearBtn = document.getElementById('search-clear-btn');
+      const filterPills = document.querySelectorAll('.filter-pill');
+      const articles = document.querySelectorAll('#article-grid article');
+      const resultsCount = document.getElementById('results-count');
+      const resetBtn = document.getElementById('reset-filter-btn');
+
+      let currentCategory = 'all';
+      let currentQuery = '';
+
+      function updateDisplay() {
+        let visibleCount = 0;
+        const normalizedQuery = currentQuery.toLowerCase().trim();
+
+        articles.forEach(article => {
+          const category = article.dataset.category;
+          const title = article.querySelector('h2').textContent.toLowerCase();
+          const excerpt = article.querySelector('p').textContent.toLowerCase();
+
+          const matchesCategory = currentCategory === 'all' || category === currentCategory;
+          const matchesQuery = !normalizedQuery || title.includes(normalizedQuery) || excerpt.includes(normalizedQuery);
+
+          if (matchesCategory && matchesQuery) {
+            article.style.display = 'flex';
+            visibleCount++;
+          } else {
+            article.style.display = 'none';
+          }
+        });
+
+        // Update Results Count Label
+        const categoryLabel = currentCategory === 'all' 
+          ? 'All Topics' 
+          : Array.from(filterPills).find(p => p.dataset.category === currentCategory)?.textContent.trim() || 'Selected Topic';
+        
+        resultsCount.innerHTML = `Showing ${visibleCount} article${visibleCount === 1 ? '' : 's'} in <strong>${categoryLabel}</strong>`;
+      }
+
+      // Filter Pill Click
+      filterPills.forEach(pill => {
+        pill.addEventListener('click', () => {
+          filterPills.forEach(p => {
+            p.className = 'filter-pill shrink-0 px-3.5 py-1.5 rounded-full font-label-md text-label-md bg-surface-container-low text-secondary hover:text-on-surface border border-outline-variant/40 transition-colors';
+          });
+          pill.className = 'filter-pill shrink-0 px-3.5 py-1.5 rounded-full font-label-md text-label-md bg-primary-container text-on-primary transition-colors shadow-sm';
+          currentCategory = pill.dataset.category;
+          updateDisplay();
+        });
+      });
+
+      // Search Input Change
+      searchInput.addEventListener('input', (e) => {
+        currentQuery = e.target.value;
+        updateDisplay();
+      });
+
+      // Clear Search
+      clearBtn.addEventListener('click', () => {
+        searchInput.value = '';
+        currentQuery = '';
+        updateDisplay();
+        searchInput.focus();
+      });
+
+      // Reset All Filters
+      resetBtn.addEventListener('click', () => {
+        searchInput.value = '';
+        currentQuery = '';
+        currentCategory = 'all';
+        filterPills.forEach(p => {
+          if (p.dataset.category === 'all') {
+            p.className = 'filter-pill shrink-0 px-3.5 py-1.5 rounded-full font-label-md text-label-md bg-primary-container text-on-primary transition-colors shadow-sm';
+          } else {
+            p.className = 'filter-pill shrink-0 px-3.5 py-1.5 rounded-full font-label-md text-label-md bg-surface-container-low text-secondary hover:text-on-surface border border-outline-variant/40 transition-colors';
+          }
+        });
+        updateDisplay();
+      });
+    });
+  </script>
+</body></html>

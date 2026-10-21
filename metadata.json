@@ -1,0 +1,6 @@
+{
+  "name": "The Journal",
+  "description": "An independent editorial publishing platform and CMS atelier for deliberate thinking, systems craftsmanship, and long-form writing.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

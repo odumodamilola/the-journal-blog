@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+
+<html class="h-full bg-background" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Edit Article — The Journal Studio</title>
+<!-- Fonts & Material Icons -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;1,6..72,400&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "inverse-on-surface": "#f2f1ee",
+            "on-surface": "#1a1c1a",
+            "surface-container-high": "#e9e8e5",
+            "outline": "#6f7a73",
+            "on-secondary": "#ffffff",
+            "tertiary-fixed": "#dae5dd",
+            "on-error": "#ffffff",
+            "on-tertiary-container": "#dbe7de",
+            "outline-variant": "#bec9c1",
+            "background": "#faf9f6",
+            "on-primary": "#ffffff",
+            "secondary-fixed": "#d9e6dc",
+            "secondary-container": "#d9e6dc",
+            "surface": "#faf9f6",
+            "primary": "#00593f",
+            "tertiary-fixed-dim": "#bec9c1",
+            "on-surface-variant": "#3f4943",
+            "on-tertiary-fixed-variant": "#3f4943",
+            "error": "#ba1a1a",
+            "surface-bright": "#faf9f6",
+            "surface-tint": "#166b4f",
+            "on-secondary-fixed": "#131e18",
+            "on-secondary-container": "#5b6760",
+            "surface-container-lowest": "#ffffff",
+            "error-container": "#ffdad6",
+            "secondary": "#55615a",
+            "on-secondary-fixed-variant": "#3e4942",
+            "on-error-container": "#93000a",
+            "on-primary-container": "#a4f4cf",
+            "surface-container-low": "#f4f3f0",
+            "surface-container": "#efeeeb",
+            "primary-fixed": "#a4f3ce",
+            "inverse-primary": "#88d6b3",
+            "tertiary": "#45504a",
+            "on-primary-fixed": "#002115",
+            "on-background": "#1a1c1a",
+            "surface-dim": "#dbdad7",
+            "on-tertiary": "#ffffff",
+            "inverse-surface": "#2f312f",
+            "primary-container": "#207255",
+            "surface-container-highest": "#e3e2df",
+            "on-primary-fixed-variant": "#005139",
+            "tertiary-container": "#5d6861",
+            "secondary-fixed-dim": "#bdcac0",
+            "on-tertiary-fixed": "#141e19",
+            "surface-variant": "#e3e2df",
+            "primary-fixed-dim": "#88d6b3"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "full": "9999px"
+          },
+          "spacing": {
+            "space-2xl": "4rem",
+            "space-xs": "0.25rem",
+            "space-md": "1rem",
+            "margin-desktop": "3.5rem",
+            "space-lg": "1.5rem",
+            "space-xl": "2.5rem",
+            "margin-tablet": "2rem",
+            "margin": "1rem",
+            "gutter": "1.5rem",
+            "gutter-desktop": "2.5rem",
+            "space-sm": "0.5rem"
+          },
+          "fontFamily": {
+            "body-lg": ["Newsreader"],
+            "body-sm": ["Inter"],
+            "body-md": ["Inter"],
+            "headline-sm": ["Newsreader"],
+            "label-md": ["Inter"],
+            "label-sm": ["Inter"],
+            "display-hero": ["Newsreader"],
+            "headline-lg": ["Newsreader"],
+            "editorial-lead": ["Newsreader"],
+            "headline-lg-mobile": ["Newsreader"],
+            "headline-md": ["Newsreader"],
+            "label-lg": ["Inter"],
+            "display-hero-mobile": ["Newsreader"]
+          },
+          "fontSize": {
+            "body-lg": ["20px", { "lineHeight": "34px", "fontWeight": "400" }],
+            "body-sm": ["13px", { "lineHeight": "20px", "fontWeight": "400" }],
+            "body-md": ["15px", { "lineHeight": "24px", "fontWeight": "400" }],
+            "headline-sm": ["22px", { "lineHeight": "30px", "letterSpacing": "-0.005em", "fontWeight": "500" }],
+            "label-md": ["12px", { "lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "500" }],
+            "label-sm": ["11px", { "lineHeight": "14px", "letterSpacing": "0.04em", "fontWeight": "600" }],
+            "display-hero": ["56px", { "lineHeight": "64px", "letterSpacing": "-0.02em", "fontWeight": "400" }],
+            "headline-lg": ["40px", { "lineHeight": "48px", "letterSpacing": "-0.015em", "fontWeight": "400" }],
+            "editorial-lead": ["24px", { "lineHeight": "36px", "fontWeight": "300" }],
+            "headline-lg-mobile": ["30px", { "lineHeight": "38px", "letterSpacing": "-0.01em", "fontWeight": "400" }],
+            "headline-md": ["28px", { "lineHeight": "36px", "letterSpacing": "-0.01em", "fontWeight": "500" }],
+            "label-lg": ["14px", { "lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600" }],
+            "display-hero-mobile": ["38px", { "lineHeight": "46px", "letterSpacing": "-0.015em", "fontWeight": "400" }]
+          }
+        }
+      }
+    }
+  </script>
+<style>
+    /* Custom subtle scrollbar & code styling */
+    textarea::-webkit-scrollbar {
+      width: 6px;
+    }
+    textarea::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    textarea::-webkit-scrollbar-thumb {
+      background: #bec9c1;
+      border-radius: 4px;
+    }
+  </style>
+</head>
+<body class="h-full bg-background text-on-surface antialiased flex flex-col md:flex-row overflow-x-hidden">
+<!-- ================= SIDEBAR NAVIGATION (Shared Component: SideNavBar) ================= -->
+<aside class="w-64 h-screen fixed left-0 top-0 flex flex-col justify-between bg-surface-container-low border-r border-outline-variant/30 z-30 select-none">
+<div class="p-space-md flex flex-col gap-space-lg">
+<!-- Brand & Editorial Identity -->
+<div class="flex items-center gap-space-sm pt-space-xs">
+<div class="w-9 h-9 rounded-lg bg-primary-container text-on-primary flex items-center justify-center font-headline-sm text-headline-sm font-semibold shadow-sm">
+          J
+        </div>
+<div class="flex flex-col">
+<span class="font-headline-sm text-headline-sm font-medium text-on-surface leading-tight">The Journal Studio</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant text-[11px] leading-none">Managing Editor</span>
+</div>
+</div>
+<!-- Action CTA -->
+<button class="w-full flex items-center justify-center gap-space-xs bg-primary-container hover:bg-primary text-on-primary py-space-sm px-space-md rounded-lg font-label-lg text-label-lg transition-colors active:scale-[0.98] duration-150 shadow-sm">
+<span class="material-symbols-outlined text-[18px]">add</span>
+<span>New Entry</span>
+</button>
+<!-- Primary Tabs -->
+<nav class="flex flex-col gap-1">
+<!-- Dashboard -->
+<a class="flex items-center gap-space-sm px-space-md py-space-sm text-on-surface-variant hover:text-on-surface hover:bg-surface-container rounded-lg font-label-lg text-label-lg transition-colors" href="#">
+<span class="material-symbols-outlined text-[20px]">dashboard</span>
+<span>Dashboard</span>
+</a>
+<!-- Stories (Active Item for Editing an Article) -->
+<a class="flex items-center gap-space-sm px-space-md py-space-sm bg-surface-container-highest text-primary rounded-lg font-label-lg text-label-lg shadow-xs" href="#">
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">menu_book</span>
+<span>Stories</span>
+</a>
+<!-- Drafts -->
+<a class="flex items-center gap-space-sm px-space-md py-space-sm text-on-surface-variant hover:text-on-surface hover:bg-surface-container rounded-lg font-label-lg text-label-lg transition-colors" href="#">
+<span class="material-symbols-outlined text-[20px]">edit_note</span>
+<span>Drafts</span>
+</a>
+<!-- Analytics -->
+<a class="flex items-center gap-space-sm px-space-md py-space-sm text-on-surface-variant hover:text-on-surface hover:bg-surface-container rounded-lg font-label-lg text-label-lg transition-colors" href="#">
+<span class="material-symbols-outlined text-[20px]">query_stats</span>
+<span>Analytics</span>
+</a>
+<!-- Subscribers -->
+<a class="flex items-center gap-space-sm px-space-md py-space-sm text-on-surface-variant hover:text-on-surface hover:bg-surface-container rounded-lg font-label-lg text-label-lg transition-colors" href="#">
+<span class="material-symbols-outlined text-[20px]">group</span>
+<span>Subscribers</span>
+</a>
+<!-- Settings -->
+<a class="flex items-center gap-space-sm px-space-md py-space-sm text-on-surface-variant hover:text-on-surface hover:bg-surface-container rounded-lg font-label-lg text-label-lg transition-colors" href="#">
+<span class="material-symbols-outlined text-[20px]">settings</span>
+<span>Settings</span>
+</a>
+</nav>
+</div>
+<!-- Sidebar Footer Actions -->
+<div class="p-space-md border-t border-outline-variant/30 flex flex-col gap-1">
+<a class="flex items-center gap-space-sm px-space-md py-space-sm text-on-surface-variant hover:text-on-surface hover:bg-surface-container rounded-lg font-label-lg text-label-lg transition-colors" href="/blog/building-better-software-starts-with-better-thinking" target="_blank">
+<span class="material-symbols-outlined text-[18px]">open_in_new</span>
+<span>Reader View</span>
+</a>
+<a class="flex items-center gap-space-sm px-space-md py-space-sm text-on-surface-variant hover:text-error hover:bg-error-container/30 rounded-lg font-label-lg text-label-lg transition-colors" href="#">
+<span class="material-symbols-outlined text-[18px]">logout</span>
+<span>Sign Out</span>
+</a>
+</div>
+</aside>
+<!-- ================= MAIN WORKSPACE CANVAS ================= -->
+<div class="flex-1 md:ml-64 flex flex-col min-h-screen bg-background">
+<!-- Top Editorial Header & Lifecycle Controls -->
+<header class="sticky top-0 z-20 bg-surface/90 backdrop-blur-md border-b border-outline-variant/40 px-6 lg:px-10 py-4 transition-all">
+<div class="max-w-7xl mx-auto flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+<!-- Left: Context & Heading -->
+<div class="flex flex-col gap-1">
+<!-- Breadcrumb -->
+<div class="flex items-center gap-2 text-on-surface-variant font-body-sm text-body-sm">
+<a class="hover:text-primary transition-colors" href="#">Dashboard</a>
+<span class="text-outline-variant">/</span>
+<a class="hover:text-primary transition-colors" href="#">Articles</a>
+<span class="text-outline-variant">/</span>
+<span class="text-on-surface font-medium">Edit</span>
+</div>
+<div class="flex flex-wrap items-center gap-3 mt-1">
+<h1 class="font-headline-lg text-[32px] md:text-[36px] text-on-surface font-normal tracking-tight">Edit Article</h1>
+<!-- Live Status Pill -->
+<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-label-sm font-medium bg-[#15803D]/10 text-[#15803D] border border-[#15803D]/20">
+<span class="w-1.5 h-1.5 rounded-full bg-[#15803D] animate-pulse"></span>
+              Published — October 20, 2026
+            </span>
+</div>
+</div>
+<!-- Right: Action Cluster -->
+<div class="flex items-center flex-wrap gap-2.5">
+<!-- Move to Draft -->
+<button class="inline-flex items-center gap-1.5 px-3.5 py-2 text-on-surface font-body-sm text-body-sm border border-outline-variant/60 rounded-lg bg-surface-container-lowest hover:bg-surface-container transition-colors active:scale-[0.98]" type="button">
+<span class="material-symbols-outlined text-[17px] text-on-surface-variant">archive</span>
+<span>Move to Draft</span>
+</button>
+<!-- View Live Article -->
+<a class="inline-flex items-center gap-1.5 px-3.5 py-2 text-on-surface font-body-sm text-body-sm border border-outline-variant/60 rounded-lg bg-surface-container-lowest hover:bg-surface-container transition-colors active:scale-[0.98]" href="/blog/building-better-software-starts-with-better-thinking" target="_blank">
+<span>View Live Article</span>
+<span class="material-symbols-outlined text-[16px] text-on-surface-variant">arrow_outward</span>
+</a>
+<!-- Save Changes -->
+<button class="inline-flex items-center gap-1.5 px-5 py-2 bg-primary-container text-on-primary hover:bg-[#17573F] font-label-lg text-label-lg rounded-lg shadow-sm transition-all active:scale-[0.98]" id="save-button" type="button">
+<span class="material-symbols-outlined text-[18px]">check</span>
+<span>Save Changes</span>
+</button>
+</div>
+</div>
+</header>
+<!-- Main Grid Content Area (70% Editor / 30% Sidebar) -->
+<main class="flex-1 max-w-7xl mx-auto w-full px-6 lg:px-10 py-8">
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+<!-- ================= LEFT: 70% EDITOR COLUMN (8 of 12 cols) ================= -->
+<section class="lg:col-span-8 flex flex-col gap-6">
+<!-- Title & URL Container -->
+<div class="bg-surface-container-lowest p-6 rounded-xl border border-outline-variant/40 shadow-xs flex flex-col gap-4">
+<!-- Article Title Input -->
+<div>
+<label class="block font-label-md text-label-md text-on-surface-variant mb-1.5" for="post-title">Article Headline</label>
+<input class="w-full font-headline-md text-[24px] md:text-[28px] font-medium text-on-surface bg-transparent border-0 border-b border-outline-variant/50 px-0 pb-2 focus:ring-0 focus:border-primary transition-colors placeholder:text-outline-variant" id="post-title" placeholder="Give this dispatch an enduring title..." type="text" value="Building Better Software Starts With Better Thinking"/>
+</div>
+<!-- URL Slug Editor with Live Badge -->
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pt-1 text-on-surface-variant font-body-sm text-body-sm">
+<div class="flex items-center gap-1.5 overflow-hidden">
+<span class="material-symbols-outlined text-[18px] text-outline">link</span>
+<span class="text-outline">yourdomain.com/blog/</span>
+<input class="font-mono text-xs px-2 py-1 bg-surface-container border border-outline-variant/60 rounded text-on-surface focus:outline-none focus:border-primary transition-colors" type="text" value="building-better-software-starts-with-better-thinking"/>
+</div>
+<span class="inline-flex items-center text-[11px] font-label-sm font-medium uppercase tracking-wider text-primary bg-primary-fixed/30 px-2 py-0.5 rounded">
+                Live Permanent Link
+              </span>
+</div>
+<!-- Excerpt / Short Description -->
+<div class="pt-2">
+<div class="flex items-center justify-between mb-1">
+<label class="font-label-md text-label-md text-on-surface-variant" for="post-excerpt">Short Description / Excerpt</label>
+<span class="text-xs font-mono text-outline" id="char-count">142 / 200</span>
+</div>
+<textarea class="w-full text-sm font-body-md text-body-md text-on-surface bg-surface-container-low/60 border border-outline-variant/50 rounded-lg p-3 focus:outline-none focus:border-primary focus:ring-0 transition-colors" id="post-excerpt" rows="2">Why understanding the problem deeply matters far more than rushing into code syntax. A meditative essay on cognitive clarity and deliberate modeling.</textarea>
+</div>
+</div>
+<!-- Markdown Content Editor -->
+<div class="bg-surface-container-lowest rounded-xl border border-outline-variant/40 shadow-xs flex flex-col overflow-hidden">
+<!-- Editor Subheader Toolbar & Mode Switcher -->
+<div class="flex flex-wrap items-center justify-between px-4 py-2.5 bg-surface-container-low/70 border-b border-outline-variant/30 gap-2">
+<!-- Formatting Tool actions -->
+<div class="flex items-center gap-0.5 text-on-surface-variant">
+<button class="p-1.5 hover:bg-surface-container rounded text-on-surface transition-colors" title="Bold" type="button">
+<span class="material-symbols-outlined text-[19px]">format_bold</span>
+</button>
+<button class="p-1.5 hover:bg-surface-container rounded text-on-surface transition-colors" title="Italic" type="button">
+<span class="material-symbols-outlined text-[19px]">format_italic</span>
+</button>
+<div class="w-px h-4 bg-outline-variant/40 mx-1"></div>
+<button class="px-2 py-1 hover:bg-surface-container rounded font-serif text-sm font-semibold transition-colors" title="Heading 2" type="button">
+                  H2
+                </button>
+<button class="px-2 py-1 hover:bg-surface-container rounded font-serif text-xs font-semibold transition-colors" title="Heading 3" type="button">
+                  H3
+                </button>
+<div class="w-px h-4 bg-outline-variant/40 mx-1"></div>
+<button class="p-1.5 hover:bg-surface-container rounded text-on-surface transition-colors" title="Blockquote" type="button">
+<span class="material-symbols-outlined text-[19px]">format_quote</span>
+</button>
+<button class="p-1.5 hover:bg-surface-container rounded text-on-surface transition-colors" title="Code Block" type="button">
+<span class="material-symbols-outlined text-[19px]">code</span>
+</button>
+<button class="p-1.5 hover:bg-surface-container rounded text-on-surface transition-colors" title="Hyperlink" type="button">
+<span class="material-symbols-outlined text-[19px]">link</span>
+</button>
+<button class="p-1.5 hover:bg-surface-container rounded text-on-surface transition-colors" title="Insert Asset" type="button">
+<span class="material-symbols-outlined text-[19px]">image</span>
+</button>
+</div>
+<!-- Dual Mode Switcher -->
+<div class="inline-flex p-0.5 rounded-lg bg-surface-container-high border border-outline-variant/40 text-xs font-label-md">
+<button class="px-3 py-1 bg-surface-container-lowest text-on-surface font-semibold rounded-md shadow-xs" type="button">
+                  Write (Markdown)
+                </button>
+<button class="px-3 py-1 text-on-surface-variant hover:text-on-surface transition-colors" type="button">
+                  Preview Mode
+                </button>
+</div>
+</div>
+<!-- Actual Markdown Canvas -->
+<div class="p-6">
+<textarea class="w-full font-mono text-sm leading-relaxed text-on-surface bg-transparent border-0 focus:ring-0 focus:outline-none resize-y" rows="18">## The Precedence of Cognition
+
+Most software failures are not algorithmic breakdowns; they are mental lapses crystallized into syntax. In our hurried rush to demonstrate tangible velocity, we often commit keystrokes to disk before establishing a rigorous mental taxonomy of the actual domain space.
+
+### Core Principles of Deliberate Modeling
+
+* **Resist the urge to prototype prematurely:** Sit with paper, clarify definitions, and question edge boundaries.
+* **Architecture is communication:** Systems should mirror human intuition before they mirror database constraints.
+* **Subtractive refactoring:** Perfection is obtained not when there is nothing left to add, but when nothing left can be removed.</textarea></div></div></section></div></main></div></body></html>

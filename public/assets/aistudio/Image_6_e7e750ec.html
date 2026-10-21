@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>The Journal — Content Management Dashboard</title>
+<!-- Google Fonts & Material Symbols -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;1,6..72,400&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "inverse-on-surface": "#f2f1ee",
+            "on-surface": "#1a1c1a",
+            "surface-container-high": "#e9e8e5",
+            "outline": "#6f7a73",
+            "on-secondary": "#ffffff",
+            "tertiary-fixed": "#dae5dd",
+            "on-error": "#ffffff",
+            "on-tertiary-container": "#dbe7de",
+            "outline-variant": "#bec9c1",
+            "background": "#faf9f6",
+            "on-primary": "#ffffff",
+            "secondary-fixed": "#d9e6dc",
+            "secondary-container": "#d9e6dc",
+            "surface": "#faf9f6",
+            "primary": "#00593f",
+            "tertiary-fixed-dim": "#bec9c1",
+            "on-surface-variant": "#3f4943",
+            "on-tertiary-fixed-variant": "#3f4943",
+            "error": "#ba1a1a",
+            "surface-bright": "#faf9f6",
+            "surface-tint": "#166b4f",
+            "on-secondary-fixed": "#131e18",
+            "on-secondary-container": "#5b6760",
+            "surface-container-lowest": "#ffffff",
+            "error-container": "#ffdad6",
+            "secondary": "#55615a",
+            "on-secondary-fixed-variant": "#3e4942",
+            "on-error-container": "#93000a",
+            "on-primary-container": "#a4f4cf",
+            "surface-container-low": "#f4f3f0",
+            "surface-container": "#efeeeb",
+            "primary-fixed": "#a4f3ce",
+            "inverse-primary": "#88d6b3",
+            "tertiary": "#45504a",
+            "on-primary-fixed": "#002115",
+            "on-background": "#1a1c1a",
+            "surface-dim": "#dbdad7",
+            "on-tertiary": "#ffffff",
+            "inverse-surface": "#2f312f",
+            "primary-container": "#207255",
+            "surface-container-highest": "#e3e2df",
+            "on-primary-fixed-variant": "#005139",
+            "tertiary-container": "#5d6861",
+            "secondary-fixed-dim": "#bdcac0",
+            "on-tertiary-fixed": "#141e19",
+            "surface-variant": "#e3e2df",
+            "primary-fixed-dim": "#88d6b3"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "full": "9999px"
+          },
+          "spacing": {
+            "space-2xl": "4rem",
+            "space-xs": "0.25rem",
+            "space-md": "1rem",
+            "margin-desktop": "3.5rem",
+            "space-lg": "1.5rem",
+            "space-xl": "2.5rem",
+            "margin-tablet": "2rem",
+            "margin": "1rem",
+            "gutter": "1.5rem",
+            "gutter-desktop": "2.5rem",
+            "space-sm": "0.5rem"
+          },
+          "fontFamily": {
+            "body-lg": ["Newsreader"],
+            "body-sm": ["Inter"],
+            "body-md": ["Inter"],
+            "headline-sm": ["Newsreader"],
+            "label-md": ["Inter"],
+            "label-sm": ["Inter"],
+            "display-hero": ["Newsreader"],
+            "headline-lg": ["Newsreader"],
+            "editorial-lead": ["Newsreader"],
+            "headline-lg-mobile": ["Newsreader"],
+            "headline-md": ["Newsreader"],
+            "label-lg": ["Inter"],
+            "display-hero-mobile": ["Newsreader"]
+          },
+          "fontSize": {
+            "body-lg": ["20px", { "lineHeight": "34px", "fontWeight": "400" }],
+            "body-sm": ["13px", { "lineHeight": "20px", "fontWeight": "400" }],
+            "body-md": ["15px", { "lineHeight": "24px", "fontWeight": "400" }],
+            "headline-sm": ["22px", { "lineHeight": "30px", "letterSpacing": "-0.005em", "fontWeight": "500" }],
+            "label-md": ["12px", { "lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "500" }],
+            "label-sm": ["11px", { "lineHeight": "14px", "letterSpacing": "0.04em", "fontWeight": "600" }],
+            "display-hero": ["56px", { "lineHeight": "64px", "letterSpacing": "-0.02em", "fontWeight": "400" }],
+            "headline-lg": ["40px", { "lineHeight": "48px", "letterSpacing": "-0.015em", "fontWeight": "400" }],
+            "editorial-lead": ["24px", { "lineHeight": "36px", "fontWeight": "300" }],
+            "headline-lg-mobile": ["30px", { "lineHeight": "38px", "letterSpacing": "-0.01em", "fontWeight": "400" }],
+            "headline-md": ["28px", { "lineHeight": "36px", "letterSpacing": "-0.01em", "fontWeight": "500" }],
+            "label-lg": ["14px", { "lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600" }],
+            "display-hero-mobile": ["38px", { "lineHeight": "46px", "letterSpacing": "-0.015em", "fontWeight": "400" }]
+          }
+        }
+      }
+    }
+  </script>
+<style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      display: inline-block;
+      vertical-align: middle;
+      line-height: 1;
+    }
+    .custom-scroll::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    .custom-scroll::-webkit-scrollbar-track {
+      background: #faf9f6;
+    }
+    .custom-scroll::-webkit-scrollbar-thumb {
+      background: #bec9c1;
+      border-radius: 9999px;
+    }
+  </style>
+</head>
+<body class="bg-background text-on-surface antialiased min-h-screen flex selection:bg-primary selection:text-on-primary">
+<!-- ========================================================================= -->
+<!-- 1. SIDEBAR NAVIGATION (Persistent, fixed 250px on desktop)               -->
+<!-- ========================================================================= -->
+<aside class="w-[250px] shrink-0 h-screen sticky top-0 bg-surface-container-lowest border-r border-outline-variant/30 flex flex-col justify-between z-30">
+<div class="p-space-lg flex flex-col gap-space-lg">
+<!-- Brand Logo & Studio Pill Badge -->
+<div class="flex flex-col gap-space-sm pb-space-md border-b border-outline-variant/20">
+<a class="flex items-center gap-2.5 group" href="/admin">
+<img alt="The Journal Wordmark" class="w-8 h-8 rounded-lg object-contain shadow-xs" src="https://lh3.googleusercontent.com/aida/AEtjO1WCnLDISF1B4DOE2WOWVf8o8J1lRGqXM2LX58nL2LAKLggO2Ap5nktLM6rPIg4KCvnMUYTx2BVHWvSxPVsrxw5B5PraRCu5iENa99OBBf8maQLPHFACYEWtC2ABRic3X8PWEaLKnaVm28288EcxNU_GMHfSoTfvItBfaRS6rWjuI66C49hQt0AcNwG9YsELkruxLz31NE0U5AYvHSNLiNvUA6aIxfx4f8reiV9re2deizaQD2e6nnNWYQg"/>
+<div class="flex flex-col">
+<span class="font-headline-sm text-headline-sm font-medium tracking-tight text-on-surface leading-none">The Journal</span>
+<span class="font-label-sm text-[10px] text-on-surface-variant/70 tracking-widest mt-1">EST. 2024</span>
+</div>
+</a>
+<div class="mt-1">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-surface-container text-on-surface-variant font-label-sm text-[10px] uppercase font-semibold tracking-wider border border-outline-variant/40">
+<span class="w-1.5 h-1.5 rounded-full bg-primary-container"></span>
+            CONTENT STUDIO
+          </span>
+</div>
+</div>
+<!-- Navigation Links -->
+<nav class="flex flex-col gap-1.5">
+<!-- Overview / Dashboard (Active) -->
+<a class="flex items-center gap-space-sm px-3.5 py-2.5 rounded-lg bg-surface-container text-primary font-label-lg text-label-lg font-semibold transition-colors duration-150" href="/admin">
+<span class="material-symbols-outlined text-[20px] text-primary" data-icon="dashboard">dashboard</span>
+<span>Overview / Dashboard</span>
+</a>
+<!-- All Posts -->
+<a class="flex items-center gap-space-sm px-3.5 py-2.5 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container-low font-label-lg text-label-lg transition-colors duration-150 group" href="/admin/posts">
+<span class="material-symbols-outlined text-[20px] text-on-surface-variant group-hover:text-on-surface" data-icon="description">description</span>
+<span>All Posts</span>
+</a>
+<!-- Create New Post -->
+<a class="flex items-center gap-space-sm px-3.5 py-2.5 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container-low font-label-lg text-label-lg transition-colors duration-150 group" href="/admin/posts/new">
+<span class="material-symbols-outlined text-[20px] text-on-surface-variant group-hover:text-on-surface" data-icon="add_circle">add_circle</span>
+<span>Create New Post</span>
+</a>
+<!-- View Live Website -->
+<a class="flex items-center justify-between px-3.5 py-2.5 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container-low font-label-lg text-label-lg transition-colors duration-150 group" href="/" target="_blank">
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-[20px] text-on-surface-variant group-hover:text-on-surface" data-icon="open_in_new">open_in_new</span>
+<span>View Live Website</span>
+</div>
+<span class="material-symbols-outlined text-[16px] text-outline-variant opacity-0 group-hover:opacity-100 transition-opacity" data-icon="arrow_forward">arrow_forward</span>
+</a>
+</nav>
+</div>
+<!-- Bottom Profile & Logout Area -->
+<div class="p-space-md border-t border-outline-variant/30 bg-surface-container-low/60">
+<div class="flex items-center gap-3 mb-space-sm p-1">
+<div class="relative">
+<img class="w-10 h-10 rounded-full object-cover border border-outline-variant/50" data-alt="Close-up editorial portrait of an experienced publication managing editor in natural light, shot on medium format film with warm organic tones and balanced studio lighting, reflecting authority, literary prestige, and contemplative depth." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA-H2-6WHWLkq7zTiTtXkDQYrbIJAaDCwI9BVV7t3Yupp4uRBFv3qRi65lxaftgSGDskcoM2pAH-cEJvay_fzcd4FkXGMYBxJlfyhCoZ16tTAsXN9i2DCu6v6qs83o5yfhrIt4lK2B47u_n165fSYUVSyst4rjluQt6pEOcrmJYVzUghrriDMVpaytdNjwAmGpZPBGXgBSKvi5IJkUKgf8r6Kyc8Nmhi71KMrowb-lMOrF0_u6lV0YdKQ"/>
+<span class="absolute bottom-0 right-0 w-2.5 h-2.5 bg-primary rounded-full ring-2 ring-surface-container-lowest"></span>
+</div>
+<div class="flex flex-col min-w-0">
+<span class="font-label-lg text-label-lg font-semibold text-on-surface truncate">Managing Editor</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant truncate text-[11px]">editor@thejournal.press</span>
+</div>
+</div>
+<button class="w-full flex items-center justify-center gap-2 px-3 py-2 rounded-lg text-on-surface-variant hover:text-error hover:bg-error-container/20 font-label-md text-label-md transition-all duration-150">
+<span class="material-symbols-outlined text-[18px]" data-icon="logout">logout</span>
+<span>Log Out</span>
+</button>
+</div>
+</aside>
+<!-- ========================================================================= -->
+<!-- MAIN WORKSPACE & CONTENT CANVAS                                           -->
+<!-- ========================================================================= -->
+<main class="flex-1 flex flex-col min-w-0 bg-background custom-scroll overflow-y-auto">
+<!-- Top Ambient Banner / Breadcrumb Bar (Responsive micro-header) -->
+<div class="px-margin md:px-margin-desktop py-space-sm border-b border-outline-variant/20 bg-surface-container-lowest/70 backdrop-blur flex justify-between items-center text-on-surface-variant font-label-sm text-label-sm">
+<div class="flex items-center gap-2">
+<span>Editorial Workspace</span>
+<span class="text-outline-variant">/</span>
+<span class="text-on-surface font-semibold">Content Management</span>
+</div>
+<div class="flex items-center gap-4">
+<span class="flex items-center gap-1 text-[11px] text-outline">
+<span class="w-2 h-2 rounded-full bg-emerald-600 inline-block animate-pulse"></span>
+          CMS Sync Active
+        </span>
+<span class="text-outline-variant">|</span>
+<span class="text-[11px]">Oct 28, 2026</span>
+</div>
+</div>
+<div class="max-w-6xl w-full mx-auto px-margin md:px-margin-desktop py-space-xl flex flex-col gap-space-xl">
+<!-- 2. DASHBOARD HEADER -->
+<section class="flex flex-col sm:flex-row sm:items-center justify-between gap-space-md">
+<div>
+<h1 class="font-headline-lg text-headline-lg font-normal text-on-surface tracking-tight">Dashboard</h1>
+<p class="font-body-md text-body-md text-on-surface-variant mt-1">Manage your stories and keep your publication growing.</p>
+</div>
+<div class="flex items-center gap-3">
+<button class="hidden md:inline-flex items-center gap-1.5 px-4 py-2.5 rounded-lg border border-outline-variant/60 text-on-surface hover:bg-surface-container transition-colors font-label-lg text-label-lg">
+<span class="material-symbols-outlined text-[18px]" data-icon="file_download">file_download</span>
+            Export CSV
+          </button>
+<!-- Primary CTA Button -->
+<a class="inline-flex items-center justify-center gap-2 px-5 h-[44px] rounded-lg bg-primary-container text-on-primary font-label-lg text-label-lg hover:bg-primary transition-colors shadow-sm active:scale-[0.98]" href="/admin/posts/new">
+<span class="material-symbols-outlined text-[20px]" data-icon="add">add</span>
+<span>+ New Article</span>
+</a>
+</div>
+</section>
+<!-- 3. OVERVIEW STATISTICS (3 Balanced Cards) -->
+<section class="grid grid-cols-1 md:grid-cols-3 gap-space-md">
+<!-- Card 1: Total Articles -->
+<div class="bg-surface-container-lowest border border-outline-variant/30 rounded-xl p-space-lg flex items-start justify-between shadow-[0_4px_20px_-2px_rgba(24,35,29,0.03)] hover:border-outline-variant/60 transition-all">
+<div class="flex flex-col">
+<span class="font-label-md text-label-md uppercase tracking-wider text-on-surface-variant font-semibold">Total Articles</span>
+<div class="flex items-baseline gap-2 mt-2">
+<span class="font-headline-lg text-headline-lg font-normal text-on-surface">24</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">posts across all issues</span>
+</div>
+<div class="mt-4 flex items-center gap-1 text-[12px] text-on-surface-variant/80">
+<span class="material-symbols-outlined text-[16px] text-primary" data-icon="trending_up">trending_up</span>
+<span>+3 stories added this month</span>
+</div>
+</div>
+<div class="w-11 h-11 rounded-lg bg-surface-container flex items-center justify-center text-on-surface-variant">
+<span class="material-symbols-outlined text-[22px]" data-icon="description">description</span>
+</div>
+</div>
+<!-- Card 2: Published -->
+<div class="bg-surface-container-lowest border border-outline-variant/30 rounded-xl p-space-lg flex items-start justify-between shadow-[0_4px_20px_-2px_rgba(24,35,29,0.03)] hover:border-outline-variant/60 transition-all">
+<div class="flex flex-col">
+<div class="flex items-center gap-2">
+<span class="font-label-md text-label-md uppercase tracking-wider text-on-surface-variant font-semibold">Published</span>
+<span class="inline-flex items-center px-2 py-0.5 rounded-full text-[11px] font-semibold bg-emerald-50 text-emerald-800 border border-emerald-200">
+                Live
+              </span>
+</div>
+<div class="flex items-baseline gap-2 mt-2">
+<span class="font-headline-lg text-headline-lg font-normal text-on-surface">18</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">live articles</span>
+</div>
+<div class="mt-4 flex items-center gap-1 text-[12px] text-emerald-800 font-medium">
+<span class="material-symbols-outlined text-[16px] text-emerald-700" data-icon="check_circle">check_circle</span>
+<span>75% publication conversion rate</span>
+</div>
+</div>
+<div class="w-11 h-11 rounded-lg bg-emerald-50 flex items-center justify-center text-emerald-800 border border-emerald-100">
+<span class="material-symbols-outlined text-[22px]" data-icon="check_circle">check_circle</span>
+</div>
+</div>
+<!-- Card 3: Drafts -->
+<div class="bg-surface-container-lowest border border-outline-variant/30 rounded-xl p-space-lg flex items-start justify-between shadow-[0_4px_20px_-2px_rgba(24,35,29,0.03)] hover:border-outline-variant/60 transition-all">
+<div class="flex flex-col">
+<div class="flex items-center gap-2">
+<span class="font-label-md text-label-md uppercase tracking-wider text-on-surface-variant font-semibold">Drafts</span>
+<span class="inline-flex items-center px-2 py-0.5 rounded-full text-[11px] font-semibold bg-amber-50 text-amber-800 border border-amber-200">
+                WIP
+              </span>
+</div>
+<div class="flex items-baseline gap-2 mt-2">
+<span class="font-headline-lg text-headline-lg font-normal text-on-surface">6</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">in-progress essays</span>
+</div>
+<div class="mt-4 flex items-center gap-1 text-[12px] text-amber-800 font-medium">
+<span class="material-symbols-outlined text-[16px] text-amber-700" data-icon="edit_note">edit_note</span>
+<span>2 slated for review tomorrow</span>
+</div>
+</div>
+<div class="w-11 h-11 rounded-lg bg-amber-50 flex items-center justify-center text-amber-800 border border-amber-100">
+<span class="material-symbols-outlined text-[22px]" data-icon="edit">edit</span>
+</div>
+</div>
+</section>
+<!-- 4. CONTENT MANAGEMENT SECTION ("Your Articles") -->
+<section class="bg-surface-container-lowest border border-outline-variant/30 rounded-xl overflow-hidden shadow-[0_4px_24px_-4px_rgba(24,35,29,0.04)]">
+<!-- Header & Action Ribbon -->
+<div class="p-space-lg border-b border-outline-variant/20 flex flex-col md:flex-row md:items-center justify-between gap-space-md">
+<div>
+<h2 class="font-headline-sm text-headline-sm font-medium text-on-surface">Your Articles</h2>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-0.5">Create, edit, and manage everything you've written.</p>
+</div>
+<!-- Search & Filter Controls -->
+<div class="flex flex-wrap items-center gap-3">
+<!-- Search Input -->
+<div class="relative min-w-[240px] flex-1 sm:flex-none">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-[18px]" data-icon="search">search</span>
+<input class="w-full pl-9 pr-3 py-2 text-body-sm font-body-sm bg-surface rounded-lg border border-outline-variant/50 focus:border-primary focus:ring-0 text-on-surface placeholder:text-outline-variant transition-colors" placeholder="Search articles by title..." type="text"/>
+</div>
+<!-- Status Filter Pills -->
+<div class="flex items-center p-1 bg-surface-container rounded-lg border border-outline-variant/30 text-label-md font-label-md">
+<button class="px-3 py-1 rounded-md bg-surface-container-lowest text-primary font-semibold shadow-xs">
+                All <span class="ml-1 text-[11px] text-on-surface-variant/80 font-normal">24</span>
+</button>
+<button class="px-3 py-1 rounded-md text-on-surface-variant hover:text-on-surface transition-colors">
+                Published <span class="ml-1 text-[11px] text-outline font-normal">18</span>
+</button>
+<button class="px-3 py-1 rounded-md text-on-surface-variant hover:text-on-surface transition-colors">
+                Drafts <span class="ml-1 text-[11px] text-outline font-normal">6</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Data Table Container -->
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="border-b border-outline-variant/20 bg-surface-container-low/50 font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">
+<th class="py-3 px-space-lg font-semibold">Article</th>
+<th class="py-3 px-space-md font-semibold">Category</th>
+<th class="py-3 px-space-md font-semibold">Status</th>
+<th class="py-3 px-space-md font-semibold">Last Updated</th>
+<th class="py-3 px-space-lg text-right font-semibold">Actions</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant/20 font-body-sm text-body-sm">
+<!-- Row 1 -->
+<tr class="hover:bg-surface-container-low/40 transition-colors group">
+<td class="py-4 px-space-lg max-w-md">
+<div class="flex items-center gap-3">
+<img class="w-12 h-12 rounded-lg object-cover shrink-0 border border-outline-variant/40" data-alt="A minimalist architectural photograph of clean structural concrete curves with crisp morning shadows, shot on medium format monochrome film with deep tonal contrast, representing distributed software systems and disciplined engineering logic in high-key aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDgYDvfXM5SJBmwblh-VQWhbY497x-qpU0FlDyGjx-lGONw7-FBXRMziDSlo7yMsVMPkuQFJN0tNTWpQBfO0weslz4WSNs65-eokgPqppLT-6QJYqDeQrOTJJmKXLRVgVwIpQz63jvEaWZswhY92jBm_XtcaMPng9mSrrxA8fyKCKMZXXehhkaU7NkNe_XHGjsbw9C3lY-j2K8r_DKSrN2Q2mlJ53SD22BPy6mhcSbEXUgpmjW3erkMyg"/>
+<div class="flex flex-col min-w-0">
+<span class="font-headline-sm text-[16px] font-medium text-on-surface group-hover:text-primary transition-colors leading-snug truncate">Designing Resilient Distributed State in TypeScript</span>
+<span class="text-on-surface-variant text-[12px] truncate mt-0.5">Explorations in deterministic consensus mechanisms for decentralized data pipelines.</span>
+</div>
+</div>
+</td>
+<td class="py-4 px-space-md whitespace-nowrap">
+<span class="inline-flex items-center px-2.5 py-1 rounded-full text-label-sm font-label-sm bg-surface-container text-on-surface-variant border border-outline-variant/30">
+                    Software Engineering
+                  </span>
+</td>
+<td class="py-4 px-space-md whitespace-nowrap">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-label-sm font-label-sm font-medium bg-emerald-50 text-emerald-800 border border-emerald-200">
+<span class="w-1.5 h-1.5 rounded-full bg-emerald-600"></span>
+                    Published
+                  </span>
+</td>
+<td class="py-4 px-space-md whitespace-nowrap text-on-surface-variant font-label-md text-label-md">
+                  2 hours ago
+                </td>
+<td class="py-4 px-space-lg whitespace-nowrap text-right">
+<div class="inline-flex items-center gap-2">
+<a class="px-2.5 py-1 rounded text-label-md font-medium text-on-surface hover:bg-surface-container border border-outline-variant/40 transition-colors" href="/admin/posts/edit/1">Edit</a>
+<a class="px-2.5 py-1 rounded text-label-md font-medium text-on-surface-variant hover:text-primary hover:bg-surface-container transition-colors" href="/posts/1" target="_blank">View</a>
+<button class="p-1 rounded text-outline hover:text-error hover:bg-error-container/20 transition-colors" onclick="toggleDeleteModal(true, 'Designing Resilient Distributed State in TypeScript')" title="Delete">
+<span class="material-symbols-outlined text-[18px]" data-icon="delete">delete</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="hover:bg-surface-container-low/40 transition-colors group">
+<td class="py-4 px-space-lg max-w-md">
+<div class="flex items-center gap-3">
+<img class="w-12 h-12 rounded-lg object-cover shrink-0 border border-outline-variant/40" data-alt="An intimate minimalist still life of a fountain pen rested beside an open linen journal on an untreated oak desk, warm afternoon side-lighting casting delicate shadows, creating a reflective, quiet literary atmosphere of deliberate authorship." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDOoitIu5warRV2HNQzNPQxfyCQ--1eGi4YHyc_ng6H7dD21ejf3bdFZ6koWskf0UBAVHIr7O00_9E9UD9R4FmTiPw8Z3UQquu6Aad7-ICXc-fmk4DcYtbPrwNfKcx0CcccbHpvVcTPVkhWsa2hsWgntKXy6s9ctWtFhtzgCucMZvG7hUjgCqQ7ZyGNsdqMMLeHikqRaPbVaFwTJAKxL9JXQhhu07MpDmj4GEqmc8OTtzU87EVMLDloDQ"/>
+<div class="flex flex-col min-w-0">
+<span class="font-headline-sm text-[16px] font-medium text-on-surface group-hover:text-primary transition-colors leading-snug truncate">The Psychology of Deep Work in an Era of Infinite Pings</span>
+<span class="text-on-surface-variant text-[12px] truncate mt-0.5">Reflections on reclaiming sustained cognitive presence amidst algorithmic hyper-stimulation.</span>
+</div>
+</div>
+</td>
+<td class="py-4 px-space-md whitespace-nowrap">
+<span class="inline-flex items-center px-2.5 py-1 rounded-full text-label-sm font-label-sm bg-surface-container text-on-surface-variant border border-outline-variant/30">
+                    Personal Notes
+                  </span>
+</td>
+<td class="py-4 px-space-md whitespace-nowrap">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-label-sm font-label-sm font-medium bg-emerald-50 text-emerald-800 border border-emerald-200">
+<span class="w-1.5 h-1.5 rounded-full bg-emerald-600"></span>
+                    Published
+                  </span>
+</td>
+<td class="py-4 px-space-md whitespace-nowrap text-on-surface-variant font-label-md text-label-md">
+                  Oct 25, 2026
+                </td>
+<td class="py-4 px-space-lg whitespace-nowrap text-right">
+<div class="inline-flex items-center gap-2">
+<a class="px-2.5 py-1 rounded text-label-md font-medium text-on-surface hover:bg-surface-container border border-outline-variant/40 transition-colors" href="/admin/posts/edit/2">Edit</a>
+<a class="px-2.5 py-1 rounded text-label-md font-medium text-on-surface-variant hover:text-primary hover:bg-surface-container transition-colors" href="/posts/2" target="_blank">View</a>
+<button class="p-1 rounded text-outline hover:text-error hover:bg-error-container/20 transition-colors" onclick="toggleDeleteModal(true, 'The Psychology of Deep Work in an Era of Infinite Pings')" title="Delete">
+<span class="material-symbols-outlined text-[18px]" data-icon="delete">delete</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="hover:bg-surface-container-low/40 transition-colors group">
+<td class="py-4 px-space-lg max-w-md">
+<div class="flex items-center gap-3">
+<img class="w-12 h-12 rounded-lg object-cover shrink-0 border border-outline-variant/40" data-alt="An abstract typographic composition of vintage lead letterpress blocks neatly arranged in a wooden compositor tray, illuminated with soft ambient daylight, evoking timeless craftsmanship and methodical technological evolution." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAIINqQ65SlKSdNlxB8DT69WQJM7eO4SwVhNjRIXIBC0oGUeAELpKWu7nbn2Pc3ssOL3-pARbv88rq1ACBHj2KKyMfrrPFVeUivPJsCM0MCXpZESssZPSV3_7fLsp3NA1Mof2oCUWO6TvSUyim0MQfsn9xmjOBTRmXwPq6MBLEVM4LmK6ACpVT-WFf72x9tgV1k864jyUskCY-hUsPONzTNjKNImXs92_9JZVf85N2WqhIZv25KQRbSbg"/>
+<div class="flex flex-col min-w-0">
+<span class="font-headline-sm text-[16px] font-medium text-on-surface group-hover:text-primary transition-colors leading-snug truncate">Local-First Architectures: An Empirical Evaluation</span>
+<span class="text-on-surface-variant text-[12px] truncate mt-0.5">CRDT implementations versus operational transformation across patchy mobile networks.</span>
+</div>
+</div>
+</td>
+<td class="py-4 px-space-md whitespace-nowrap">
+<span class="inline-flex items-center px-2.5 py-1 rounded-full text-label-sm font-label-sm bg-surface-container text-on-surface-variant border border-outline-variant/30">
+                    Technology
+                  </span>
+</td>
+<td class="py-4 px-space-md whitespace-nowrap">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-label-sm font-label-sm font-medium bg-amber-50 text-amber-800 border border-amber-200">
+<span class="w-1.5 h-1.5 rounded-full bg-amber-600"></span>
+                    Draft
+                  </span>
+</td>
+<td class="py-4 px-space-md whitespace-nowrap text-on-surface-variant font-label-md text-label-md">
+                  Oct 24, 2026
+                </td>
+<td class="py-4 px-space-lg whitespace-nowrap text-right">
+<div class="inline-flex items-center gap-2">
+<a class="px-2.5 py-1 rounded text-label-md font-medium text-on-surface hover:bg-surface-container border border-outline-variant/40 transition-colors" href="/admin/posts/edit/3">Edit</a>
+<button class="p-1 rounded text-outline hover:text-error hover:bg-error-container/20 transition-colors" onclick="toggleDeleteModal(true, 'Local-First Architectures: An Empirical Evaluation')" title="Delete">
+<span class="material-symbols-outlined text-[18px]" data-icon="delete">delete</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 4 -->
+<tr class="hover:bg-surface-container-low/40 transition-colors group">
+<td class="py-4 px-space-lg max-w-md">
+<div class="flex items-center gap-3">
+<img class="w-12 h-12 rounded-lg object-cover shrink-0 border border-outline-variant/40" data-alt="A serene modern library reading room with high arched windows casting gentle geometric light onto long wooden reading tables, quiet atmosphere, minimal Scandinavian interior aesthetic in natural paper and oak hues." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAt1wLiXwkuIDWmcZ9peMI8cQ5H9Fq8BF42XB6Jt1tiB5LE0ietupKGJY1KMDnmsgrsAK6j0Amx7IJ1xuKkfga4rYdnHbUpagqAn25eoAU-fgg3ZpwT2BKvjLwUkExsulqB2hv-9NS5q3D_pL-_QUeD23njEShuuHmSnGAMyp7IPiDQmWVZM2tyx5tS12_lFoNvpRSvH1eW8OaytWddJBSk2q-_IAM1yEC5AlIUOnbLoM6LYwMwPrHfCw"/>
+<div class="flex flex-col min-w-0">
+<span class="font-headline-sm text-[16px] font-medium text-on-surface group-hover:text-primary transition-colors leading-snug truncate">Building Better Software Starts With Better Thinking</span>
+<span class="text-on-surface-variant text-[12px] truncate mt-0.5">Why clarity of written thought is the single most undervalued capability in modern engineering teams.</span>
+</div>
+</div>
+</td>
+<td class="py-4 px-space-md whitespace-nowrap">
+<span class="inline-flex items-center px-2.5 py-1 rounded-full text-label-sm font-label-sm bg-surface-container text-on-surface-variant border border-outline-variant/30">
+                    Software Engineering
+                  </span>
+</td>
+<td class="py-4 px-space-md whitespace-nowrap">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-label-sm font-label-sm font-medium bg-emerald-50 text-emerald-800 border border-emerald-200">
+<span class="w-1.5 h-1.5 rounded-full bg-emerald-600"></span>
+                    Published
+                  </span>
+</td>
+<td class="py-4 px-space-md whitespace-nowrap text-on-surface-variant font-label-md text-label-md">
+                  Oct 20, 2026
+                </td>
+<td class="py-4 px-space-lg whitespace-nowrap text-right">
+<div class="inline-flex items-center gap-2">
+<a class="px-2.5 py-1 rounded text-label-md font-medium text-on-surface hover:bg-surface-container border border-outline-variant/40 transition-colors" href="/admin/posts/edit/4">Edit</a>
+<a class="px-2.5 py-1 rounded text-label-md font-medium text-on-surface-variant hover:text-primary hover:bg-surface-container transition-colors" href="/posts/4" target="_blank">View</a>
+<button class="p-1 rounded text-outline hover:text-error hover:bg-error-container/20 transition-colors" onclick="toggleDeleteModal(true, 'Building Better Software Starts With Better Thinking')" title="Delete">
+<span class="material-symbols-outlined text-[18px]" data-icon="delete">delete</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 5 -->
+<tr class="hover:bg-surface-container-low/40 transition-colors group">
+<td class="py-4 px-space-lg max-w-md">
+<div class="flex items-center gap-3">
+<img class="w-12 h-12 rounded-lg object-cover shrink-0 border border-outline-variant/40" data-alt="A curated macro study of classic editorial typography specimens on heavyweight archival paper, featuring high-contrast serif ligatures and ink traps under soft diffuse natural light, celebrating deliberate typographic craft." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA0RUED1RFhOTb55P262Y3x4jWnYe_17fp0rKAJG7zMGtMwrGNnAWfZrkvH2xVqUx1ZMQzLDDcFMhfYCa5S8OpTDpRAlGIr_cIPU29ctrWpuSiGcGzqIx2nlxXngm5DHdkKBuwXL8hwXKFOGlpnDkIHVSZZOQhqO7csyXevLOmhy-sFipLfIqcyc8-rlG4xrZKgYvlg4i46AXf12C_A0q20M3rrt2AtqUou-YYB6VF6io8mUKh1GTAqgg"/>
+<div class="flex flex-col min-w-0">
+<span class="font-headline-sm text-[16px] font-medium text-on-surface group-hover:text-primary transition-colors leading-snug truncate">Draft: The Typography of Modern Programming Languages</span>
+<span class="text-on-surface-variant text-[12px] truncate mt-0.5">Analyzing ligature designs, glyph weights, and legibility thresholds across mono fonts.</span>
+</div>
+</div>
+</td>
+<td class="py-4 px-space-md whitespace-nowrap">
+<span class="inline-flex items-center px-2.5 py-1 rounded-full text-label-sm font-label-sm bg-surface-container text-on-surface-variant border border-outline-variant/30">
+                    Tutorials
+                  </span>
+</td>
+<td class="py-4 px-space-md whitespace-nowrap">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-label-sm font-label-sm font-medium bg-amber-50 text-amber-800 border border-amber-200">
+<span class="w-1.5 h-1.5 rounded-full bg-amber-600"></span>
+                    Draft
+                  </span>
+</td>
+<td class="py-4 px-space-md whitespace-nowrap text-on-surface-variant font-label-md text-label-md">
+                  Oct 18, 2026
+                </td>
+<td class="py-4 px-space-lg whitespace-nowrap text-right">
+<div class="inline-flex items-center gap-2">
+<a class="px-2.5 py-1 rounded text-label-md font-medium text-on-surface hover:bg-surface-container border border-outline-variant/40 transition-colors" href="/admin/posts/edit/5">Edit</a>
+<button class="p-1 rounded text-outline hover:text-error hover:bg-error-container/20 transition-colors" onclick="toggleDeleteModal(true, 'Draft: The Typography of Modern Programming Languages')" title="Delete">
+<span class="material-symbols-outlined text-[18px]" data-icon="delete">delete</span>
+</button>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Table Footer Pagination & Summary -->
+<div class="p-space-md border-t border-outline-variant/20 bg-surface-container-low/30 flex flex-col sm:flex-row items-center justify-between gap-space-sm text-on-surface-variant font-body-sm text-body-sm">
+<span class="text-[12px]">Showing <strong class="text-on-surface font-semibold">1</strong> to <strong class="text-on-surface font-semibold">5</strong> of 24 articles</span>
+<div class="flex items-center gap-1.5">
+<button class="px-3 py-1.5 rounded-lg border border-outline-variant/30 text-outline hover:text-on-surface bg-surface-container-lowest disabled:opacity-40 font-label-md text-label-md" disabled="">
+              Previous
+            </button>
+<button class="px-3 py-1.5 rounded-lg border border-primary bg-primary text-on-primary font-label-md text-label-md">
+              1
+            </button>
+<button class="px-3 py-1.5 rounded-lg border border-outline-variant/30 text-on-surface-variant hover:text-on-surface bg-surface-container-lowest font-label-md text-label-md">
+              2
+            </button>
+<button class="px-3 py-1.5 rounded-lg border border-outline-variant/30 text-on-surface-variant hover:text-on-surface bg-surface-container-lowest font-label-md text-label-md">
+              3
+            </button>
+<button class="px-3 py-1.5 rounded-lg border border-outline-variant/30 text-on-surface-variant hover:text-on-surface bg-surface-container-lowest font-label-md text-label-md">
+              Next
+            </button>
+</div>
+</div>
+</section>
+<!-- Editorial Tip / Guidelines Card -->
+<section class="p-space-lg rounded-xl bg-surface-container border border-outline-variant/30 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-space-md">
+<div class="flex items-start gap-space-md">
+<div class="w-10 h-10 rounded-full bg-surface-container-lowest flex items-center justify-center shrink-0 border border-outline-variant/40 text-primary">
+<span class="material-symbols-outlined text-[20px]" data-icon="auto_stories">auto_stories</span>
+</div>
+<div>
+<h3 class="font-headline-sm text-[17px] font-medium text-on-surface">Deliberate Publishing Workflow</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-0.5">Every published essay is permanently cataloged in the Journal Archive. Ensure citation links and typographic ligatures are verified prior to public release.</p>
+</div>
+</div>
+<a class="shrink-0 px-4 py-2 rounded-lg border border-outline-variant/50 text-on-surface font-label-md text-label-md hover:bg-surface-container-lowest transition-colors" href="/admin/guidelines">
+          View Style Guide
+        </a>
+</section>
+</div>
+<!-- Editorial CMS Footer Ribbon -->
+<footer class="mt-auto border-t border-outline-variant/20 bg-surface-container-lowest/80 px-margin md:px-margin-desktop py-space-md flex flex-col sm:flex-row justify-between items-center gap-space-sm text-on-surface-variant font-label-md text-label-md">
+<span>© 2026 The Journal Publishing Co. Admin Atelier.</span>
+<div class="flex items-center gap-4">
+<a class="hover:text-primary transition-colors" href="#">Editorial Charter</a>
+<a class="hover:text-primary transition-colors" href="#">Security</a>
+<a class="hover:text-primary transition-colors" href="#">API Keys</a>
+</div>
+</footer>
+</main>
+<!-- ========================================================================= -->
+<!-- MODAL: DELETE CONFIRMATION PREVIEW                                       -->
+<!-- ========================================================================= -->
+<div class="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-xs hidden transition-opacity duration-200" id="deleteModal">
+<div class="bg-surface-container-lowest border border-outline-variant/40 rounded-xl p-space-lg max-w-md w-full mx-4 shadow-[0_12px_32px_-4px_rgba(24,35,29,0.12)] transform transition-transform">
+<div class="flex items-start gap-3.5">
+<div class="w-10 h-10 rounded-full bg-error-container/40 flex items-center justify-center shrink-0 text-error">
+<span class="material-symbols-outlined text-[22px]" data-icon="warning">warning</span>
+</div>
+<div class="flex-1">
+<h3 class="font-headline-sm text-headline-sm font-medium text-on-surface">Delete this article?</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-1.5 leading-relaxed">
+            This action cannot be undone. The article <span class="font-semibold text-on-surface italic" id="articleTitleToDelete">"Designing Resilient Distributed State in TypeScript"</span> and all associated subscriber reading progress will be permanently removed.
+          </p>
+</div>
+</div>
+<div class="mt-space-lg flex items-center justify-end gap-3 pt-space-md border-t border-outline-variant/20">
+<button class="px-4 py-2 rounded-lg border border-outline-variant/40 text-on-surface hover:bg-surface-container font-label-md text-label-md transition-colors" onclick="toggleDeleteModal(false)">
+          Cancel
+        </button>
+<button class="px-4 py-2 rounded-lg bg-error text-on-error hover:bg-[#a01616] font-label-md text-label-md font-medium transition-colors shadow-xs" onclick="confirmDeleteAction()">
+          Delete Article
+        </button>
+</div>
+</div>
+</div>
+<!-- Interactive Logic for Modal -->
+<script>
+    function toggleDeleteModal(show, title = '') {
+      const modal = document.getElementById('deleteModal');
+      const titleElem = document.getElementById('articleTitleToDelete');
+      if (title && titleElem) {
+        titleElem.textContent = `"${title}"`;
+      }
+      if (show) {
+        modal.classList.remove('hidden');
+      } else {
+        modal.classList.add('hidden');
+      }
+    }
+
+    function confirmDeleteAction() {
+      // Micro-feedback demo
+      toggleDeleteModal(false);
+      const toast = document.createElement('div');
+      toast.className = 'fixed bottom-6 right-6 z-50 bg-inverse-surface text-inverse-on-surface px-4 py-3 rounded-lg shadow-lg font-body-sm text-body-sm flex items-center gap-2 border border-outline/30';
+      toast.innerHTML = '<span class="material-symbols-outlined text-emerald-400 text-[18px]">check_circle</span> Article moved to trash.';
+      document.body.appendChild(toast);
+      setTimeout(() => toast.remove(), 3200);
+    }
+  </script>
+</body></html>

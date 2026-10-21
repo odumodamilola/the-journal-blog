@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+
+<html class="scroll-smooth" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Building Better Software Starts With Better Thinking — The Journal</title>
+<!-- Google Fonts: Newsreader and Inter -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols Outlined -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS with Forms and Container Queries -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "inverse-on-surface": "#f2f1ee",
+            "on-surface": "#1a1c1a",
+            "surface-container-high": "#e9e8e5",
+            "outline": "#6f7a73",
+            "on-secondary": "#ffffff",
+            "tertiary-fixed": "#dae5dd",
+            "on-error": "#ffffff",
+            "on-tertiary-container": "#dbe7de",
+            "outline-variant": "#bec9c1",
+            "background": "#faf9f6",
+            "on-primary": "#ffffff",
+            "secondary-fixed": "#d9e6dc",
+            "secondary-container": "#d9e6dc",
+            "surface": "#faf9f6",
+            "primary": "#00593f",
+            "tertiary-fixed-dim": "#bec9c1",
+            "on-surface-variant": "#3f4943",
+            "on-tertiary-fixed-variant": "#3f4943",
+            "error": "#ba1a1a",
+            "surface-bright": "#faf9f6",
+            "surface-tint": "#166b4f",
+            "on-secondary-fixed": "#131e18",
+            "on-secondary-container": "#5b6760",
+            "surface-container-lowest": "#ffffff",
+            "error-container": "#ffdad6",
+            "secondary": "#55615a",
+            "on-secondary-fixed-variant": "#3e4942",
+            "on-error-container": "#93000a",
+            "on-primary-container": "#a4f4cf",
+            "surface-container-low": "#f4f3f0",
+            "surface-container": "#efeeeb",
+            "primary-fixed": "#a4f3ce",
+            "inverse-primary": "#88d6b3",
+            "tertiary": "#45504a",
+            "on-primary-fixed": "#002115",
+            "on-background": "#1a1c1a",
+            "surface-dim": "#dbdad7",
+            "on-tertiary": "#ffffff",
+            "inverse-surface": "#2f312f",
+            "primary-container": "#207255",
+            "surface-container-highest": "#e3e2df",
+            "on-primary-fixed-variant": "#005139",
+            "tertiary-container": "#5d6861",
+            "secondary-fixed-dim": "#bdcac0",
+            "on-tertiary-fixed": "#141e19",
+            "surface-variant": "#e3e2df",
+            "primary-fixed-dim": "#88d6b3"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "full": "9999px"
+          },
+          "spacing": {
+            "space-2xl": "4rem",
+            "space-xs": "0.25rem",
+            "space-md": "1rem",
+            "margin-desktop": "3.5rem",
+            "space-lg": "1.5rem",
+            "space-xl": "2.5rem",
+            "margin-tablet": "2rem",
+            "margin": "1rem",
+            "gutter": "1.5rem",
+            "gutter-desktop": "2.5rem",
+            "space-sm": "0.5rem"
+          },
+          "fontFamily": {
+            "body-lg": ["Newsreader"],
+            "body-sm": ["Inter"],
+            "body-md": ["Inter"],
+            "headline-sm": ["Newsreader"],
+            "label-md": ["Inter"],
+            "label-sm": ["Inter"],
+            "display-hero": ["Newsreader"],
+            "headline-lg": ["Newsreader"],
+            "editorial-lead": ["Newsreader"],
+            "headline-lg-mobile": ["Newsreader"],
+            "headline-md": ["Newsreader"],
+            "label-lg": ["Inter"],
+            "display-hero-mobile": ["Newsreader"]
+          },
+          "fontSize": {
+            "body-lg": ["20px", { "lineHeight": "34px", "fontWeight": "400" }],
+            "body-sm": ["13px", { "lineHeight": "20px", "fontWeight": "400" }],
+            "body-md": ["15px", { "lineHeight": "24px", "fontWeight": "400" }],
+            "headline-sm": ["22px", { "lineHeight": "30px", "letterSpacing": "-0.005em", "fontWeight": "500" }],
+            "label-md": ["12px", { "lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "500" }],
+            "label-sm": ["11px", { "lineHeight": "14px", "letterSpacing": "0.04em", "fontWeight": "600" }],
+            "display-hero": ["56px", { "lineHeight": "64px", "letterSpacing": "-0.02em", "fontWeight": "400" }],
+            "headline-lg": ["40px", { "lineHeight": "48px", "letterSpacing": "-0.015em", "fontWeight": "400" }],
+            "editorial-lead": ["24px", { "lineHeight": "36px", "fontWeight": "300" }],
+            "headline-lg-mobile": ["30px", { "lineHeight": "38px", "letterSpacing": "-0.01em", "fontWeight": "400" }],
+            "headline-md": ["28px", { "lineHeight": "36px", "letterSpacing": "-0.01em", "fontWeight": "500" }],
+            "label-lg": ["14px", { "lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600" }],
+            "display-hero-mobile": ["38px", { "lineHeight": "46px", "letterSpacing": "-0.015em", "fontWeight": "400" }]
+          }
+        }
+      }
+    }
+  </script>
+<style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      display: inline-block;
+      vertical-align: middle;
+      line-height: 1;
+    }
+    .drop-cap::first-letter {
+      float: left;
+      font-family: 'Newsreader', serif;
+      font-size: 4.75rem;
+      line-height: 0.85;
+      padding-top: 4px;
+      padding-right: 12px;
+      padding-bottom: 2px;
+      color: #00593f;
+      font-weight: 500;
+    }
+    pre code {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+    }
+  </style>
+</head>
+<body class="bg-background text-on-surface antialiased selection:bg-primary-container selection:text-on-primary">
+<!-- Sticky Top Reading Nav Bar -->
+<header class="sticky top-0 z-40 bg-surface/95 backdrop-blur-md border-b border-outline-variant/30 transition-all duration-200">
+<div class="max-w-7xl mx-auto px-margin md:px-margin-desktop py-space-sm flex items-center justify-between">
+<!-- Left: Monogram and Back link -->
+<div class="flex items-center gap-space-md">
+<a class="flex items-center gap-2 text-on-surface-variant hover:text-primary transition-colors group py-1" href="#back">
+<span class="material-symbols-outlined text-[18px] transition-transform duration-200 group-hover:-translate-x-1">arrow_back</span>
+<span class="font-label-md text-label-md hidden sm:inline">Explore Articles</span>
+</a>
+<div class="h-4 w-[1px] bg-outline-variant/40 hidden sm:block"></div>
+<a class="flex items-center gap-2" href="#home">
+<img alt="The Journal Wordmark" class="w-7 h-7 object-contain rounded-md" src="https://lh3.googleusercontent.com/aida/AEtjO1WCnLDISF1B4DOE2WOWVf8o8J1lRGqXM2LX58nL2LAKLggO2Ap5nktLM6rPIg4KCvnMUYTx2BVHWvSxPVsrxw5B5PraRCu5iENa99OBBf8maQLPHFACYEWtC2ABRic3X8PWEaLKnaVm28288EcxNU_GMHfSoTfvItBfaRS6rWjuI66C49hQt0AcNwG9YsELkruxLz31NE0U5AYvHSNLiNvUA6aIxfx4f8reiV9re2deizaQD2e6nnNWYQg"/>
+<span class="font-headline-sm text-headline-sm font-medium tracking-tight text-on-surface hidden md:inline">The Journal</span>
+</a>
+</div>
+<!-- Center: Current Article Title hint (Visible upon scroll) -->
+<div class="hidden lg:block max-w-md truncate text-center opacity-80">
+<span class="font-headline-sm text-headline-sm text-[16px] leading-[22px] text-on-surface-variant truncate block">
+          Building Better Software Starts With Better Thinking
+        </span>
+</div>
+<!-- Right: Reader actions -->
+<div class="flex items-center gap-space-xs sm:gap-space-sm">
+<button class="p-2 text-on-surface-variant hover:text-primary hover:bg-surface-container rounded-lg transition-colors flex items-center gap-1.5" id="copy-top-btn" title="Copy Article Link">
+<span class="material-symbols-outlined text-[20px]">link</span>
+<span class="font-label-md text-label-md hidden md:inline">Share</span>
+</button>
+<button class="p-2 text-on-surface-variant hover:text-primary hover:bg-surface-container rounded-lg transition-colors" title="Bookmark story">
+<span class="material-symbols-outlined text-[20px]">bookmark</span>
+</button>
+<a class="ml-1 px-3 py-1.5 bg-primary-container text-on-primary font-label-md text-label-md rounded-lg hover:bg-primary transition-colors" href="#subscribe">
+          Subscribe
+        </a>
+</div>
+</div>
+<!-- Reading Progress Bar -->
+<div class="w-full bg-outline-variant/20 h-[2.5px] overflow-hidden">
+<div class="bg-primary h-full w-0 transition-[width] duration-150 ease-out" id="reading-progress-bar"></div>
+</div>
+</header>
+<main class="w-full">
+<!-- Breadcrumb back link -->
+<div class="max-w-[740px] mx-auto px-margin pt-8 md:pt-12">
+<a class="inline-flex items-center gap-1.5 font-label-md text-label-md text-secondary hover:text-primary transition-all duration-200 group" href="#back-to-articles">
+<span class="material-symbols-outlined text-[16px] transition-transform duration-200 group-hover:-translate-x-1">arrow_left_alt</span>
+<span>Back to Articles</span>
+</a>
+</div>
+<!-- Article Header Section -->
+<header class="max-w-[740px] mx-auto px-margin pt-6 pb-8">
+<!-- Category Pill -->
+<div class="mb-5">
+<span class="inline-block px-3 py-1 bg-surface-container text-on-surface-variant border border-outline-variant/40 rounded-full font-label-sm text-label-sm tracking-widest uppercase">
+          Software Engineering
+        </span>
+</div>
+<!-- Title -->
+<h1 class="font-headline-lg text-headline-lg-mobile md:text-headline-lg text-on-surface font-normal tracking-tight mb-4 text-balance">
+        Building Better Software Starts With Better Thinking
+      </h1>
+<!-- Subtitle -->
+<p class="font-editorial-lead text-editorial-lead text-on-surface-variant font-light leading-relaxed mb-8 text-balance">
+        Why understanding the problem deeply matters far more than rushing to write the first line of code.
+      </p>
+<!-- Metadata & Author Line -->
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 py-4 border-y border-outline-variant/30">
+<!-- Author Profile -->
+<div class="flex items-center gap-3">
+<img class="w-10 h-10 rounded-full object-cover border border-outline-variant/50" data-alt="Close up editorial portrait photograph of an architectural systems engineer and writer in soft morning studio light with warm tinted neutral tones and quiet literary composure." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBPQDz79MkY-Dsgkz1OPgZCJJHfTPMw904-tE-Gr_V0jtGE9ruHvQg0sz9USSi5TvABUgEgprAZXNXWHW9wh0ID-kJh_gRvmNAwuHruY_8oJO1u-h0O0YCLpU6QVBt0Fo_FwtU73Kbk0rJi1UaU5d40_39l0MzO4PyaCrOAVKl1N0baEEb2AN8yfoY5JfgK2Y6iOQ7jhy6pph8bc64rgkeKIfCaHHA2SwIkuBjDiWKgSNPCQ9L32S8sCQ"/>
+<div>
+<div class="flex items-center gap-2">
+<span class="font-label-lg text-label-lg text-on-surface">By The Journal Editorial</span>
+<span class="inline-block w-1 h-1 rounded-full bg-outline-variant"></span>
+<span class="font-label-sm text-label-sm text-primary font-medium">Author</span>
+</div>
+<p class="font-body-sm text-body-sm text-secondary">
+              October 20, 2026 · 6 min read · 1,420 words
+            </p>
+</div>
+</div>
+<!-- Article Utility Controls -->
+<div class="flex items-center gap-1 text-secondary self-start sm:self-auto">
+<button class="p-1.5 hover:text-primary hover:bg-surface-container rounded transition-colors" id="font-decrease" title="Decrease font size">
+<span class="font-label-sm text-label-sm font-semibold">A-</span>
+</button>
+<button class="p-1.5 hover:text-primary hover:bg-surface-container rounded transition-colors" id="font-increase" title="Increase font size">
+<span class="font-label-md text-label-md font-semibold">A+</span>
+</button>
+<div class="h-4 w-[1px] bg-outline-variant/40 mx-1"></div>
+<button class="p-1.5 hover:text-primary hover:bg-surface-container rounded transition-colors" id="copy-article-link" title="Copy story link">
+<span class="material-symbols-outlined text-[18px]">share</span>
+</button>
+<button class="p-1.5 hover:text-primary hover:bg-surface-container rounded transition-colors" title="Listen to narrative audio">
+<span class="material-symbols-outlined text-[18px]">headphones</span>
+</button>
+</div>
+</div>
+</header>
+<!-- Featured Cover Image -->
+<div class="max-w-5xl mx-auto px-margin md:px-margin-desktop mb-12">
+<div class="relative overflow-hidden rounded-xl border border-outline-variant/40 bg-surface-container-low shadow-sm">
+<img class="w-full h-[340px] md:h-[480px] object-cover" data-alt="A wide, quiet architectural drafting studio with wooden drafting boards, archival blueprint sketches, warm ambient daylight streaming through tall mullioned windows, and botanical accents in forest green." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB7rs5A7kyyp-7PB0LxwjngCDQed3bVO4r0JntAzXc1qMesyH6OMXvu7IEoAXzq2zFlax5emioiIoZS7huWBPJuTX0DecjViT4GqP0qkIu1fPi9CjhA6I46Ag-SzzxloY7ZtwLmpTn9mZ-aEBgbGISDrz7dllmYGTnXLw2Z9PDTzuN5LQXzU4cMFKK4h48HIS64sqZPbFpfjvsYWv8QRnaCqCwkJxqnv26NMqG-03sUyR-EY_FAviAtdg"/>
+</div>
+<p class="mt-3 text-center font-body-sm text-body-sm text-secondary italic">
+        Figure 1: Architectural contemplation precedes structural resilience. Studio dispatch #418.
+      </p>
+</div>
+<!-- Centered Editorial Reading Column -->
+<article class="max-w-[740px] mx-auto px-margin text-on-surface" id="reading-content">
+<!-- Paragraph with Drop Cap -->
+<p class="drop-cap font-body-lg text-body-lg leading-[34px] text-on-surface mb-6">
+        Every morning before opening an editor or terminal, there is a temptation that modern engineering culture relentlessly reinforces: the urge to produce visible momentum. We measure velocity in pull requests merged, tickets resolved, and lines of typescript orchestrated into cloud services. Yet, the costliest disasters in distributed software rarely stem from typing speed; they stem from incomplete mental models of the problem domain.
+      </p>
+<p class="font-body-lg text-body-lg leading-[34px] text-on-surface mb-8">
+        When an engineer rushes to synthesize a solution before articulating the invariant constraints, they are not saving time—they are borrowing against future clarity at an extortionate interest rate. Deliberate thinking is neither procrastination nor academic indulgence; it is the single most potent optimization available in modern software delivery.
+      </p>
+<!-- H2 Section 1 -->
+<h2 class="font-headline-md text-headline-md text-on-surface font-normal mt-12 mb-4 tracking-tight">
+        1. The Illusion of Immediate Momentum
+      </h2>
+<p class="font-body-lg text-body-lg leading-[34px] text-on-surface mb-6">
+        Consider the common lifecycle of an ambitious feature request. The initial requirements document arrives with ambiguous boundaries. Rather than stepping back with a pad of paper to interrogate the edge behaviors, the modern reflex is to scaffold scaffolding immediately: initialize databases, design React contexts, and connect API clients.
+      </p>
+<!-- Styled Editorial Blockquote -->
+<blockquote class="my-8 pl-6 border-l-2 border-primary py-2 text-on-surface bg-surface-container-low/50 rounded-r-lg">
+<p class="font-headline-sm text-headline-sm italic font-normal text-on-surface leading-snug">
+          "Premature abstraction is the root of most architectural rot in modern web applications."
+        </p>
+<footer class="mt-2 font-label-md text-label-md text-secondary not-italic">
+          — Notes on Software Discipline, 2026
+        </footer>
+</blockquote>
+<p class="font-body-lg text-body-lg leading-[34px] text-on-surface mb-6">
+        By drafting abstractions early, the developer inadvertently constructs a psychological barrier against revision. When fundamental misunderstandings surface later in quality assurance or load trials, correcting them demands disassembling elaborate edifices rather than redrawing sketches on a whiteboard.
+      </p>
+<!-- Bulleted Points of Discipline -->
+<div class="my-8 bg-surface-container-low border border-outline-variant/30 rounded-xl p-6">
+<h3 class="font-headline-sm text-headline-sm text-[18px] leading-6 font-medium text-on-surface mb-4">
+          Three diagnostic questions before the first keystroke:
+        </h3>
+<ul class="space-y-3 font-body-md text-body-md text-on-surface-variant">
+<li class="flex items-start gap-3">
+<span class="material-symbols-outlined text-primary text-[20px] mt-0.5">check_circle</span>
+<span><strong class="text-on-surface font-semibold">What is the irreversible core?</strong> Identify which database state transitions or API commitments cannot be easily undone later.</span>
+</li>
+<li class="flex items-start gap-3">
+<span class="material-symbols-outlined text-primary text-[20px] mt-0.5">check_circle</span>
+<span><strong class="text-on-surface font-semibold">Can this be described in plain sentences?</strong> If you cannot explain the reconciliation algorithm to a non-technical peer without technical jargon, the boundary is hazy.</span>
+</li>
+<li class="flex items-start gap-3">
+<span class="material-symbols-outlined text-primary text-[20px] mt-0.5">check_circle</span>
+<span><strong class="text-on-surface font-semibold">What is the failure state when external services halt?</strong> Systems must be architected for degradation rather than utopian availability.</span>
+</li>
+</ul>
+</div>
+<!-- Syntax-Highlighted Code Block -->
+<div class="my-8 rounded-lg overflow-hidden border border-outline-variant/40 bg-inverse-surface text-inverse-on-surface shadow-sm">
+<div class="flex items-center justify-between px-4 py-2 bg-inverse-surface border-b border-outline/30 text-outline-variant font-label-sm text-label-sm">
+<div class="flex items-center gap-2">
+<span class="inline-block w-2.5 h-2.5 rounded-full bg-error/70"></span>
+<span class="inline-block w-2.5 h-2.5 rounded-full bg-amber-400/70"></span>
+<span class="inline-block w-2.5 h-2.5 rounded-full bg-primary-fixed/70"></span>
+<span class="ml-2 font-mono uppercase tracking-wider text-[11px] text-tertiary-fixed">typescript</span>
+</div>
+<button class="flex items-center gap-1.5 text-tertiary-fixed hover:text-inverse-on-surface transition-colors py-0.5 px-2 rounded hover:bg-white/10" id="copy-code-btn" onclick="copySnippet()">
+<span class="material-symbols-outlined text-[14px]">content_copy</span>
+<span>Copy</span>
+</button>
+</div>
+<pre class="p-4 md:p-5 overflow-x-auto text-[13px] leading-relaxed text-inverse-on-surface"><code><span class="text-primary-fixed">// Define bounded contracts and immutable domain states before schema execution</span>
+<span class="text-outline-variant">type</span> <span class="text-primary-fixed">EditorialRevision</span> = {
+  <span class="text-primary-fixed">readonly</span> id: <span class="text-amber-200">RevisionIdentifier</span>;
+  <span class="text-primary-fixed">readonly</span> documentId: <span class="text-amber-200">string</span>;
+  <span class="text-primary-fixed">readonly</span> delta: <span class="text-amber-200">OperationLog</span>[];
+  <span class="text-primary-fixed">readonly</span> author: <span class="text-amber-200">StaffCredentials</span>;
+  <span class="text-primary-fixed">readonly</span> createdAt: <span class="text-amber-200">Date</span>;
+};
+
+<span class="text-primary-fixed">export async function</span> <span class="text-secondary-fixed">commitDeliberateThought</span>(
+  intent: <span class="text-amber-200">SystemIntent</span>,
+  constraints: <span class="text-amber-200">BoundaryMap</span>
+): <span class="text-amber-200">Promise</span>&lt;<span class="text-amber-200">SystemContract</span>&gt; {
+  <span class="text-primary-fixed">const</span> validatedContext = <span class="text-primary-fixed">await</span> constraints.interrogate(intent);
+  <span class="text-primary-fixed">return</span> validatedContext.freezeAsImmutableSpecification();
+}</code></pre>
+</div>
+<!-- H2 Section 2 -->
+<h2 class="font-headline-md text-headline-md text-on-surface font-normal mt-12 mb-4 tracking-tight">
+        2. Writing as an Architectural Tool
+      </h2>
+<p class="font-body-lg text-body-lg leading-[34px] text-on-surface mb-6">
+        The highest leverage practice an engineering team can adopt is writing narrative Request For Comments (RFC) documents prior to implementation. When forced into sentences with subjects, verbs, and punctuation, logical vacuums become painfully obvious. Code excels at conveying instructions to a runtime; English prose excels at exposing self-deception in human understanding.
+      </p>
+<p class="font-body-lg text-body-lg leading-[34px] text-on-surface mb-6">
+        When we treat the drafting of a technical specification with the same editorial seriousness as an essay for publication, the resulting software requires fewer hotfixes, exhibits predictable performance traits, and can be maintained effortlessly by developers who were not present when the first line was committed.
+      </p>
+<p class="font-body-lg text-body-lg leading-[34px] text-on-surface mb-10">
+        In the end, our machines do not care how fast we typed the code into the editor. They only execute the decisions we arrived at when we sat in silence, stared at the blank page, and took the time to think.
+      </p>
+</article>
+<!-- Article Ending & Utility Monogram Accent -->
+<div class="max-w-[740px] mx-auto px-margin pt-6 pb-12">
+<!-- Monogram Divider -->
+<div class="flex items-center justify-center gap-4 my-8">
+<div class="h-[1px] bg-outline-variant/40 flex-1"></div>
+<div class="w-8 h-8 rounded-full bg-surface-container flex items-center justify-center border border-outline-variant/40">
+<img alt="The Journal Monogram" class="w-4 h-4 object-contain rounded" src="https://lh3.googleusercontent.com/aida/AEtjO1WCnLDISF1B4DOE2WOWVf8o8J1lRGqXM2LX58nL2LAKLggO2Ap5nktLM6rPIg4KCvnMUYTx2BVHWvSxPVsrxw5B5PraRCu5iENa99OBBf8maQLPHFACYEWtC2ABRic3X8PWEaLKnaVm28288EcxNU_GMHfSoTfvItBfaRS6rWjuI66C49hQt0AcNwG9YsELkruxLz31NE0U5AYvHSNLiNvUA6aIxfx4f8reiV9re2deizaQD2e6nnNWYQg"/>
+</div>
+<div class="h-[1px] bg-outline-variant/40 flex-1"></div>
+</div>
+<!-- Signoff Box -->
+<div class="p-6 md:p-8 bg-surface-container-low rounded-xl border border-outline-variant/30 text-center">
+<h4 class="font-headline-sm text-headline-sm text-on-surface mb-2">Thanks for reading.</h4>
+<p class="font-body-md text-body-md text-on-surface-variant max-w-md mx-auto mb-6">
+          The Journal publishes weekly dispatches dedicated to intentional craftsmanship across systems engineering, design, and literature.
+        </p>
+<div class="flex flex-wrap items-center justify-center gap-3">
+<a class="px-5 py-2.5 bg-primary-container text-on-primary font-label-lg text-label-lg rounded-lg hover:bg-primary transition-all shadow-sm" href="#explore-articles">
+            Explore More Articles
+          </a>
+<button class="px-5 py-2.5 border border-outline-variant/50 text-on-surface hover:bg-surface-container font-label-lg text-label-lg rounded-lg transition-colors flex items-center gap-2" id="bookmark-footer">
+<span class="material-symbols-outlined text-[18px]">bookmark_add</span>
+<span>Save to Reading List</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Related Articles Section (Stories from the same vein) -->
+<section class="border-t border-outline-variant/30 bg-surface-container-lowest py-16">
+<div class="max-w-7xl mx-auto px-margin md:px-margin-desktop">
+<!-- Section Header -->
+<div class="flex flex-col md:flex-row md:items-end justify-between mb-10 pb-4 border-b border-outline-variant/30">
+<div>
+<span class="font-label-sm text-label-sm text-primary uppercase tracking-widest block mb-1">Curation</span>
+<h3 class="font-headline-md text-headline-md text-on-surface">Stories from the same vein</h3>
+</div>
+<a class="mt-2 md:mt-0 font-label-md text-label-md text-secondary hover:text-primary transition-colors flex items-center gap-1 group" href="#archive">
+<span>View full engineering index</span>
+<span class="material-symbols-outlined text-[16px] transition-transform group-hover:translate-x-1">arrow_forward</span>
+</a>
+</div>
+<!-- 3-Column Card Bento Layout -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-space-lg">
+<!-- Card 1 -->
+<article class="group bg-surface rounded-xl border border-outline-variant/40 p-space-lg transition-all duration-200 hover:-translate-y-1 hover:shadow-[0_4px_20px_-2px_rgba(24,35,29,0.06)] flex flex-col justify-between">
+<div>
+<div class="aspect-[16/10] overflow-hidden rounded-lg mb-4 bg-surface-container">
+<img class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105" data-alt="Minimalist architectural model photograph featuring cast concrete forms and geometric light patterns in a quiet museum gallery under soft indirect window illumination." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDTq5mtkGf3K_8Ga2IfMLe4idYsui6lPm75zN-Q4JT_xXDzij695S4F27xrXSijGCPmU2TlDy9XFnPFBaaYAHUOCTSojC26QX9o9Rl1lg8cQ42VZjGagPyeapvNUwzMLLM8f1nWEbIv5azzh4D2G2Thx3ofae0fkWc6kZ8oVFFF68q5NwHd082lKJ2axaFUa9k5CPThO5-uSemzrHg-Aed_kYIuM1pUWf7ufQfMSlH03Hs440uD0PBe-w"/>
+</div>
+<div class="flex items-center gap-2 mb-2">
+<span class="font-label-sm text-label-sm text-primary uppercase tracking-wider">Architecture</span>
+<span class="text-outline-variant text-[10px]">·</span>
+<span class="font-body-sm text-body-sm text-secondary">5 min read</span>
+</div>
+<h4 class="font-headline-sm text-headline-sm text-on-surface group-hover:text-primary transition-colors line-clamp-2 mb-2">
+                Simplicity in Monolithic Foundations
+              </h4>
+<p class="font-body-sm text-body-sm text-on-surface-variant line-clamp-3">
+                Why modern teams are dismantling convoluted microservices in favor of disciplined single-repository boundaries.
+              </p>
+</div>
+<div class="mt-6 pt-4 border-t border-outline-variant/20 flex items-center justify-between text-secondary">
+<span class="font-label-sm text-label-sm">Oct 14, 2026</span>
+<span class="material-symbols-outlined text-[18px] group-hover:text-primary">arrow_forward</span>
+</div>
+</article>
+<!-- Card 2 -->
+<article class="group bg-surface rounded-xl border border-outline-variant/40 p-space-lg transition-all duration-200 hover:-translate-y-1 hover:shadow-[0_4px_20px_-2px_rgba(24,35,29,0.06)] flex flex-col justify-between">
+<div>
+<div class="aspect-[16/10] overflow-hidden rounded-lg mb-4 bg-surface-container">
+<img class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105" data-alt="An antique brass analytical balance scale resting on an oiled walnut editorial work table beside handwritten technical manuscripts in warm daylight." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDnfyD_7EPdZjj69nBb4sORpyAu9AmiSP7RcOFskl4W43O0-jZzBzPKnrMASlgM69Ced2yh-tSHDd27FSEf3zuPAVeXsz5c_C04NoNh8RfrQ--v5HKRcwHL9tKqt-uUfqZ7vanlofkVxh_SB1YI5ixIYskVj3SrFJ50U6E5WbpvM9wDnlwDb9JHrFiDVX9NNB2lid1A0dQMcGbXgx0MBZ9P8xcgRT_nM14Y3Q9R0KOvBPGr0YmBntecJQ"/>
+</div>
+<div class="flex items-center gap-2 mb-2">
+<span class="font-label-sm text-label-sm text-primary uppercase tracking-wider">Data Modeling</span>
+<span class="text-outline-variant text-[10px]">·</span>
+<span class="font-body-sm text-body-sm text-secondary">8 min read</span>
+</div>
+<h4 class="font-headline-sm text-headline-sm text-on-surface group-hover:text-primary transition-colors line-clamp-2 mb-2">
+                The Geometry of Relational Schemas
+              </h4>
+<p class="font-body-sm text-body-sm text-on-surface-variant line-clamp-3">
+                Structuring PostgreSQL tables so that invalid transactional business conditions become mathematically unrepresentable.
+              </p>
+</div>
+<div class="mt-6 pt-4 border-t border-outline-variant/20 flex items-center justify-between text-secondary">
+<span class="font-label-sm text-label-sm">Oct 09, 2026</span>
+<span class="material-symbols-outlined text-[18px] group-hover:text-primary">arrow_forward</span>
+</div>
+</article>
+<!-- Card 3 -->
+<article class="group bg-surface rounded-xl border border-outline-variant/40 p-space-lg transition-all duration-200 hover:-translate-y-1 hover:shadow-[0_4px_20px_-2px_rgba(24,35,29,0.06)] flex flex-col justify-between">
+<div>
+<div class="aspect-[16/10] overflow-hidden rounded-lg mb-4 bg-surface-container">
+<img class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105" data-alt="A vintage printing press movable lead typography drawer filled with metal letters, highlighting deliberate mechanical precision and tactile craftsmanship." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCBjfb2mBsYy-5t9vCKTiCWxWz57SUu4ItDl86OBKnYAvjsfVn4BZ_Gl5vEfH1oOVC9T6EqB5i90549EegIRni1x5QVZxeIcScqZIsnj93K1BSLjn0Fc-nGh8leAR-b8Bp2hVbwn6SQ7n3nASLRQSsDJWigcbrDznTxMCIzEG9FmZhnc4j5sEbic8tRQvQn-vgckZApbrM1eN6rWYBSt3RkW5bOjzHKLloY7z1uPyzKkn8Ujd_Er9uIcw"/>
+</div>
+<div class="flex items-center gap-2 mb-2">
+<span class="font-label-sm text-label-sm text-primary uppercase tracking-wider">Discipline</span>
+<span class="text-outline-variant text-[10px]">·</span>
+<span class="font-body-sm text-body-sm text-secondary">4 min read</span>
+</div>
+<h4 class="font-headline-sm text-headline-sm text-on-surface group-hover:text-primary transition-colors line-clamp-2 mb-2">
+                Refactoring as an Act of Housekeeping
+              </h4>
+<p class="font-body-sm text-body-sm text-on-surface-variant line-clamp-3">
+                Maintaining code hygiene through daily incremental prunings rather than multi-month architectural rewrites.
+              </p>
+</div>
+<div class="mt-6 pt-4 border-t border-outline-variant/20 flex items-center justify-between text-secondary">
+<span class="font-label-sm text-label-sm">Sep 28, 2026</span>
+<span class="material-symbols-outlined text-[18px] group-hover:text-primary">arrow_forward</span>
+</div>
+</article>
+</div>
+</div>
+</section>
+<!-- Floating Reading Audio / Font Control Dock (Discreet Bottom Pill) -->
+<aside class="fixed bottom-6 left-1/2 -translate-x-1/2 z-30 bg-surface/95 backdrop-blur-md border border-outline-variant/50 shadow-lg px-4 py-2 rounded-full flex items-center gap-4 text-secondary">
+<div class="flex items-center gap-2">
+<button class="p-1.5 hover:text-primary rounded-full hover:bg-surface-container transition-colors" title="Play article audio">
+<span class="material-symbols-outlined text-[20px]">play_circle</span>
+</button>
+<span class="font-label-sm text-label-sm hidden sm:inline">Listen (6m)</span>
+</div>
+<div class="w-[1px] h-3.5 bg-outline-variant/40"></div>
+<div class="flex items-center gap-1">
+<button class="px-1.5 py-0.5 text-xs font-semibold hover:text-primary rounded hover:bg-surface-container" id="floating-font-sm">Aa-</button>
+<button class="px-1.5 py-0.5 text-sm font-semibold hover:text-primary rounded hover:bg-surface-container" id="floating-font-lg">Aa+</button>
+</div>
+<div class="w-[1px] h-3.5 bg-outline-variant/40"></div>
+<button class="p-1 hover:text-primary transition-colors" id="dock-bookmark" title="Bookmark story">
+<span class="material-symbols-outlined text-[18px]">bookmark_border</span>
+</button>
+</aside>
+</main>
+<!-- Standard Footer (Exact Shared Component Configuration) -->
+<footer class="w-full bg-surface-container-low border-t border-outline-variant/30">
+<div class="w-full max-w-7xl mx-auto px-margin md:px-margin-desktop py-space-xl flex flex-col md:flex-row justify-between items-center gap-space-md">
+<!-- Left: Logo & Copyright -->
+<div class="flex flex-col sm:flex-row items-center gap-4 text-center sm:text-left">
+<div class="flex items-center gap-2">
+<img alt="The Journal Logo" class="w-5 h-5 object-contain rounded" src="https://lh3.googleusercontent.com/aida/AEtjO1WCnLDISF1B4DOE2WOWVf8o8J1lRGqXM2LX58nL2LAKLggO2Ap5nktLM6rPIg4KCvnMUYTx2BVHWvSxPVsrxw5B5PraRCu5iENa99OBBf8maQLPHFACYEWtC2ABRic3X8PWEaLKnaVm28288EcxNU_GMHfSoTfvItBfaRS6rWjuI66C49hQt0AcNwG9YsELkruxLz31NE0U5AYvHSNLiNvUA6aIxfx4f8reiV9re2deizaQD2e6nnNWYQg"/>
+<span class="font-headline-sm text-headline-sm font-normal text-on-surface">The Journal</span>
+</div>
+<p class="font-body-sm text-body-sm text-secondary">
+          © 2025 The Journal Publishing Co. Crafted for deliberate reading and thoughtful authorship.
+        </p>
+</div>
+<!-- Right: Links -->
+<nav class="flex flex-wrap items-center justify-center gap-x-6 gap-y-2">
+<a class="font-label-md text-label-md text-on-surface-variant hover:text-on-surface hover:underline transition-all duration-150" href="#charter">Editorial Charter</a>
+<a class="font-label-md text-label-md text-on-surface-variant hover:text-on-surface hover:underline transition-all duration-150" href="#masthead">Masthead</a>
+<a class="font-label-md text-label-md text-on-surface-variant hover:text-on-surface hover:underline transition-all duration-150" href="#submissions">Submissions</a>
+<a class="font-label-md text-label-md text-on-surface-variant hover:text-on-surface hover:underline transition-all duration-150" href="#archive">Archive Index</a>
+<a class="font-label-md text-label-md text-on-surface-variant hover:text-on-surface hover:underline transition-all duration-150" href="#style-guide">Style Guide</a>
+<a class="font-label-md text-label-md text-on-surface-variant hover:text-on-surface hover:underline transition-all duration-150" href="#privacy">Privacy &amp; Terms</a>
+</nav>
+</div>
+</footer>
+<!-- Inline Vanilla Interactions -->
+<script>
+    // 1. Reading Progress Bar Logic
+    window.addEventListener('scroll', () => {
+      const docHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+      const scrollPos = window.scrollY;
+      const progressPercent = (scrollPos / docHeight) * 100;
+      const bar = document.getElementById('reading-progress-bar');
+      if (bar) {
+        bar.style.width = Math.min(100, Math.max(0, progressPercent)) + '%';
+      }
+    });
+
+    // 2. Font Scaling Micro-interactions
+    const readingArea = document.getElementById('reading-content');
+    let currentFontSizeIndex = 1; // 0: smaller, 1: default (20px), 2: larger (22px)
+    const fontSizes = ['18px', '20px', '23px'];
+    const lineHeights = ['30px', '34px', '38px'];
+
+    function applyFontSize(index) {
+      if (!readingArea) return;
+      currentFontSizeIndex = Math.max(0, Math.min(fontSizes.length - 1, index));
+      const paragraphs = readingArea.querySelectorAll('p');
+      paragraphs.forEach(p => {
+        p.style.fontSize = fontSizes[currentFontSizeIndex];
+        p.style.lineHeight = lineHeights[currentFontSizeIndex];
+      });
+    }
+
+    document.getElementById('font-decrease')?.addEventListener('click', () => applyFontSize(currentFontSizeIndex - 1));
+    document.getElementById('font-increase')?.addEventListener('click', () => applyFontSize(currentFontSizeIndex + 1));
+    document.getElementById('floating-font-sm')?.addEventListener('click', () => applyFontSize(currentFontSizeIndex - 1));
+    document.getElementById('floating-font-lg')?.addEventListener('click', () => applyFontSize(currentFontSizeIndex + 1));
+
+    // 3. Copy Code Snippet Interaction
+    function copySnippet() {
+      const copyBtn = document.getElementById('copy-code-btn');
+      if (copyBtn) {
+        copyBtn.innerHTML = '<span class="material-symbols-outlined text-[14px]">check</span><span>Copied</span>';
+        setTimeout(() => {
+          copyBtn.innerHTML = '<span class="material-symbols-outlined text-[14px]">content_copy</span><span>Copy</span>';
+        }, 2000);
+      }
+    }
+
+    // 4. Share and Link Feedback
+    function triggerShareFeedback(btnId) {
+      const btn = document.getElementById(btnId);
+      if (btn) {
+        btn.addEventListener('click', () => {
+          const original = btn.innerHTML;
+          btn.innerHTML = '<span class="material-symbols-outlined text-[18px] text-primary">done</span><span class="font-label-md text-label-md text-primary hidden md:inline">Copied!</span>';
+          setTimeout(() => {
+            btn.innerHTML = original;
+          }, 1800);
+        });
+      }
+    }
+    triggerShareFeedback('copy-article-link');
+    triggerShareFeedback('copy-top-btn');
+
+    // 5. Bookmark toggle feedback
+    const dockBookmark = document.getElementById('dock-bookmark');
+    if (dockBookmark) {
+      dockBookmark.addEventListener('click', function() {
+        const icon = this.querySelector('span');
+        if (icon.innerText === 'bookmark_border') {
+          icon.innerText = 'bookmark';
+          icon.style.fontVariationSettings = "'FILL' 1";
+          icon.classList.add('text-primary');
+        } else {
+          icon.innerText = 'bookmark_border';
+          icon.style.fontVariationSettings = "'FILL' 0";
+          icon.classList.remove('text-primary');
+        }
+      });
+    }
+  </script>
+</body></html>
