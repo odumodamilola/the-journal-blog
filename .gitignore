@@ -1,7 +1,16 @@
 node_modules/
 .next/
+.next-verify/
+.vercel/
+supabase/.temp/
+supabase/.branches/
 coverage/
 .DS_Store
 *.log
 .env*
 !.env.example
+*.tsbuildinfo
+.demo-credentials.json
+test-results/
+playwright-report/
+.vercel

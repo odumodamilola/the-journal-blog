@@ -1,9 +1,25 @@
-import type {NextConfig} from 'next';
+import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   reactStrictMode: true,
-  eslint: {
-    ignoreDuringBuilds: true,
+  distDir: process.env.JOURNAL_BUILD_DIR || ".next",
+  outputFileTracingRoot: process.cwd(),
+  poweredByHeader: false,
+  async headers() {
+    return [
+      {
+        source: "/:path*",
+        headers: [
+          { key: "X-Content-Type-Options", value: "nosniff" },
+          { key: "X-Frame-Options", value: "DENY" },
+          { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
+          {
+            key: "Permissions-Policy",
+            value: "camera=(), microphone=(), geolocation=()",
+          },
+        ],
+      },
+    ];
   },
   typescript: {
     ignoreBuildErrors: false,
@@ -12,26 +28,31 @@ const nextConfig: NextConfig = {
   // Allow access to remote image placeholder.
   images: {
     remotePatterns: [
+      { protocol: "https", hostname: "images.unsplash.com" },
       {
-        protocol: 'https',
-        hostname: 'picsum.photos',
-        port: '',
-        pathname: '/**', // This allows any path under the hostname
+        protocol: "https",
+        hostname: "tgfhjjiojftvidofzxji.supabase.co",
+        pathname: "/storage/v1/object/public/**",
       },
       {
-        protocol: 'https',
-        hostname: 'lh3.googleusercontent.com',
-        port: '',
-        pathname: '/**',
+        protocol: "https",
+        hostname: "picsum.photos",
+        port: "",
+        pathname: "/**", // This allows any path under the hostname
+      },
+      {
+        protocol: "https",
+        hostname: "lh3.googleusercontent.com",
+        port: "",
+        pathname: "/**",
       },
     ],
   },
-  output: 'standalone',
-  transpilePackages: ['motion'],
-  webpack: (config, {dev}) => {
+  transpilePackages: ["motion"],
+  webpack: (config, { dev }) => {
     // HMR is disabled in AI Studio via DISABLE_HMR env var.
     // Do not modify—file watching is disabled to prevent flickering during agent edits.
-    if (dev && process.env.DISABLE_HMR === 'true') {
+    if (dev && process.env.DISABLE_HMR === "true") {
       config.watchOptions = {
         ignored: /.*/,
       };

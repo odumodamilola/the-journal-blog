@@ -1,9 +1,9 @@
-'use client';
+"use client";
 
-import React, { useState, useEffect } from 'react';
-import ReactMarkdown from 'react-markdown';
-import { Article } from '@/lib/types';
-import { isBookmarked, toggleBookmark } from '@/lib/articles-store';
+import React, { useState, useEffect } from "react";
+import ReactMarkdown from "react-markdown";
+import { Article } from "@/lib/types";
+import { isBookmarked, toggleBookmark } from "@/lib/articles-store";
 
 interface ReaderViewProps {
   article: Article;
@@ -24,26 +24,29 @@ export function ReaderView({
   const [fontSizeIndex, setFontSizeIndex] = useState(1); // 0: 18px, 1: 20px, 2: 23px
   const [copiedLink, setCopiedLink] = useState(false);
   const [copiedCode, setCopiedCode] = useState(false);
-  const [bookmarkedSlug, setBookmarkedSlug] = useState<{ [slug: string]: boolean }>({});
+  const [bookmarkedSlug, setBookmarkedSlug] = useState<{
+    [slug: string]: boolean;
+  }>({});
   const bookmarked = bookmarkedSlug[article.slug] ?? isBookmarked(article.slug);
   const [isPlayingAudio, setIsPlayingAudio] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
       const docHeight =
-        document.documentElement.scrollHeight - document.documentElement.clientHeight;
+        document.documentElement.scrollHeight -
+        document.documentElement.clientHeight;
       if (docHeight > 0) {
         const progress = (window.scrollY / docHeight) * 100;
         setScrollProgress(Math.min(100, Math.max(0, progress)));
       }
     };
 
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   const handleCopyLink = () => {
-    if (typeof window !== 'undefined') {
+    if (typeof window !== "undefined") {
       navigator.clipboard?.writeText(window.location.href);
     }
     setCopiedLink(true);
@@ -51,7 +54,7 @@ export function ReaderView({
   };
 
   const handleCopyCode = (code: string) => {
-    if (typeof window !== 'undefined') {
+    if (typeof window !== "undefined") {
       navigator.clipboard?.writeText(code);
     }
     setCopiedCode(true);
@@ -64,9 +67,9 @@ export function ReaderView({
   };
 
   const fontSizes = [
-    { text: 'text-[18px] leading-[30px]', label: 'Small' },
-    { text: 'text-[20px] leading-[34px]', label: 'Standard' },
-    { text: 'text-[23px] leading-[38px]', label: 'Comfortable' },
+    { text: "text-[18px] leading-[30px]", label: "Small" },
+    { text: "text-[20px] leading-[34px]", label: "Standard" },
+    { text: "text-[23px] leading-[38px]", label: "Comfortable" },
   ];
 
   return (
@@ -114,10 +117,10 @@ export function ReaderView({
               title="Copy Article Link"
             >
               <span className="material-symbols-outlined text-[18px]">
-                {copiedLink ? 'check' : 'link'}
+                {copiedLink ? "check" : "link"}
               </span>
               <span className="hidden md:inline">
-                {copiedLink ? 'Copied' : 'Share'}
+                {copiedLink ? "Copied" : "Share"}
               </span>
             </button>
 
@@ -125,14 +128,16 @@ export function ReaderView({
               onClick={handleBookmarkToggle}
               className={`p-1.5 rounded-lg transition-colors cursor-pointer ${
                 bookmarked
-                  ? 'text-primary bg-primary-fixed/30'
-                  : 'text-on-surface-variant hover:text-primary hover:bg-surface-container'
+                  ? "text-primary bg-primary-fixed/30"
+                  : "text-on-surface-variant hover:text-primary hover:bg-surface-container"
               }`}
               title="Bookmark story"
             >
               <span
                 className="material-symbols-outlined text-[18px]"
-                style={bookmarked ? { fontVariationSettings: "'FILL' 1" } : undefined}
+                style={
+                  bookmarked ? { fontVariationSettings: "'FILL' 1" } : undefined
+                }
               >
                 bookmark
               </span>
@@ -140,7 +145,9 @@ export function ReaderView({
 
             <button
               onClick={() => {
-                alert('Subscribed! You will receive weekly dispatches from The Journal.');
+                alert(
+                  "Subscribed! You will receive weekly dispatches from The Journal.",
+                );
               }}
               className="ml-1 px-3 py-1.5 bg-primary-container text-on-primary text-xs font-semibold rounded-lg hover:bg-primary transition-colors cursor-pointer"
             >
@@ -212,7 +219,7 @@ export function ReaderView({
                 </div>
                 <p className="text-xs text-secondary">
                   {article.publishedAt} · {article.readTime}
-                  {article.wordCount ? ` · ${article.wordCount} words` : ''}
+                  {article.wordCount ? ` · ${article.wordCount} words` : ""}
                 </p>
               </div>
             </div>
@@ -229,7 +236,9 @@ export function ReaderView({
               </button>
               <button
                 type="button"
-                onClick={() => setFontSizeIndex((i) => Math.min(fontSizes.length - 1, i + 1))}
+                onClick={() =>
+                  setFontSizeIndex((i) => Math.min(fontSizes.length - 1, i + 1))
+                }
                 className="px-2 py-1 hover:text-primary hover:bg-surface-container rounded transition-colors text-xs font-semibold cursor-pointer"
                 title="Increase font size"
               >
@@ -243,19 +252,25 @@ export function ReaderView({
                 title="Copy story link"
               >
                 <span className="material-symbols-outlined text-[18px]">
-                  {copiedLink ? 'done' : 'share'}
+                  {copiedLink ? "done" : "share"}
                 </span>
               </button>
               <button
                 type="button"
                 onClick={() => setIsPlayingAudio(!isPlayingAudio)}
                 className={`p-1.5 rounded transition-colors cursor-pointer ${
-                  isPlayingAudio ? 'text-primary bg-primary-fixed/30' : 'hover:text-primary hover:bg-surface-container'
+                  isPlayingAudio
+                    ? "text-primary bg-primary-fixed/30"
+                    : "hover:text-primary hover:bg-surface-container"
                 }`}
-                title={isPlayingAudio ? 'Pause narrative audio' : 'Listen to narrative audio'}
+                title={
+                  isPlayingAudio
+                    ? "Pause narrative audio"
+                    : "Listen to narrative audio"
+                }
               >
                 <span className="material-symbols-outlined text-[18px]">
-                  {isPlayingAudio ? 'pause' : 'headphones'}
+                  {isPlayingAudio ? "pause" : "headphones"}
                 </span>
               </button>
             </div>
@@ -267,16 +282,20 @@ export function ReaderView({
           <div className="relative overflow-hidden rounded-xl border border-outline-variant/40 bg-surface-container-low shadow-sm">
             <img
               src={
-                article.slug === 'building-better-software-starts-with-better-thinking'
-                  ? 'https://lh3.googleusercontent.com/aida-public/AB6AXuB7rs5A7kyyp-7PB0LxwjngCDQed3bVO4r0JntAzXc1qMesyH6OMXvu7IEoAXzq2zFlax5emioiIoZS7huWBPJuTX0DecjViT4GqP0qkIu1fPi9CjhA6I46Ag-SzzxloY7ZtwLmpTn9mZ-aEBgbGISDrz7dllmYGTnXLw2Z9PDTzuN5LQXzU4cMFKK4h48HIS64sqZPbFpfjvsYWv8QRnaCqCwkJxqnv26NMqG-03sUyR-EY_FAviAtdg'
-                  : article.imageUrl || article.coverImageUrl || 'https://lh3.googleusercontent.com/aida-public/AB6AXuCsYv1pw284tnSDkXJJNqGK0NIaF13zQxbTRf0qMYdhPnCKONaCN_vR4QNxC7OU1XcOhswnUAbHbjMbgX4E1o_dRO5VXzo37RNzgE2-r1nNuQnBD_mad7biRAfWtOAvWaGvqpFlXzP89hz6JWGAWNn3yIP-XitsfrU-wgQab6ApSoOQO39XAohxYFKWttBYq12iU_4cVpJl6u5G0Ruqg5z3FXdsL2vTWI6VH2jxZNVOBR1HU4dYz4KSmQ'
+                article.slug ===
+                "building-better-software-starts-with-better-thinking"
+                  ? "https://lh3.googleusercontent.com/aida-public/AB6AXuB7rs5A7kyyp-7PB0LxwjngCDQed3bVO4r0JntAzXc1qMesyH6OMXvu7IEoAXzq2zFlax5emioiIoZS7huWBPJuTX0DecjViT4GqP0qkIu1fPi9CjhA6I46Ag-SzzxloY7ZtwLmpTn9mZ-aEBgbGISDrz7dllmYGTnXLw2Z9PDTzuN5LQXzU4cMFKK4h48HIS64sqZPbFpfjvsYWv8QRnaCqCwkJxqnv26NMqG-03sUyR-EY_FAviAtdg"
+                  : article.imageUrl ||
+                    article.coverImageUrl ||
+                    "https://lh3.googleusercontent.com/aida-public/AB6AXuCsYv1pw284tnSDkXJJNqGK0NIaF13zQxbTRf0qMYdhPnCKONaCN_vR4QNxC7OU1XcOhswnUAbHbjMbgX4E1o_dRO5VXzo37RNzgE2-r1nNuQnBD_mad7biRAfWtOAvWaGvqpFlXzP89hz6JWGAWNn3yIP-XitsfrU-wgQab6ApSoOQO39XAohxYFKWttBYq12iU_4cVpJl6u5G0Ruqg5z3FXdsL2vTWI6VH2jxZNVOBR1HU4dYz4KSmQ"
               }
               alt={article.imageAlt || article.coverCaption || article.title}
               className="w-full h-[320px] md:h-[460px] object-cover"
             />
           </div>
           <p className="mt-3 text-center text-xs text-secondary italic">
-            Figure 1: Architectural contemplation precedes structural resilience. Studio dispatch #{article.id}24.
+            Figure 1: Architectural contemplation precedes structural
+            resilience. Studio dispatch #{article.id}24.
           </p>
         </div>
 
@@ -288,7 +307,9 @@ export function ReaderView({
           {isPlayingAudio && (
             <div className="mb-6 p-3.5 bg-primary-fixed/30 border border-primary-fixed-dim/50 rounded-xl flex items-center justify-between font-editorial-sans text-xs animate-in fade-in">
               <div className="flex items-center gap-2 text-primary font-medium">
-                <span className="material-symbols-outlined text-[18px] animate-pulse">graphic_eq</span>
+                <span className="material-symbols-outlined text-[18px] animate-pulse">
+                  graphic_eq
+                </span>
                 <span>Now Narrating: {article.title}</span>
               </div>
               <div className="flex items-center gap-3 text-secondary">
@@ -320,7 +341,9 @@ export function ReaderView({
                       </h3>
                     ),
                     p: ({ children }) => (
-                      <p className={`mb-6 text-on-surface ${fontSizes[fontSizeIndex].text}`}>
+                      <p
+                        className={`mb-6 text-on-surface ${fontSizes[fontSizeIndex].text}`}
+                      >
                         {children}
                       </p>
                     ),
@@ -331,11 +354,16 @@ export function ReaderView({
                         </div>
                       </blockquote>
                     ),
-                    code: ({ inline, className, children, ...props }: any) => {
-                      const codeString = String(children).replace(/\n$/, '');
+                    code: ({ className, children, ...props }) => {
+                      const inline =
+                        !className && !String(children).includes("\n");
+                      const codeString = String(children).replace(/\n$/, "");
                       if (inline) {
                         return (
-                          <code className="bg-surface-container px-1.5 py-0.5 rounded text-xs font-mono text-primary font-medium" {...props}>
+                          <code
+                            className="bg-surface-container px-1.5 py-0.5 rounded text-xs font-mono text-primary font-medium"
+                            {...props}
+                          >
                             {children}
                           </code>
                         );
@@ -357,9 +385,9 @@ export function ReaderView({
                               className="flex items-center gap-1.5 text-tertiary-fixed hover:text-inverse-on-surface transition-colors py-0.5 px-2 rounded hover:bg-white/10 cursor-pointer text-xs"
                             >
                               <span className="material-symbols-outlined text-[14px]">
-                                {copiedCode ? 'check' : 'content_copy'}
+                                {copiedCode ? "check" : "content_copy"}
                               </span>
-                              <span>{copiedCode ? 'Copied' : 'Copy'}</span>
+                              <span>{copiedCode ? "Copied" : "Copy"}</span>
                             </button>
                           </div>
                           <pre className="p-4 md:p-5 overflow-x-auto text-[13px] leading-relaxed text-inverse-on-surface font-mono">
@@ -385,14 +413,20 @@ export function ReaderView({
               </div>
             </div>
           ) : (
-            <p className="text-secondary italic">This article has no content yet.</p>
+            <p className="text-secondary italic">
+              This article has no content yet.
+            </p>
           )}
 
           {/* Three Diagnostic Questions Checklist Callout for software essays */}
           <div className="my-8 bg-surface-container-low border border-outline-variant/30 rounded-xl p-6 font-editorial-sans">
             <h3 className="text-base font-semibold text-on-surface mb-3 flex items-center gap-2">
-              <span className="material-symbols-outlined text-primary text-[20px]">psychology</span>
-              <span>Three diagnostic questions before the first keystroke:</span>
+              <span className="material-symbols-outlined text-primary text-[20px]">
+                psychology
+              </span>
+              <span>
+                Three diagnostic questions before the first keystroke:
+              </span>
             </h3>
             <ul className="space-y-3 text-xs leading-relaxed text-on-surface-variant">
               <li className="flex items-start gap-2.5">
@@ -400,7 +434,11 @@ export function ReaderView({
                   check_circle
                 </span>
                 <span>
-                  <strong className="text-on-surface font-semibold">What is the irreversible core?</strong> Identify which database state transitions or API commitments cannot be easily undone later.
+                  <strong className="text-on-surface font-semibold">
+                    What is the irreversible core?
+                  </strong>{" "}
+                  Identify which database state transitions or API commitments
+                  cannot be easily undone later.
                 </span>
               </li>
               <li className="flex items-start gap-2.5">
@@ -408,7 +446,12 @@ export function ReaderView({
                   check_circle
                 </span>
                 <span>
-                  <strong className="text-on-surface font-semibold">Can this be described in plain sentences?</strong> If you cannot explain the reconciliation algorithm to a non-technical peer without technical jargon, the boundary is hazy.
+                  <strong className="text-on-surface font-semibold">
+                    Can this be described in plain sentences?
+                  </strong>{" "}
+                  If you cannot explain the reconciliation algorithm to a
+                  non-technical peer without technical jargon, the boundary is
+                  hazy.
                 </span>
               </li>
               <li className="flex items-start gap-2.5">
@@ -416,7 +459,11 @@ export function ReaderView({
                   check_circle
                 </span>
                 <span>
-                  <strong className="text-on-surface font-semibold">What is the failure state when external services halt?</strong> Systems must be architected for degradation rather than utopian availability.
+                  <strong className="text-on-surface font-semibold">
+                    What is the failure state when external services halt?
+                  </strong>{" "}
+                  Systems must be architected for degradation rather than
+                  utopian availability.
                 </span>
               </li>
             </ul>
@@ -444,7 +491,8 @@ export function ReaderView({
               Thanks for reading.
             </h4>
             <p className="text-xs md:text-sm text-on-surface-variant max-w-md mx-auto mb-6 leading-relaxed">
-              The Journal publishes weekly dispatches dedicated to intentional craftsmanship across systems engineering, design, and literature.
+              The Journal publishes weekly dispatches dedicated to intentional
+              craftsmanship across systems engineering, design, and literature.
             </p>
             <div className="flex flex-wrap items-center justify-center gap-3">
               <button
@@ -460,9 +508,13 @@ export function ReaderView({
                 className="px-5 py-2.5 border border-outline-variant/50 text-on-surface hover:bg-surface-container text-xs font-semibold rounded-lg transition-colors flex items-center gap-2 cursor-pointer"
               >
                 <span className="material-symbols-outlined text-[18px]">
-                  {bookmarked ? 'bookmark' : 'bookmark_add'}
+                  {bookmarked ? "bookmark" : "bookmark_add"}
                 </span>
-                <span>{bookmarked ? 'Saved to Reading List' : 'Save to Reading List'}</span>
+                <span>
+                  {bookmarked
+                    ? "Saved to Reading List"
+                    : "Save to Reading List"}
+                </span>
               </button>
             </div>
           </div>
@@ -487,7 +539,9 @@ export function ReaderView({
                   className="mt-2 md:mt-0 text-xs font-semibold text-secondary hover:text-primary transition-colors flex items-center gap-1 cursor-pointer"
                 >
                   <span>View full engineering index</span>
-                  <span className="material-symbols-outlined text-[16px]">arrow_forward</span>
+                  <span className="material-symbols-outlined text-[16px]">
+                    arrow_forward
+                  </span>
                 </button>
               </div>
 
@@ -541,10 +595,10 @@ export function ReaderView({
             className="flex items-center gap-1.5 hover:text-primary transition-colors cursor-pointer"
           >
             <span className="material-symbols-outlined text-[20px] text-primary">
-              {isPlayingAudio ? 'pause_circle' : 'play_circle'}
+              {isPlayingAudio ? "pause_circle" : "play_circle"}
             </span>
             <span className="font-medium hidden sm:inline">
-              {isPlayingAudio ? 'Playing' : 'Listen (6m)'}
+              {isPlayingAudio ? "Playing" : "Listen (6m)"}
             </span>
           </button>
           <div className="w-px h-3.5 bg-outline-variant/40"></div>
@@ -553,16 +607,22 @@ export function ReaderView({
               type="button"
               onClick={() => setFontSizeIndex((i) => Math.max(0, i - 1))}
               className={`px-1.5 py-0.5 rounded text-xs font-semibold cursor-pointer ${
-                fontSizeIndex === 0 ? 'text-primary bg-primary-fixed/30' : 'hover:text-primary'
+                fontSizeIndex === 0
+                  ? "text-primary bg-primary-fixed/30"
+                  : "hover:text-primary"
               }`}
             >
               Aa-
             </button>
             <button
               type="button"
-              onClick={() => setFontSizeIndex((i) => Math.min(fontSizes.length - 1, i + 1))}
+              onClick={() =>
+                setFontSizeIndex((i) => Math.min(fontSizes.length - 1, i + 1))
+              }
               className={`px-1.5 py-0.5 rounded text-xs font-semibold cursor-pointer ${
-                fontSizeIndex === 2 ? 'text-primary bg-primary-fixed/30' : 'hover:text-primary'
+                fontSizeIndex === 2
+                  ? "text-primary bg-primary-fixed/30"
+                  : "hover:text-primary"
               }`}
             >
               Aa+
@@ -577,9 +637,13 @@ export function ReaderView({
           >
             <span
               className="material-symbols-outlined text-[18px]"
-              style={bookmarked ? { fontVariationSettings: "'FILL' 1", color: '#00593f' } : undefined}
+              style={
+                bookmarked
+                  ? { fontVariationSettings: "'FILL' 1", color: "#00593f" }
+                  : undefined
+              }
             >
-              {bookmarked ? 'bookmark' : 'bookmark_border'}
+              {bookmarked ? "bookmark" : "bookmark_border"}
             </span>
           </button>
         </aside>
