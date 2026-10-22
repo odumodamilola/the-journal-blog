@@ -6,19 +6,20 @@ export function PublicShell({ children }: { children: React.ReactNode }) {
         <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-6">
           <Link
             href="/"
-            className="font-editorial-headline text-3xl tracking-tight"
+            className="whitespace-nowrap font-editorial-headline text-2xl tracking-tight sm:text-3xl"
           >
             The Journal<span className="text-primary">.</span>
           </Link>
           <nav
             aria-label="Main navigation"
-            className="flex items-center gap-6 text-sm"
+            className="flex items-center gap-4 text-xs sm:gap-6 sm:text-sm"
           >
             <Link href="/blog" className="hover:text-primary">
               Articles
             </Link>
             <Link href="/login" className="text-primary">
-              Editorial studio ↗
+              <span className="sm:hidden">Studio ↗</span>
+              <span className="hidden sm:inline">Editorial studio ↗</span>
             </Link>
           </nav>
         </div>

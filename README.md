@@ -2,6 +2,10 @@
 
 A single-author publishing platform built with Next.js 15 App Router, React, TypeScript, Tailwind CSS, Supabase Auth and PostgreSQL.
 
+Live site: https://the-journal-blog-three.vercel.app · Editorial studio: https://the-journal-blog-three.vercel.app/login
+
+Source: https://github.com/odumodamilola/the-journal-blog. Pushes to `main` build and deploy automatically through the connected Vercel project.
+
 ## Run locally
 
 Use Node.js 22 or newer.

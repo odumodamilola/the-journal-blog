@@ -34,9 +34,9 @@ Scope: one administrator, private Markdown drafts, public published posts, serve
 - [x] Final runtime dependency audit after patched PostCSS installation.
 - [x] Final public/mobile browser acceptance run.
 - [x] Vercel authenticated and initial deployment completed.
-- [ ] Final release pushed to GitHub and deployed through the connected repository.
+- [x] Release pushed to GitHub (`7adc212`) and deployed through the connected repository; Vercel reported READY and the GitHub deployment status succeeded.
 - [x] Production domain/Auth redirects configured and public signup disabled.
-- [ ] Backup retention/recovery policy selected by the project owner.
+- [ ] Backup retention/recovery policy selected by the project owner. Existing project inspection returned WAL archiving enabled, PITR disabled, and no available physical recovery points yet; no paid upgrade was enabled.
 - [ ] Live-domain publishing and sign-out verified.
 
 A passing build does not prove these remaining gates. No production deployment is claimed until it has been verified.
