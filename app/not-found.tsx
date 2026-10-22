@@ -1,8 +1,11 @@
-import Link from 'next/link';
+import Link from "next/link";
 
 export default function NotFound() {
   return (
-    <div className="min-h-screen bg-[#FDFCF7] text-[#1A1A1A] flex flex-col items-center justify-center p-6 text-center">
+    <main
+      id="main-content"
+      className="min-h-screen bg-[#FDFCF7] text-[#1A1A1A] flex flex-col items-center justify-center p-6 text-center"
+    >
       <span className="text-xs font-mono uppercase tracking-widest text-[#73726E] mb-3">
         404 — Page Not Found
       </span>
@@ -10,7 +13,8 @@ export default function NotFound() {
         Story Not Found
       </h1>
       <p className="text-[#73726E] max-w-md mb-8 font-sans">
-        The article or view you are looking for does not exist or may have been archived.
+        The article or view you are looking for does not exist or may have been
+        archived.
       </p>
       <Link
         href="/"
@@ -18,6 +22,6 @@ export default function NotFound() {
       >
         Return to Front Page
       </Link>
-    </div>
+    </main>
   );
 }

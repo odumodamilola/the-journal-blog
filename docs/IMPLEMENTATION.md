@@ -30,16 +30,26 @@ Scope: one administrator, private Markdown drafts, public published posts, serve
 
 ## Release gates still to verify
 
-- [ ] Editor replaces the initial password at `/admin/account`.
+- [x] Editor replaced the initial password at `/admin/account`; the old temporary password was independently rejected.
 - [x] Full browser CMS lifecycle test with the verified editor.
 - [x] Final runtime dependency audit after patched PostCSS installation.
 - [x] Final public/mobile browser acceptance run.
 - [x] Vercel authenticated and initial deployment completed.
 - [x] Release pushed to GitHub (`7adc212`) and deployed through the connected repository; Vercel reported READY and the GitHub deployment status succeeded.
 - [x] Production domain/Auth redirects configured and public signup disabled.
-- [ ] Backup retention/recovery policy selected by the project owner. Existing project inspection returned WAL archiving enabled, PITR disabled, and no available physical recovery points yet; no paid upgrade was enabled.
+- [x] Owner-approved encrypted local backup of `public` and `auth` created; isolated password-protected Postgres restore and restored permission/lifecycle tests passed. Operator-run retention/recovery policy and limitations documented in `docs/OPERATIONS.md`; unattended scheduling and a separate-device copy are not claimed.
 - [x] Live-domain publishing and sign-out verified.
 
-Deployment and browser behavior have been verified independently of the build. The remaining owner decisions above must be handled before treating this as a fully hardened operational service.
+Deployment and browser behavior have been verified independently of the build. Follow the operating policy below; a one-time backup is not an unattended recovery service.
+
+## Hardening follow-up — 23 October 2026
+
+- Added AES-256-GCM encrypted logical database backups, 30-day retention, tamper/wrong-key tests and an isolated recovery drill. The drill restored the real approved archive, retained RLS and singleton membership, and passed all SQL permission/lifecycle assertions. No restore touched production; temporary databases were stopped and removed.
+- Verified the owner changed the administrator password and the old temporary credential no longer authenticates.
+- Added WCAG-tagged axe scans, keyboard/skip-link/error checks and 320/768/1440px overflow regression checks. Fixed the missing skip-link target on the 404 page. All five public accessibility tests passed against the corrected production build.
+- Replaced render-blocking third-party font CSS with Next.js self-hosted fonts and added the missing site icon. Automated reports remain ignored because authenticated browser artifacts can contain private sessions/content.
+- Bounded live load smoke test: 50 read-only requests, concurrency 5, zero failures, p95 1113ms. This does not establish an enterprise traffic-capacity SLA.
+- Expanded CI to run production dependency auditing and anonymous browser/accessibility checks. Authenticated tests require an explicit editor session; no privileged credential is placed in CI.
+- Patched the development CSS selector-parser advisory through a pinned override; production dependency audit remains clean.
 
 Known tooling advisory: the development-only glob/micromatch chain uses braces 3.0.3, whose latest upstream release remains unpatched for a nested-pattern denial of service. These tools consume repository patterns during build/lint, not visitor input. The production dependency audit is clean; keep the build toolchain under review rather than accepting npm's suggested framework downgrade.

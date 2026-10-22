@@ -1,4 +1,6 @@
 import { test, expect } from "@playwright/test";
+import { readFile } from "node:fs/promises";
+import AxeBuilder from "@axe-core/playwright";
 const credentials =
   process.env.JOURNAL_TEST_EMAIL && process.env.JOURNAL_TEST_PASSWORD
     ? {
@@ -64,19 +66,38 @@ test("real administrator can save, preview, publish, edit, unpublish and delete"
   browser,
 }) => {
   test.skip(
-    !credentials,
+    !credentials && !process.env.JOURNAL_TEST_STORAGE_STATE,
     "Set JOURNAL_TEST_EMAIL and JOURNAL_TEST_PASSWORD for a verified administrator to run the full CMS acceptance test.",
   );
   const slug = `cms-acceptance-${Date.now()}`;
-  await page.goto("/login");
-  await page.getByLabel("Email address").fill(credentials!.email);
-  await page
-    .getByLabel("Password", { exact: true })
-    .fill(credentials!.password);
-  await page.getByRole("button", { name: "Sign in to studio" }).click();
-  await expect(page).toHaveURL(/\/admin(\/account\?initial=1)?$/);
+  if (process.env.JOURNAL_TEST_STORAGE_STATE) {
+    const storage = JSON.parse(
+      await readFile(process.env.JOURNAL_TEST_STORAGE_STATE, "utf8"),
+    );
+    await page.context().addCookies(storage.cookies);
+  } else {
+    await page.goto("/login");
+    await page.getByLabel("Email address").fill(credentials!.email);
+    await page
+      .getByLabel("Password", { exact: true })
+      .fill(credentials!.password);
+    await page.getByRole("button", { name: "Sign in to studio" }).click();
+    await expect(page).toHaveURL(/\/admin(\/account\?initial=1)?$/);
+  }
+  const audit = async () =>
+    expect(
+      (
+        await new AxeBuilder({ page })
+          .withTags(["wcag2a", "wcag2aa", "wcag21aa", "wcag22aa"])
+          .analyze()
+      ).violations,
+    ).toEqual([]);
+  await page.goto("/admin/account");
+  await audit();
   await page.goto("/admin");
+  await audit();
   await page.getByRole("link", { name: "+ New article" }).click();
+  await audit();
   await page.getByLabel("Title", { exact: true }).fill("CMS acceptance story");
   await page.getByLabel("Article URL").fill(slug);
   await page
@@ -100,6 +121,7 @@ test("real administrator can save, preview, publish, edit, unpublish and delete"
   await expect(
     page.getByText("Article content is required to publish."),
   ).toBeVisible();
+  await audit();
   await expect(page.getByLabel("Title", { exact: true })).toHaveValue(
     "CMS acceptance story",
   );
@@ -128,6 +150,7 @@ test("real administrator can save, preview, publish, edit, unpublish and delete"
   await expect(
     page.getByText("Private preview", { exact: false }),
   ).toBeVisible();
+  await audit();
   await page.getByRole("link", { name: "Back to editor" }).click();
   await page
     .getByRole("button", { name: "Publish article", exact: true })
@@ -140,6 +163,13 @@ test("real administrator can save, preview, publish, edit, unpublish and delete"
     reader.getByRole("heading", { name: "CMS acceptance story", exact: true }),
   ).toBeVisible();
   await expect(reader).toHaveTitle("CMS acceptance story · The Journal");
+  expect(
+    (
+      await new AxeBuilder({ page: reader })
+        .withTags(["wcag2a", "wcag2aa", "wcag21aa", "wcag22aa"])
+        .analyze()
+    ).violations,
+  ).toEqual([]);
   await expect(reader.locator('link[rel="canonical"]')).toHaveAttribute(
     "href",
     new RegExp(`/blog/${slug}$`),
@@ -198,6 +228,7 @@ test("real administrator can save, preview, publish, edit, unpublish and delete"
   await page
     .getByRole("button", { name: "Delete Updated CMS acceptance story" })
     .click();
+  await audit();
   await page.getByRole("button", { name: "Cancel", exact: true }).click();
   await expect(
     page.getByRole("link", {

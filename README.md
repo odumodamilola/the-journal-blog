@@ -27,7 +27,7 @@ where id = 'YOUR_VERIFIED_USER_UUID' and email_confirmed_at is not null;
 
 The singleton primary key permits one administrator only. Ordinary authenticated users cannot add themselves, read drafts, or write posts. The app checks the verified server session and membership on every CMS route and mutation; PostgreSQL enforces the same access rules with RLS. Public requests use a separate client without session cookies, including when the reader is an administrator.
 
-The designated administrator has been registered and email verification is complete. Replace the initial password before public use. Sign in at `/login`; an initial password matching the email redirects to `/admin/account` to change it. There is no authentication bypass or built-in demo account.
+The designated administrator has been registered, email verification is complete, and the owner has replaced the initial password. Sign in at `/login`; passwords are managed at `/admin/account`. There is no authentication bypass or built-in demo account.
 
 ## Publishing
 
@@ -66,6 +66,8 @@ Run `supabase/tests/permissions.sql` as postgres through SQL Editor or MCP. It v
 GitHub Actions runs lint, types, unit tests and build on pushes to `main` and pull requests. Vercel can deploy automatically from the connected repository after these checks pass. The app needs no privileged server key.
 
 ## Operations and recovery
+
+See [the production operations runbook](docs/OPERATIONS.md) for encrypted backups, isolated restore drills, retention, recovery steps, accessibility/performance budgets, and known platform limitations. `npm run backup:create` creates an ignored local encrypted archive; `npm run backup:verify` restores only to a temporary local database. Save the recovery key separately in your password manager. `npm run test:admin` opens a normal editor login window for authenticated browser/a11y verification without sharing a password or retrieving a service-role key.
 
 Monitor Vercel runtime failures and Supabase Auth/database logs. Review Supabase security advisors after schema changes. Do not log passwords, cookies or access tokens. Keep `npm ci` reproducible and review dependency advisories before updates; the PostCSS override pins the patched version for Next.js as well as the root dependency.
 

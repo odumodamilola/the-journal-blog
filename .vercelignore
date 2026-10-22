@@ -8,3 +8,8 @@ playwright-report/
 /*.png
 public/test*.png
 .aistudio/
+.backups/
+.backup-key
+.test-auth/
+.recovery-drill/
+.audit-reports/

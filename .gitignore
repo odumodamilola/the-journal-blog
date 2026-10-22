@@ -13,4 +13,9 @@ coverage/
 .demo-credentials.json
 test-results/
 playwright-report/
+.backups/
+.backup-key
+.test-auth/
+.recovery-drill/
+.audit-reports/
 .vercel
