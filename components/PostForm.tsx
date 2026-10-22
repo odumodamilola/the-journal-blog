@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useActionState, useEffect, useState } from "react";
+import { startTransition, useActionState, useEffect, useState } from "react";
 import { savePost } from "@/app/actions/posts";
 import { categories } from "@/lib/site";
 import { slugify } from "@/lib/posts/validation";
@@ -11,14 +11,6 @@ import { Markdown } from "@/components/blog/Markdown";
 type Post = Database["public"]["Tables"]["posts"]["Row"];
 export function PostForm({ post, newId }: { post?: Post; newId?: string }) {
   const [state, action, pending] = useActionState(savePost, {});
-  const saveDraft = (data: FormData) => {
-    data.set("status", "draft");
-    action(data);
-  };
-  const publish = (data: FormData) => {
-    data.set("status", "published");
-    action(data);
-  };
   const [title, setTitle] = useState(post?.title || "");
   const [slug, setSlug] = useState(post?.slug || "");
   const [slugEdited, setSlugEdited] = useState(!!post);
@@ -72,7 +64,20 @@ export function PostForm({ post, newId }: { post?: Post; newId?: string }) {
         save.
       </p>
       <form
-        action={saveDraft}
+        onSubmit={(event) => {
+          event.preventDefault();
+          const data = new FormData(event.currentTarget);
+          const submitter = (event.nativeEvent as SubmitEvent).submitter;
+          data.set(
+            "status",
+            submitter instanceof HTMLButtonElement &&
+              submitter.value === "published"
+              ? "published"
+              : "draft",
+          );
+          // Keep editor values intact when a server action returns validation errors.
+          startTransition(() => action(data));
+        }}
         onChange={() => setDirty(true)}
         className="mt-8 space-y-6"
       >
@@ -239,7 +244,12 @@ export function PostForm({ post, newId }: { post?: Post; newId?: string }) {
             </div>
           </details>
           <div className="sticky bottom-0 flex flex-wrap gap-3 border-t bg-background/95 py-5 backdrop-blur">
-            <button type="submit" className="button-secondary">
+            <button
+              type="submit"
+              name="status"
+              value="draft"
+              className="button-secondary"
+            >
               {pending
                 ? "Saving…"
                 : post?.status === "published"
@@ -248,7 +258,8 @@ export function PostForm({ post, newId }: { post?: Post; newId?: string }) {
             </button>
             <button
               type="submit"
-              formAction={publish}
+              name="status"
+              value="published"
               className="button-primary"
             >
               {pending

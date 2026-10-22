@@ -46,6 +46,7 @@ test("public navigation, filtering, SEO and mobile layout", async ({
 test("every admin route rejects anonymous visitors", async ({ page }) => {
   for (const route of [
     "/admin",
+    "/admin/account",
     "/admin/posts/new",
     "/admin/posts/00000000-0000-4000-8000-00000000b001/edit",
     "/admin/posts/00000000-0000-4000-8000-00000000b001/preview",
@@ -79,6 +80,21 @@ test("real administrator can save, preview, publish, edit, unpublish and delete"
   await page.getByLabel("Title", { exact: true }).fill("CMS acceptance story");
   await page.getByLabel("Article URL").fill(slug);
   await page
+    .getByRole("combobox", { name: "Category", exact: true })
+    .selectOption("Tutorials");
+  await expect(
+    page.getByRole("combobox", { name: "Category", exact: true }),
+  ).toHaveValue("Tutorials");
+  await page
+    .getByLabel("Short description")
+    .fill("Acceptance coverage for cover images, categories, search, and SEO.");
+  await page.getByText("Cover image (optional)", { exact: true }).click();
+  const coverUrl = "https://picsum.photos/seed/journal-cms-acceptance/1200/800";
+  await page.getByLabel("HTTPS image URL").fill(coverUrl);
+  await page
+    .getByLabel("Image description")
+    .fill("Acceptance test landscape cover");
+  await page
     .getByRole("button", { name: "Publish article", exact: true })
     .click();
   await expect(
@@ -87,6 +103,12 @@ test("real administrator can save, preview, publish, edit, unpublish and delete"
   await expect(page.getByLabel("Title", { exact: true })).toHaveValue(
     "CMS acceptance story",
   );
+  await expect(page.getByLabel("Short description")).toHaveValue(
+    "Acceptance coverage for cover images, categories, search, and SEO.",
+  );
+  await expect(
+    page.getByRole("combobox", { name: "Category", exact: true }),
+  ).toHaveValue("Tutorials");
   await page
     .getByLabel("Article content", { exact: true })
     .fill(
@@ -117,6 +139,34 @@ test("real administrator can save, preview, publish, edit, unpublish and delete"
   await expect(
     reader.getByRole("heading", { name: "CMS acceptance story", exact: true }),
   ).toBeVisible();
+  await expect(reader).toHaveTitle("CMS acceptance story · The Journal");
+  await expect(reader.locator('link[rel="canonical"]')).toHaveAttribute(
+    "href",
+    new RegExp(`/blog/${slug}$`),
+  );
+  await expect(
+    reader.locator('meta[property="og:image"]').first(),
+  ).toHaveAttribute("content", coverUrl);
+  const image = reader.getByRole("img", {
+    name: "Acceptance test landscape cover",
+    exact: true,
+  });
+  await expect
+    .poll(
+      () =>
+        image.evaluate(
+          (element) =>
+            (element as HTMLImageElement).complete &&
+            (element as HTMLImageElement).naturalWidth > 0,
+        ),
+      { timeout: 30000 },
+    )
+    .toBe(true);
+  await reader.goto("/blog?q=CMS%20acceptance&category=Tutorials");
+  await expect(
+    reader.getByRole("link", { name: "CMS acceptance story", exact: true }),
+  ).toBeVisible();
+  await reader.goto(`/blog/${slug}`);
   await page
     .getByRole("row")
     .filter({ hasText: "CMS acceptance story" })
