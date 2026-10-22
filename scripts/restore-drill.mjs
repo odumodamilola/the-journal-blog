@@ -118,9 +118,18 @@ try {
   if (!counts.rlsEnabled || counts.administrators !== 1)
     throw new Error("Restored database failed access-control checks.");
   // The backup contains ACL-independent objects. Reapply the app's explicit API grants on recovery.
-  sql(
-    "grant usage on schema public, auth to anon, authenticated; grant select on public.posts to anon, authenticated; grant select on public.admin_users to authenticated; grant insert,update,delete on public.posts to authenticated;",
-  );
+  run(postgresTool("psql"), ["-X", "-v", "ON_ERROR_STOP=1"], {
+    env: environment,
+    input: await readFile("supabase/recovery/application-grants.sql", "utf8"),
+  });
+  if (
+    sql(
+      "select has_function_privilege('anon', 'public.enforce_post_lifecycle()', 'execute') or has_function_privilege('authenticated', 'public.enforce_post_lifecycle()', 'execute')",
+    ).trim() !== "f"
+  )
+    throw new Error(
+      "Internal trigger execution privileges were not restricted.",
+    );
   const permissions = await readFile("supabase/tests/permissions.sql", "utf8");
   run(postgresTool("psql"), ["-X", "-v", "ON_ERROR_STOP=1"], {
     env: environment,

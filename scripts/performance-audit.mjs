@@ -2,6 +2,7 @@ import lighthouse from "lighthouse";
 import * as chromeLauncher from "chrome-launcher";
 import { mkdir, writeFile } from "node:fs/promises";
 import path from "node:path";
+import { chromium } from "@playwright/test";
 
 const base = new URL(
   process.env.JOURNAL_TEST_BASE_URL || "http://127.0.0.1:3107",
@@ -12,7 +13,9 @@ const directory = path.resolve(".audit-reports");
 await mkdir(directory, { recursive: true });
 const chrome = await chromeLauncher.launch({
   chromeFlags: ["--headless=new", "--no-sandbox", "--disable-dev-shm-usage"],
-  chromePath: process.env.CHROME_PATH,
+  chromePath:
+    process.env.CHROME_PATH ||
+    (process.env.CI ? chromium.executablePath() : undefined),
 });
 const evidence = [];
 try {

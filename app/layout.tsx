@@ -3,6 +3,9 @@ import "./globals.css";
 import { site } from "@/lib/site";
 import { Inter, Newsreader, JetBrains_Mono } from "next/font/google";
 
+// Keep server-side Auth/database requests close to this project's eu-central-1 database.
+export const preferredRegion = "fra1";
+
 const inter = Inter({
   subsets: ["latin"],
   variable: "--font-inter",

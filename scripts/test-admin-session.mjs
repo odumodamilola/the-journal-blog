@@ -17,8 +17,9 @@ const context = await browser.newContext();
 let storage;
 try {
   const page = await context.newPage();
-  page.on("framenavigated", frame => {
-    if (frame === page.mainFrame()) console.log(`Test login page: ${new URL(frame.url()).pathname}`);
+  page.on("framenavigated", (frame) => {
+    if (frame === page.mainFrame())
+      console.log(`Test login page: ${new URL(frame.url()).pathname}`);
   });
   console.log(
     "Sign in in the temporary Chrome window. Your password is not recorded. The window closes automatically after sign-in.",
