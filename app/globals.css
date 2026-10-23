@@ -159,6 +159,180 @@ button:disabled {
 .prose {
   overflow-wrap: anywhere;
 }
+.public-journal .font-editorial-headline {
+  font-family: var(--public-heading);
+}
+.public-journal .prose {
+  --tw-prose-body: var(--color-on-surface);
+  --tw-prose-headings: var(--color-on-surface);
+  --tw-prose-links: var(--color-primary);
+}
+.editorial-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+  background: var(--color-primary);
+  color: #fff;
+  min-height: 3.25rem;
+  padding: 0.9rem 1.35rem;
+  font-size: 0.78rem;
+  font-weight: 600;
+  border-radius: 2px;
+}
+.editorial-button:hover {
+  filter: brightness(0.9);
+}
+.landing-section {
+  padding-top: 4rem;
+}
+.landing-section-quote {
+  padding: 5rem 1rem 2rem;
+}
+.editorial-art {
+  aspect-ratio: 0.95;
+  position: relative;
+  overflow: hidden;
+  background: #dedfce;
+  border-radius: 46% 46% 2px 2px;
+  isolation: isolate;
+}
+.art-grid {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(#64735c18 1px, transparent 1px),
+    linear-gradient(90deg, #64735c18 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+.art-sun {
+  position: absolute;
+  width: 28%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: #ca6b43;
+  top: 14%;
+  right: 14%;
+}
+.art-arch {
+  position: absolute;
+  width: 55%;
+  height: 75%;
+  border: 1px solid #344e3b;
+  border-radius: 50% 50% 0 0;
+  bottom: -8%;
+  left: 16%;
+  transform: rotate(-12deg);
+}
+.art-arch-one {
+  background: #34553f;
+  box-shadow: 18px 13px 0 #c4ccb4;
+}
+.art-arch-two {
+  width: 35%;
+  height: 59%;
+  left: 27%;
+  bottom: -8%;
+  background: #f0ede1;
+  box-shadow: inset 16px 0 0 #b0bea2;
+}
+.art-orbit {
+  position: absolute;
+  width: 110%;
+  height: 25%;
+  left: -4%;
+  top: 39%;
+  border: 1px solid #486343;
+  border-radius: 50%;
+  transform: rotate(-30deg);
+  z-index: 3;
+}
+.art-note {
+  position: absolute;
+  left: 9%;
+  bottom: 18%;
+  transform: rotate(-90deg);
+  transform-origin: 0 0;
+  font-size: 9px;
+  line-height: 1.8;
+  letter-spacing: 0.25em;
+  color: #233b2b;
+}
+.art-caption {
+  position: absolute;
+  right: 5%;
+  bottom: 5%;
+  writing-mode: vertical-rl;
+  font-size: 8px;
+  letter-spacing: 0.2em;
+  color: #233b2b;
+}
+.cms-panel {
+  border: 1px solid var(--color-outline-variant);
+  border-radius: 1rem;
+  padding: 1.5rem;
+  background: white;
+}
+.cms-dialog {
+  position: fixed;
+  inset: 0;
+  margin: auto;
+  width: min(1100px, 94vw);
+  max-height: 90dvh;
+  overflow: auto;
+  border: 1px solid var(--color-outline-variant);
+  border-radius: 1rem;
+  padding: 1.5rem;
+  background: var(--color-background);
+  color: var(--color-on-surface);
+}
+.cms-dialog::backdrop {
+  background: #12251d99;
+  backdrop-filter: blur(3px);
+}
+.editor-tool {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  min-height: 2.5rem;
+  padding: 0.45rem 0.6rem;
+  border: 1px solid transparent;
+  border-radius: 0.35rem;
+  font-size: 0.7rem;
+  cursor: pointer;
+}
+.editor-tool:hover,
+.editor-tool.is-active {
+  background: var(--color-secondary-container);
+  border-color: var(--color-outline-variant);
+}
+.editor-tool select {
+  max-width: 8rem;
+  background: white;
+  border: 1px solid var(--color-outline-variant);
+  padding: 0.3rem;
+}
+.editor-tool input[type="color"] {
+  width: 1.7rem;
+  height: 1.7rem;
+}
+.tiptap img {
+  max-height: 600px;
+  width: auto;
+  max-width: 100%;
+}
+.tiptap .ProseMirror-selectednode {
+  outline: 3px solid var(--color-primary);
+  outline-offset: 3px;
+}
+@media (min-width: 768px) {
+  .landing-section {
+    padding-top: 5rem;
+  }
+  .landing-section-quote {
+    padding: 7rem 2rem 3rem;
+  }
+}
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,

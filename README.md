@@ -73,4 +73,10 @@ Monitor Vercel runtime failures and Supabase Auth/database logs. Review Supabase
 
 Enable backups appropriate to your Supabase plan, document retention, and test restoration to a separate project. For a bad app release, roll back the Vercel deployment. Database migrations require separate review and do not roll back with the frontend. Published slugs are permanent, and deleted content requires a backup restore if recovery is needed.
 
-Comments, likes, bookmarks, subscriptions, multi-author workflows, media uploads and advanced rich-text editing are intentionally outside this release.
+## Visual editorial CMS
+
+The upgraded studio includes rich-text editing, explicit Markdown conversion, private/resumable uploads, responsive AVIF/WebP generation up to 3840 pixels, a reusable media library, article/site revisions, and draft/published website appearance controls. Start at `/admin`, `/admin/media`, or `/admin/site`. Read [the editorial CMS guide](docs/EDITORIAL-CMS.md) for quality limits, privacy, workflow, backup and recovery details. No service-role key is required.
+
+Database backups do not include image bytes. Run `npm run backup:media` as well, and retain complete encrypted database/media pairs with their key stored separately. Authenticated browser artifacts are kept inside the temporary test-session directory and deleted after the test run.
+
+Comments, likes, bookmarks, subscriptions and multi-author workflows remain outside this single-editor release.

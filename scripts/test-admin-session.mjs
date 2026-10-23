@@ -4,6 +4,8 @@ import { mkdir, mkdtemp, writeFile, rm } from "node:fs/promises";
 import path from "node:path";
 import nextEnv from "@next/env";
 import { createServerClient } from "@supabase/ssr";
+import { backupMedia } from "./backup-media.mjs";
+import { createInterface } from "node:readline";
 
 nextEnv.loadEnvConfig(process.cwd(), false, { info() {}, error() {} });
 const root = path.resolve(".test-auth");
@@ -47,16 +49,55 @@ try {
     }),
     { mode: 0o600 },
   );
-  const result = spawnSync(
-    process.execPath,
-    ["node_modules/@playwright/test/cli.js", "test", ...process.argv.slice(2)],
-    {
-      env: { ...process.env, JOURNAL_TEST_STORAGE_STATE: file },
-      windowsHide: true,
-      stdio: "inherit",
-    },
-  );
-  process.exitCode = result.status || (result.error ? 1 : 0);
+  if (process.argv.includes("--backup-only")) {
+    await backupMedia({ sessionFile: file });
+  } else {
+    const result = spawnSync(
+      process.execPath,
+      [
+        "node_modules/@playwright/test/cli.js",
+        "test",
+        `--output=${path.join(directory, "results")}`,
+        ...process.argv
+          .slice(2)
+          .filter(
+            (arg) => !["--backup-media", "--hold-on-failure"].includes(arg),
+          ),
+      ],
+      {
+        env: {
+          ...process.env,
+          JOURNAL_TEST_STORAGE_STATE: file,
+          JOURNAL_TEST_DEFER_SIGNOUT: process.argv.includes("--hold-on-failure")
+            ? "1"
+            : "0",
+          JOURNAL_BACKUP_MEDIA: process.argv.includes("--backup-media")
+            ? "1"
+            : "0",
+        },
+        windowsHide: true,
+        stdio: "inherit",
+      },
+    );
+    process.exitCode = result.status || (result.error ? 1 : 0);
+    if (process.exitCode && process.argv.includes("--hold-on-failure")) {
+      console.log(
+        `Tests failed. Temporary session retained for a bounded repair/retest window: ${file}`,
+      );
+      console.log(
+        "Send Enter when retesting is complete to revoke the session and delete its artifacts. Automatic cleanup occurs in ten minutes.",
+      );
+      const input = createInterface({ input: process.stdin });
+      await new Promise((resolve) => {
+        const timer = setTimeout(resolve, 600000);
+        input.once("line", () => {
+          clearTimeout(timer);
+          resolve();
+        });
+      });
+      input.close();
+    }
+  }
 } finally {
   await browser.close();
   if (storage) {

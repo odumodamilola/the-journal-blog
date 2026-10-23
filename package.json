@@ -8,7 +8,7 @@
     "start": "next start",
     "lint": "eslint .",
     "typecheck": "next typegen && tsc --noEmit",
-    "test": "tsx --test lib/articles.test.ts tests/validation.test.ts tests/backup.test.mjs",
+    "test": "tsx --test lib/articles.test.ts tests/validation.test.ts tests/cms.test.ts tests/backup.test.mjs",
     "test:e2e": "playwright test",
     "test:a11y": "playwright test tests/e2e/accessibility.spec.ts",
     "test:admin": "node scripts/test-admin-session.mjs",
@@ -16,11 +16,19 @@
     "test:load": "node scripts/load-check.mjs",
     "backup:create": "node scripts/backup.mjs",
     "backup:verify": "node scripts/restore-drill.mjs",
+    "backup:media": "node scripts/test-admin-session.mjs --backup-only",
     "check": "npm run lint && npm run typecheck && npm test && npm run build"
   },
   "dependencies": {
     "@supabase/ssr": "0.12.7",
     "@supabase/supabase-js": "2.118.0",
+    "@tiptap/extension-highlight": "3.32.0",
+    "@tiptap/extension-image": "3.32.0",
+    "@tiptap/extension-text-align": "3.32.0",
+    "@tiptap/extension-text-style": "3.32.0",
+    "@tiptap/pm": "3.32.0",
+    "@tiptap/react": "3.32.0",
+    "@tiptap/starter-kit": "3.32.0",
     "autoprefixer": "^10.4.21",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
@@ -31,8 +39,12 @@
     "react": "^19.2.1",
     "react-dom": "^19.2.1",
     "react-markdown": "^10.1.0",
+    "remark-parse": "11.0.0",
     "server-only": "0.0.1",
-    "tailwind-merge": "^3.3.1"
+    "sharp": "0.35.5",
+    "tailwind-merge": "^3.3.1",
+    "tus-js-client": "4.3.1",
+    "unified": "11.0.5"
   },
   "devDependencies": {
     "@axe-core/playwright": "4.14.0",

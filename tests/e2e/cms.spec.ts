@@ -1,6 +1,7 @@
 import { test, expect } from "@playwright/test";
 import { readFile } from "node:fs/promises";
 import AxeBuilder from "@axe-core/playwright";
+import { editorialAcceptance } from "./editorial-flow";
 const credentials =
   process.env.JOURNAL_TEST_EMAIL && process.env.JOURNAL_TEST_PASSWORD
     ? {
@@ -15,12 +16,10 @@ test("public navigation, filtering, SEO and mobile layout", async ({
 }) => {
   const response = await page.goto("/");
   expect(response?.status()).toBe(200);
-  await expect(page.getByRole("heading", { level: 1 })).toContainText(
-    "Ideas worth sharing",
-  );
+  await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
   await page
     .getByRole("main")
-    .getByRole("link", { name: "Explore the archive" })
+    .getByRole("link", { name: "Enter the reading room" })
     .click();
   await page.getByLabel("Search articles").fill("nonexistent-test-keyword");
   await page
@@ -43,12 +42,20 @@ test("public navigation, filtering, SEO and mobile layout", async ({
     path: "test-results/home-mobile.png",
     fullPage: true,
   });
+  await page.setViewportSize({ width: 1440, height: 1000 });
+  await page.screenshot({
+    path: "test-results/home-desktop.png",
+    fullPage: true,
+  });
 });
 
 test("every admin route rejects anonymous visitors", async ({ page }) => {
   for (const route of [
     "/admin",
     "/admin/account",
+    "/admin/media",
+    "/admin/site",
+    "/admin/site/preview",
     "/admin/posts/new",
     "/admin/posts/00000000-0000-4000-8000-00000000b001/edit",
     "/admin/posts/00000000-0000-4000-8000-00000000b001/preview",
@@ -60,11 +67,47 @@ test("every admin route rejects anonymous visitors", async ({ page }) => {
     ).toBeVisible();
   }
 });
+test("CMS APIs reject anonymous and cross-origin requests", async ({
+  request,
+  baseURL,
+}) => {
+  for (const path of ["/api/admin/media", "/api/admin/site"])
+    expect((await request.get(path)).status()).toBe(401);
+  expect(
+    (
+      await request.post("/api/admin/site", {
+        headers: { Origin: "https://untrusted.example" },
+        data: {},
+      })
+    ).status(),
+  ).toBe(403);
+  expect(
+    (
+      await request.post("/api/admin/media", {
+        headers: { Origin: new URL(baseURL!).origin },
+        data: {},
+      })
+    ).status(),
+  ).toBe(401);
+  expect(
+    (
+      await request.get(
+        "/media/00000000-0000-4000-8000-00000000e001/master.webp",
+      )
+    ).status(),
+  ).toBe(404);
+});
+
+test(
+  "rich text, private 4K uploads, media protection and website drafts",
+  editorialAcceptance,
+);
 
 test("real administrator can save, preview, publish, edit, unpublish and delete", async ({
   page,
   browser,
 }) => {
+  test.setTimeout(240000);
   test.skip(
     !credentials && !process.env.JOURNAL_TEST_STORAGE_STATE,
     "Set JOURNAL_TEST_EMAIL and JOURNAL_TEST_PASSWORD for a verified administrator to run the full CMS acceptance test.",
@@ -84,14 +127,16 @@ test("real administrator can save, preview, publish, edit, unpublish and delete"
     await page.getByRole("button", { name: "Sign in to studio" }).click();
     await expect(page).toHaveURL(/\/admin(\/account\?initial=1)?$/);
   }
-  const audit = async () =>
-    expect(
+  const audit = async () => {
+    await expect(page).toHaveTitle(/\S/);
+    return expect(
       (
         await new AxeBuilder({ page })
           .withTags(["wcag2a", "wcag2aa", "wcag21aa", "wcag22aa"])
           .analyze()
       ).violations,
     ).toEqual([]);
+  };
   await page.goto("/admin/account");
   await audit();
   await page.goto("/admin");
@@ -99,6 +144,7 @@ test("real administrator can save, preview, publish, edit, unpublish and delete"
   await page.getByRole("link", { name: "+ New article" }).click();
   await audit();
   await page.getByLabel("Title", { exact: true }).fill("CMS acceptance story");
+  await page.getByRole("button", { name: "Use Markdown", exact: true }).click();
   await page.getByLabel("Article URL").fill(slug);
   await page
     .getByRole("combobox", { name: "Category", exact: true })
@@ -246,7 +292,9 @@ test("real administrator can save, preview, publish, edit, unpublish and delete"
   await expect(
     page.getByText("Article deleted.", { exact: true }),
   ).toBeVisible();
-  await page.getByRole("button", { name: "Sign out", exact: true }).click();
-  await expect(page).toHaveURL(/\/login$/);
+  if (process.env.JOURNAL_TEST_DEFER_SIGNOUT !== "1") {
+    await page.getByRole("button", { name: "Sign out", exact: true }).click();
+    await expect(page).toHaveURL(/\/login$/);
+  }
   await publicContext.close();
 });

@@ -1,6 +1,7 @@
 import ReactMarkdown from "react-markdown";
 import Image from "next/image";
 import { coverHosts } from "@/lib/site";
+import { mediaIdFromUrl } from "@/lib/cms/content";
 
 export function Markdown({ content }: { content: string }) {
   return (
@@ -10,6 +11,18 @@ export function Markdown({ content }: { content: string }) {
         components={{
           img({ src, alt }) {
             if (typeof src !== "string") return null;
+            if (mediaIdFromUrl(src)) {
+              // The route verifies publication or the administrator session before serving.
+              return (
+                // eslint-disable-next-line @next/next/no-img-element
+                <img
+                  src={src}
+                  alt={alt || ""}
+                  loading="lazy"
+                  className="h-auto max-w-full rounded-xl"
+                />
+              );
+            }
             try {
               const url = new URL(src);
               if (

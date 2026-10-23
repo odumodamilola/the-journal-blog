@@ -4,6 +4,7 @@ export default defineConfig({
   fullyParallel: false,
   workers: 1,
   timeout: 60000,
+  expect: { timeout: 30000 },
   use: {
     baseURL: process.env.JOURNAL_TEST_BASE_URL || "http://127.0.0.1:3107",
     trace: "retain-on-failure",

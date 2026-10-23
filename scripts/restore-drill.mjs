@@ -131,10 +131,35 @@ try {
       "Internal trigger execution privileges were not restricted.",
     );
   const permissions = await readFile("supabase/tests/permissions.sql", "utf8");
+  if (process.env.JOURNAL_TEST_MIGRATION) {
+    // Local policy harness only, not a substitute for hosted Storage integration tests.
+    sql(
+      "create schema storage; grant usage on schema storage to anon,authenticated; create table storage.buckets(id text primary key,name text,public boolean,file_size_limit bigint,allowed_mime_types text[]); create table storage.objects(id uuid primary key default gen_random_uuid(),bucket_id text,name text); alter table storage.objects enable row level security; grant select,insert,update,delete on storage.objects to authenticated; grant select on storage.objects to anon; create function storage.foldername(name text) returns text[] language sql immutable as 'select string_to_array(name, ''/'')';",
+    );
+    const migrationDirectory = path.dirname(process.env.JOURNAL_TEST_MIGRATION);
+    const firstMigration = path.basename(process.env.JOURNAL_TEST_MIGRATION);
+    for (const file of (await readdir(migrationDirectory))
+      .filter((file) => file.endsWith(".sql") && file >= firstMigration)
+      .sort()) {
+      run(postgresTool("psql"), ["-X", "-v", "ON_ERROR_STOP=1"], {
+        env: environment,
+        input: await readFile(path.join(migrationDirectory, file), "utf8"),
+      });
+    }
+  }
   run(postgresTool("psql"), ["-X", "-v", "ON_ERROR_STOP=1"], {
     env: environment,
     input: permissions,
   });
+  if (
+    process.env.JOURNAL_TEST_MIGRATION ||
+    sql("select to_regclass('public.media_assets') is not null").trim() === "t"
+  ) {
+    run(postgresTool("psql"), ["-X", "-v", "ON_ERROR_STOP=1"], {
+      env: environment,
+      input: await readFile("supabase/tests/cms-permissions.sql", "utf8"),
+    });
+  }
   const result = {
     verifiedAt: new Date().toISOString(),
     archive: filename,
