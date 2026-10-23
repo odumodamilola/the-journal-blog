@@ -8,7 +8,7 @@
     "start": "next start",
     "lint": "eslint .",
     "typecheck": "next typegen && tsc --noEmit",
-    "test": "tsx --test lib/articles.test.ts tests/validation.test.ts tests/cms.test.ts tests/backup.test.mjs tests/news-edition.test.ts",
+    "test": "tsx --test lib/articles.test.ts tests/validation.test.ts tests/cms.test.ts tests/backup.test.mjs tests/news-edition.test.ts tests/editorial.test.ts",
     "test:e2e": "playwright test",
     "test:a11y": "playwright test tests/e2e/accessibility.spec.ts",
     "test:admin": "node scripts/test-admin-session.mjs",

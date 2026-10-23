@@ -21,7 +21,10 @@ test("public navigation, filtering, SEO and mobile layout", async ({
     .getByRole("main")
     .getByRole("link", { name: "Enter the reading room" })
     .click();
-  await page.getByLabel("Search articles").fill("nonexistent-test-keyword");
+  await page
+    .getByRole("main")
+    .getByLabel("Search articles")
+    .fill("nonexistent-test-keyword");
   await page
     .getByRole("combobox", { name: "Category", exact: true })
     .selectOption("Technology");
@@ -54,6 +57,7 @@ test("every admin route rejects anonymous visitors", async ({ page }) => {
     "/admin",
     "/admin/account",
     "/admin/media",
+    "/admin/messages",
     "/admin/site",
     "/admin/site/preview",
     "/admin/posts/new",

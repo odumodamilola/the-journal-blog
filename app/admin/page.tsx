@@ -87,6 +87,9 @@ export default async function Admin({
           <Link href="/admin/site" className="button-secondary">
             Website & appearance
           </Link>
+          <Link href="/admin/messages" className="button-secondary">
+            Contact inbox
+          </Link>
           <form action={signOut}>
             <button className="button-secondary">Sign out</button>
           </form>

@@ -1,93 +1,131 @@
-import Image from "next/image";
 import Link from "next/link";
-import type { Post } from "@/lib/posts/queries";
+import { ArrowRight } from "lucide-react";
+import type { Post, PostSummary } from "@/lib/posts/queries";
 import { site } from "@/lib/site";
+import { articleDate, articleHeadings, readingMinutes } from "@/lib/editorial";
 import { Markdown } from "./Markdown";
 import { RichContent } from "../cms/RichContent";
-import { MediaImage } from "../cms/MediaImage";
-import { mediaIdFromUrl } from "@/lib/cms/content";
+import { PostCover } from "./PostCover";
+import { PostCard } from "./PostCard";
+import { ReadingTools } from "./ReadingTools";
+
 export function Article({
   post,
   preview = false,
+  related = [],
 }: {
   post: Post;
   preview?: boolean;
+  related?: PostSummary[];
 }) {
+  const headings =
+    post.content_format === "markdown" && readingMinutes(post.content) >= 4
+      ? articleHeadings(post.content)
+      : [];
   return (
-    <main
-      id="main-content"
-      className="mx-auto w-full max-w-3xl px-6 py-12 sm:py-20"
-    >
-      <Link
-        href={preview ? `/admin/posts/${post.id}/edit` : "/blog"}
-        className="text-sm text-primary"
-      >
-        ← {preview ? "Back to editor" : "All articles"}
-      </Link>
+    <main id="main-content" className="journal-container article-page">
+      <div id="article-top" className="scroll-mt-44" />
+      <nav aria-label="Breadcrumb" className="breadcrumbs">
+        <Link href={preview ? `/admin/posts/${post.id}/edit` : "/blog"}>
+          ← {preview ? "Back to editor" : "All articles"}
+        </Link>
+        <span aria-hidden="true">/</span>
+        <Link href={`/blog?category=${encodeURIComponent(post.category)}`}>
+          {post.category}
+        </Link>
+      </nav>
       {preview && (
-        <p className="mt-6 rounded-lg border border-amber-300 bg-amber-50 p-4 text-sm text-amber-900">
+        <p className="mt-6 border border-amber-400 bg-amber-50 p-4 text-sm text-amber-950">
           Private preview · Only the editor can access this page. Showing the
           last saved version.
         </p>
       )}
-      <header className="my-12">
+      <header className="article-heading">
         <p className="eyebrow">{post.category}</p>
-        <h1 className="mt-4 font-editorial-headline text-4xl leading-tight sm:text-6xl">
-          {post.title || "Untitled draft"}
-        </h1>
-        <p className="mt-6 text-lg leading-relaxed text-on-surface-variant">
-          {post.excerpt}
-        </p>
-        <div className="mt-6 flex flex-wrap gap-3 text-xs text-secondary">
-          <span>By {site.author}</span>
+        <h1>{post.title || "Untitled draft"}</h1>
+        <p className="article-deck">{post.excerpt}</p>
+        <div className="article-byline">
+          <span className="author-mark">
+            <span aria-hidden="true">J.</span>By {site.author}
+          </span>
           {post.published_at && (
             <time dateTime={post.published_at}>
-              {new Intl.DateTimeFormat("en", {
-                dateStyle: "long",
-                timeZone: "UTC",
-              }).format(new Date(post.published_at))}
+              {articleDate(post.published_at)}
             </time>
           )}
-          <span>
-            {Math.max(
-              1,
-              Math.ceil(post.content.trim().split(/\s+/).length / 220),
-            )}{" "}
-            min read
-          </span>
+          <span>{readingMinutes(post.content)} min read</span>
         </div>
       </header>
-      {mediaIdFromUrl(post.cover_image_url) ? (
-        <MediaImage
-          id={mediaIdFromUrl(post.cover_image_url)!}
-          alt={post.cover_image_alt}
+      <figure className="article-cover">
+        <PostCover
+          post={post}
           priority
-          className="mb-12 h-auto w-full rounded-xl"
-          sizes="(max-width: 768px) 100vw, 768px"
+          sizes="(max-width: 1200px) 100vw, 1200px"
         />
-      ) : (
-        post.cover_image_url && (
-          <Image
-            src={post.cover_image_url}
-            alt={post.cover_image_alt}
-            width={1500}
-            height={1000}
-            sizes="(max-width: 768px) 100vw, 768px"
-            priority
-            className="mb-12 h-auto w-full rounded-xl"
-          />
-        )
-      )}
-      {post.content_format === "rich" ? (
-        <RichContent document={post.content_document} />
-      ) : (
-        <Markdown content={post.content} />
-      )}
-      <div className="mt-16 border-t pt-8 text-sm text-primary">
-        <Link href={preview ? "/admin" : "/blog"}>
-          {preview ? "Return to studio" : "Continue exploring →"}
+        {post.cover_image_url && (
+          <figcaption>{post.cover_image_alt}</figcaption>
+        )}
+      </figure>
+      {!preview && <ReadingTools title={post.title} />}
+      <div className="reading-layout">
+        <aside className="reading-aside">
+          {headings.length > 1 && (
+            <>
+              <p className="eyebrow">In this story</p>
+              <nav aria-label="Table of contents">
+                {headings.map((heading) => (
+                  <a key={heading.id} href={`#${heading.id}`}>
+                    {heading.text}
+                  </a>
+                ))}
+              </nav>
+            </>
+          )}
+        </aside>
+        <article
+          id="article-content"
+          className="article-content"
+          aria-label="Article content"
+        >
+          {post.content_format === "rich" ? (
+            <RichContent document={post.content_document} />
+          ) : (
+            <Markdown content={post.content} />
+          )}
+        </article>
+        <div />
+      </div>
+      <div className="article-ending">
+        <p className="text-sm muted">
+          A little room for a different perspective.
+        </p>
+        <Link href={preview ? "/admin" : "/blog"} className="text-link">
+          {preview ? "Return to studio" : "Continue exploring"}
+          <ArrowRight size={17} aria-hidden="true" />
         </Link>
       </div>
+      {!preview && related.length > 0 && (
+        <section className="related-reading">
+          <div className="section-heading">
+            <div>
+              <p className="eyebrow">Follow the thread</p>
+              <h2>There’s more to the story.</h2>
+            </div>
+            <Link
+              href={`/blog?category=${encodeURIComponent(post.category)}`}
+              className="text-link"
+            >
+              More in {post.category}
+              <ArrowRight size={17} aria-hidden="true" />
+            </Link>
+          </div>
+          <div className="story-grid">
+            {related.map((item) => (
+              <PostCard key={item.id} post={item} />
+            ))}
+          </div>
+        </section>
+      )}
     </main>
   );
 }
