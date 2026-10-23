@@ -421,8 +421,8 @@ export function MediaPicker({
 }) {
   const dialog = useRef<HTMLDialogElement>(null);
   useEffect(() => {
-    dialog.current?.showModal();
     const previous = document.activeElement as HTMLElement | null;
+    dialog.current?.showModal();
     return () => {
       previous?.focus();
     };

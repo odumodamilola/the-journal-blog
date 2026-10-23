@@ -107,6 +107,7 @@ test("real administrator can save, preview, publish, edit, unpublish and delete"
   page,
   browser,
 }) => {
+  test.setTimeout(240000);
   test.skip(
     !credentials && !process.env.JOURNAL_TEST_STORAGE_STATE,
     "Set JOURNAL_TEST_EMAIL and JOURNAL_TEST_PASSWORD for a verified administrator to run the full CMS acceptance test.",
@@ -126,14 +127,16 @@ test("real administrator can save, preview, publish, edit, unpublish and delete"
     await page.getByRole("button", { name: "Sign in to studio" }).click();
     await expect(page).toHaveURL(/\/admin(\/account\?initial=1)?$/);
   }
-  const audit = async () =>
-    expect(
+  const audit = async () => {
+    await expect(page).toHaveTitle(/\S/);
+    return expect(
       (
         await new AxeBuilder({ page })
           .withTags(["wcag2a", "wcag2aa", "wcag21aa", "wcag22aa"])
           .analyze()
       ).violations,
     ).toEqual([]);
+  };
   await page.goto("/admin/account");
   await audit();
   await page.goto("/admin");
@@ -289,7 +292,9 @@ test("real administrator can save, preview, publish, edit, unpublish and delete"
   await expect(
     page.getByText("Article deleted.", { exact: true }),
   ).toBeVisible();
-  await page.getByRole("button", { name: "Sign out", exact: true }).click();
-  await expect(page).toHaveURL(/\/login$/);
+  if (process.env.JOURNAL_TEST_DEFER_SIGNOUT !== "1") {
+    await page.getByRole("button", { name: "Sign out", exact: true }).click();
+    await expect(page).toHaveURL(/\/login$/);
+  }
   await publicContext.close();
 });

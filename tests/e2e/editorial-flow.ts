@@ -44,14 +44,16 @@ export async function editorialAcceptance({
   const slug = `editorial-acceptance-${Date.now()}`;
   let postId: string | undefined, assetId: string | undefined;
   let originalConfig: unknown;
-  const audit = async () =>
-    expect(
+  const audit = async () => {
+    await expect(page).toHaveTitle(/\S/);
+    return expect(
       (
         await new AxeBuilder({ page })
           .withTags(["wcag2a", "wcag2aa", "wcag21aa", "wcag22aa"])
           .analyze()
       ).violations,
     ).toEqual([]);
+  };
   // Authenticated requests run in-page so same-origin CSRF protection is exercised.
   const api = async (path: string, method: string, body?: unknown) =>
     page.evaluate(
@@ -100,13 +102,11 @@ export async function editorialAcceptance({
     )
       .jpeg({ quality: 95 })
       .toBuffer();
-    await dialog
-      .getByLabel("Upload an image")
-      .setInputFiles({
-        name: "journal-acceptance-fixture.jpg",
-        mimeType: "image/jpeg",
-        buffer: fixture,
-      });
+    await dialog.getByLabel("Upload an image").setInputFiles({
+      name: "journal-acceptance-fixture.jpg",
+      mimeType: "image/jpeg",
+      buffer: fixture,
+    });
     await expect(dialog.getByRole("status")).toContainText("Image ready", {
       timeout: 180000,
     });
@@ -129,6 +129,15 @@ export async function editorialAcceptance({
     ).toBe(404);
     await audit();
     await page.getByRole("button", { name: "Save draft", exact: true }).click();
+    try {
+      await expect(page).toHaveURL(/\/admin\?saved=draft$/);
+    } catch (error) {
+      console.log("Draft navigation diagnostic", {
+        path: new URL(page.url()).pathname,
+        alerts: await page.getByRole("alert").allTextContents(),
+      });
+      throw error;
+    }
     await expect(page.getByText("Draft saved privately.")).toBeVisible();
     const row = page
       .getByRole("row")
@@ -223,8 +232,11 @@ export async function editorialAcceptance({
         publish: false,
       });
     }
-    if (postId)
-      await client.from("posts").delete().eq("id", postId).eq("slug", slug);
+    await client
+      .from("posts")
+      .delete()
+      .eq("slug", slug)
+      .eq("title", "Visual CMS acceptance fixture");
     if (assetId)
       await api(`/api/admin/media/${assetId}`, "PATCH", { trash: true });
     if (process.env.JOURNAL_BACKUP_MEDIA === "1") {
