@@ -24,17 +24,17 @@ Framer setup was inspected because of the reference workflow; this is a Next.js 
 
 ## 4. Pages and functionality
 
-| Route | Implementation |
-| --- | --- |
-| / | Real Technology-led feature by default, complementary stories, actual latest posts, distinct green feature, real category counts and all existing CMS section types/order. Configured hero media appears separately rather than replacing an article's canonical cover. |
-| /blog | Search, original categories, stable nine-per-page archive, wide first card, meaningful empty results and pagination. |
-| /blog?category=… | Category description, original subject-specific vector artwork, selected filter and truthful published count. No fabricated stories in empty categories. |
-| /blog/[slug] | Canonical cover, date/byline/reading estimate, readable rich/Markdown content, optional long-post contents navigation, reading progress, copy/native share, back-to-top and actual same-category related posts. |
-| /about | Publication purpose and principles, configured brand copy and original illustration; no invented biography or team. |
-| /contact | Accessible, validated form backed by a private Supabase inbox. No invented public address or email-delivery claim. |
-| /login | Shared editorial design; existing authentication and authenticated redirect retained; noindex. |
-| 404 / error / loading | Shared brand/navigation and useful recovery, no external database dependency for the error shell. |
-| /admin/messages | Protected, paginated inbox and an explicit mailto reply action; no automatic email sending. |
+| Route                 | Implementation                                                                                                                                                                                                                                                          |
+| --------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| /                     | Real Technology-led feature by default, complementary stories, actual latest posts, distinct green feature, real category counts and all existing CMS section types/order. Configured hero media appears separately rather than replacing an article's canonical cover. |
+| /blog                 | Search, original categories, stable nine-per-page archive, wide first card, meaningful empty results and pagination.                                                                                                                                                    |
+| /blog?category=…      | Category description, original subject-specific vector artwork, selected filter and truthful published count. No fabricated stories in empty categories.                                                                                                                |
+| /blog/[slug]          | Canonical cover, date/byline/reading estimate, readable rich/Markdown content, optional long-post contents navigation, reading progress, copy/native share, back-to-top and actual same-category related posts.                                                         |
+| /about                | Publication purpose and principles, configured brand copy and original illustration; no invented biography or team.                                                                                                                                                     |
+| /contact              | Accessible, validated form backed by a private Supabase inbox. No invented public address or email-delivery claim.                                                                                                                                                      |
+| /login                | Shared editorial design; existing authentication and authenticated redirect retained; noindex.                                                                                                                                                                          |
+| 404 / error / loading | Shared brand/navigation and useful recovery, no external database dependency for the error shell.                                                                                                                                                                       |
+| /admin/messages       | Protected, paginated inbox and an explicit mailto reply action; no automatic email sending.                                                                                                                                                                             |
 
 No pre-existing donation, legal or author-profile route was discovered. No payment system, legal claims, staff profile or newsletter was fabricated.
 
@@ -48,7 +48,7 @@ All **51 published articles now have 51 distinct canonical cover image paths**. 
 
 All **51 cover URLs returned HTTP 200 and decoded successfully**, checked 23 October 2026. Verification does not guarantee future third-party uptime. Stable image boxes and original category-art fallback handle failures.
 
-Next/Image supplies responsive source sets and priority hints. An approved-host Unsplash loader uses its own responsive CDN encoding directly, avoiding a second lossy server recompression/download of large masters for thumbnails. Other approved sources keep the standard optimizer. Existing managed uploads retain their AVIF/WebP pipeline and private publication checks. No downloads from the reference site and no synthetic news-event photography.
+Next/Image supplies responsive source sets and priority hints. An approved-host Unsplash loader uses its own responsive CDN encoding directly, avoiding a second lossy server recompression/download of large masters for thumbnails. Other approved sources keep the standard optimizer. Existing managed uploads retain their AVIF/WebP pipeline and private publication checks. No downloads from the reference site and no synthetic news-event photography. The retained Technology photograph was traced to Mohammad Rahmani’s original Unsplash page, its free-use metadata confirmed, and its former “php” alt text replaced with a meaningful description. Its canonical image and article body were not changed.
 
 Original code-native category artwork has six distinct motifs for Technology, Software Engineering, Tutorials, Career, Personal Notes and World News. It also supplies the About/Contact compositions and honest empty-category art.
 
@@ -84,13 +84,31 @@ The global daily limit is a deliberate abuse/storage ceiling, not a full CAPTCHA
 
 TypeScript and unit tests passed during implementation. ESLint has no errors; 16 pre-existing warnings remain in unused/legacy components. Production builds passed with all new routes. Font downloads require ordinary network access; the sandbox-only DNS failure was not an application compile error.
 
-The redesigned UI is on codex/editorial-public-redesign. Production UI has not been promoted by this work. The contact migration and canonical cover updates have already been applied to the existing Supabase project. Keep the migration in source control for other environments.
+The redesigned UI is on codex/editorial-public-redesign, [draft PR #2](https://github.com/odumodamilola/the-journal-blog/pull/2). The [Vercel preview](https://the-journal-blog-afzmgwtrf-damilola-peaces-projects.vercel.app/) is READY for application commit e6dcced20e98979bfc87e1c9e8af0cdacfd982e3. Production UI has not been promoted by this work. The contact migration and canonical cover updates have already been applied to the existing Supabase project. Keep the migration in source control for other environments.
 
 ## 10. Remaining items / release evidence
 
-Final test and performance rerun: pending at the time of this report update.
+Final local browser run: **23 passed, 2 skipped**, 4.7 minutes. This includes all nine responsive widths, mobile and desktop axe checks, the corrected 404 contrast, actual navigation/search/filters, all 50 article pages, six complete archive pages, image decoding, reduced motion and anonymous administration protection. The two skips are authenticated CRUD/media workflows, not failures and not claimed as verified.
+
+Final unit run: **28 passed**. TypeScript and production build passed; final lint: **0 errors, 16 pre-existing warnings**. No new runtime dependency was added. First-load JS: homepage 155KB, archive 116KB, article 117KB, Contact 111KB, login 110KB (Next build report).
+
+[GitHub CI run 40013331696](https://github.com/odumodamilola/the-journal-blog/actions/runs/40013331696) succeeded for the application commit, including npm ci, lint, TypeScript, all unit tests, production build, production dependency audit, browser regression suite and performance gate.
+
+CI Lighthouse, simulated mobile production build:
+
+| Route  | Performance | Accessibility | Best practices | SEO                        | LCP   | TBT     | CLS |
+| ------ | ----------- | ------------- | -------------- | -------------------------- | ----- | ------- | --- |
+| /      | 86          | 100           | 100            | 100                        | 3.81s | 182.5ms | 0   |
+| /blog  | 89          | 100           | 100            | 100                        | 3.47s | 165ms   | 0   |
+| /login | 93          | 100           | 100            | 63 (intentionally noindex) | 2.93s | 161ms   | 0   |
+
+These pass the repository's performance gate. **The 2.5-second mobile LCP target is not yet achieved in these lab measurements.** Further image/network and server-response optimization plus real-user measurement remains appropriate; do not describe lab scores as a 75th-percentile field guarantee.
+
+The final Windows-local simulated-mobile audit was substantially slower and **failed** the same performance gate: home 54 (LCP 4.68s, TBT 1495.5ms), archive 60 (LCP 3.76s, TBT 2192ms), login 72 (LCP 3.41s, TBT 704.5ms). Accessibility and best-practices were 100 throughout; public SEO was 100, login 63 intentionally noindex; CLS was 0 or 0.000133. This variation is not hidden by the successful CI run. The application commit/build was the same; environment/CPU differences are a possible cause, not a proven diagnosis. Performance on slower devices remains a release consideration.
+
+Preview smoke checks returned 200 for home, World News page 6, an article, About and Contact, and 404 for an unknown URL. Each checked page has one H1; no error shell was returned. Homepage description is in head and canonical points to the production domain, not the preview URL.
 
 - Authenticated CMS visual/CRUD acceptance requires an administrator test session; never claim those skipped tests passed.
 - Existing Supabase advisory: leaked-password protection is disabled. No Auth policy or password was changed by this redesign.
-- External Supabase/image connections intermittently timed out during one full local test run; two later read-only acceptance checks hit error boundaries. A separate desktop 404 contrast issue and an ambiguous test search selector were corrected. Successful reruns must be distinguished from that initial run.
+- External Supabase/image connections intermittently timed out during the initial full local test run. The final local rerun and independent GitHub CI suite passed. A separate desktop 404 contrast issue and an ambiguous test search selector were corrected. Transient vendor outages remain possible; error states do not fabricate content or contact success.
 - The final production UI release needs preview review and promotion. No claim that this branch is already the live UI.
