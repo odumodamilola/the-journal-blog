@@ -74,6 +74,81 @@ export const publishedPost = cache(async (slug: string) => {
   return data;
 });
 
+// Cookie-free, published-only data for editorial discovery. Never reuse admin reads.
+export const homePosts = cache(async () => {
+  const [recent, core] = await Promise.all([
+    publicClient()
+      .from("posts")
+      .select(summaryColumns)
+      .eq("status", "published")
+      .order("published_at", { ascending: false })
+      .order("id", { ascending: false })
+      .limit(18),
+    publicClient()
+      .from("posts")
+      .select(summaryColumns)
+      .eq("status", "published")
+      .neq("category", "World News")
+      .order("published_at", { ascending: false })
+      .order("id", { ascending: false })
+      .limit(4),
+  ]);
+  if (recent.error || core.error)
+    throw new Error("Unable to load articles. Please try again.");
+  return [
+    ...new Map(
+      [...(core.data || []), ...(recent.data || [])].map((post) => [
+        post.id,
+        post,
+      ]),
+    ).values(),
+  ];
+});
+
+export const categoryCounts = cache(async () => {
+  const counts: Record<string, number> = Object.fromEntries(
+    categories.map((category) => [category, 0]),
+  );
+  for (let start = 0; ; start += 1000) {
+    const { data, error } = await publicClient()
+      .from("posts")
+      .select("category")
+      .eq("status", "published")
+      .order("id")
+      .range(start, start + 999);
+    if (error) throw new Error("Unable to load categories.");
+    for (const post of data)
+      counts[post.category] = (counts[post.category] || 0) + 1;
+    if (data.length < 1000) return counts;
+  }
+});
+
+export async function relatedPosts(post: Post) {
+  const { data, error } = await publicClient()
+    .from("posts")
+    .select(summaryColumns)
+    .eq("status", "published")
+    .eq("category", post.category)
+    .neq("id", post.id)
+    .order("published_at", { ascending: false })
+    .order("id", { ascending: false })
+    .limit(12);
+  if (error) throw new Error("Unable to load related articles.");
+  const used = new Set<string>();
+  return (data || [])
+    .filter((item) => {
+      const image = item.cover_image_url?.split("?")[0];
+      if (
+        image &&
+        (image === post.cover_image_url?.split("?")[0] || used.has(image))
+      )
+        return false;
+      if (image) used.add(image);
+      return true;
+    })
+    .slice(0, 3);
+}
+
 export async function adminPost(id: string) {
   const { supabase, user } = await requireAdmin();
   if (!validId(id)) return null;

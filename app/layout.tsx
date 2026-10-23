@@ -26,20 +26,17 @@ const mono = JetBrains_Mono({
 
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
-  title: "The Journal — Ideas worth sharing. Stories worth reading.",
-  description:
-    "An independent editorial publishing platform and CMS atelier for deliberate thinking, systems craftsmanship, and long-form writing.",
+  title: "The Journal — Thoughtful ideas, beautifully presented.",
+  description: site.description,
   openGraph: {
-    title: "The Journal — Ideas worth sharing. Stories worth reading.",
-    description:
-      "An independent editorial publishing platform and CMS atelier for deliberate thinking, systems craftsmanship, and long-form writing.",
+    title: "The Journal — Thoughtful ideas, beautifully presented.",
+    description: site.description,
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "The Journal — Ideas worth sharing. Stories worth reading.",
-    description:
-      "An independent editorial publishing platform and CMS atelier for deliberate thinking, systems craftsmanship, and long-form writing.",
+    title: "The Journal — Thoughtful ideas, beautifully presented.",
+    description: site.description,
   },
 };
 

@@ -5,6 +5,9 @@ const nextConfig: NextConfig = {
   distDir: process.env.JOURNAL_BUILD_DIR || ".next",
   outputFileTracingRoot: process.cwd(),
   poweredByHeader: false,
+  // CMS metadata must be in <head> for lightweight crawlers and link previews.
+  // Queries are request-deduplicated; do not stream descriptions into the body.
+  htmlLimitedBots: /.*/,
   async headers() {
     return [
       {

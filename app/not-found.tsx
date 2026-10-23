@@ -1,27 +1,32 @@
 import Link from "next/link";
-
+import { PublicFrame } from "@/components/blog/PublicFrame";
+import { defaultSite } from "@/lib/cms/site-config";
 export default function NotFound() {
   return (
-    <main
-      id="main-content"
-      className="min-h-screen bg-[#FDFCF7] text-[#1A1A1A] flex flex-col items-center justify-center p-6 text-center"
-    >
-      <span className="text-xs font-mono uppercase tracking-widest text-[#73726E] mb-3">
-        404 — Page Not Found
-      </span>
-      <h1 className="text-4xl md:text-5xl font-serif font-bold text-[#1A1A1A] mb-4">
-        Story Not Found
-      </h1>
-      <p className="text-[#73726E] max-w-md mb-8 font-sans">
-        The article or view you are looking for does not exist or may have been
-        archived.
-      </p>
-      <Link
-        href="/"
-        className="px-6 py-2.5 bg-[#1A1A1A] text-white text-sm font-medium rounded-full hover:bg-black transition-colors"
-      >
-        Return to Front Page
-      </Link>
-    </main>
+    <PublicFrame config={defaultSite}>
+      <main id="main-content" className="journal-container state-page">
+        <div>
+          <p className="eyebrow">404 / A page turned somewhere else</p>
+          <h1 className="display-title">
+            An unwritten <em>chapter.</em>
+          </h1>
+          <p className="page-description">
+            The story you’re looking for may have moved, been unpublished, or
+            never existed. There’s still plenty to discover.
+          </p>
+          <div className="flex flex-wrap gap-4 mt-8">
+            <Link href="/blog" className="editorial-button">
+              Explore the archive ↗
+            </Link>
+            <Link href="/" className="text-link">
+              Return to the front page
+            </Link>
+          </div>
+        </div>
+        <div className="state-number" aria-hidden="true">
+          404
+        </div>
+      </main>
+    </PublicFrame>
   );
 }

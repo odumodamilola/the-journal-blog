@@ -38,9 +38,9 @@ export const defaultSite: SiteConfig = {
   featuredPostId: "",
   footer:
     "A space for considered ideas. Independently written, thoughtfully shared.",
-  background: "#f6f4ed",
-  text: "#202b25",
-  accent: "#24543d",
+  background: "#f8f7f4",
+  text: "#18231d",
+  accent: "#207255",
   headingFont: "Newsreader",
   bodyFont: "Inter",
   sections: [

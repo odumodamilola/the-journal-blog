@@ -1,9 +1,16 @@
 import type { Metadata } from "next";
-import { listPublished, summaryColumns } from "@/lib/posts/queries";
+import {
+  homePosts,
+  categoryCounts,
+  summaryColumns,
+  publishedPost,
+} from "@/lib/posts/queries";
 import { publishedSite } from "@/lib/cms/queries";
 import { publicClient } from "@/lib/supabase/public";
 import { PublicShell } from "@/components/blog/PublicShell";
 import { Landing } from "@/components/blog/Landing";
+import { jsonLd } from "@/lib/editorial";
+import { site } from "@/lib/site";
 export const dynamic = "force-dynamic";
 export async function generateMetadata(): Promise<Metadata> {
   const config = await publishedSite();
@@ -15,14 +22,16 @@ export async function generateMetadata(): Promise<Metadata> {
       title: config.name,
       description: config.description,
       type: "website",
+      url: "/",
     },
     twitter: { title: config.name, description: config.description },
   };
 }
 export default async function Home() {
-  const [config, { posts }] = await Promise.all([
+  const [config, posts, counts] = await Promise.all([
     publishedSite(),
-    listPublished(),
+    homePosts(),
+    categoryCounts(),
   ]);
   const featured =
     config.featuredPostId && !posts.some((p) => p.id === config.featuredPostId)
@@ -35,9 +44,32 @@ export default async function Home() {
             .maybeSingle()
         ).data
       : null;
+  const lead =
+    featured ||
+    posts.find((post) => post.id === config.featuredPostId) ||
+    posts.find((post) => post.category !== "World News") ||
+    posts[0];
+  const fullLead = lead ? await publishedPost(lead.slug) : null;
   return (
     <PublicShell config={config}>
-      <Landing config={config} posts={posts} featured={featured} />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: jsonLd({
+            "@context": "https://schema.org",
+            "@type": "WebSite",
+            name: config.name,
+            url: site.url,
+            description: config.description,
+          }),
+        }}
+      />
+      <Landing
+        config={config}
+        posts={posts}
+        featured={fullLead || lead}
+        counts={counts}
+      />
     </PublicShell>
   );
 }

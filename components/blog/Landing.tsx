@@ -1,328 +1,371 @@
 import Link from "next/link";
-import Image from "next/image";
+import { ArrowUpRight, BookOpen } from "lucide-react";
 import type { PostSummary } from "@/lib/posts/queries";
-import type { SiteConfig } from "@/lib/cms/site-config";
-import { categories } from "@/lib/site";
+import type { SiteConfig, SiteSection } from "@/lib/cms/site-config";
+import {
+  editorialCategories,
+  categoryDetails,
+  articleDate,
+  readingMinutes,
+} from "@/lib/editorial";
 import { PostCard } from "./PostCard";
+import { PostCover } from "./PostCover";
+import { CategoryArtwork } from "./CategoryArtwork";
+import { Reveal } from "./Reveal";
 import { MediaImage } from "../cms/MediaImage";
-import { mediaIdFromUrl } from "@/lib/cms/content";
 
-function EditorialArtwork() {
+function SectionHeading({
+  eyebrow,
+  title,
+  href = "/blog",
+  label = "View all stories",
+}: {
+  eyebrow: string;
+  title: string;
+  href?: string;
+  label?: string;
+}) {
   return (
-    <div
-      className="editorial-art"
-      role="img"
-      aria-label="Abstract editorial illustration: an open doorway and an orange sun, representing a new perspective"
-    >
-      <span className="art-grid" />
-      <span className="art-sun" />
-      <span className="art-arch art-arch-one" />
-      <span className="art-arch art-arch-two" />
-      <span className="art-orbit" />
-      <span className="art-note">
-        A DIFFERENT
-        <br />
-        POINT OF VIEW.
-      </span>
-      <span className="art-caption">THE JOURNAL / FIELD NOTES</span>
+    <div className="section-heading">
+      <div>
+        <p className="eyebrow">{eyebrow}</p>
+        <h2>{title}</h2>
+      </div>
+      <Link href={href} className="text-link">
+        {label}
+        <ArrowUpRight size={18} aria-hidden="true" />
+      </Link>
     </div>
   );
 }
+
+function CustomSection({
+  section,
+  posts,
+}: {
+  section: SiteSection;
+  posts: PostSummary[];
+}) {
+  if (section.type === "latest")
+    return (
+      <section className="home-section">
+        <SectionHeading eyebrow="Fresh perspectives" title={section.title} />
+        <p className="muted mb-8 text-sm max-w-xl leading-7">{section.body}</p>
+        {posts.length ? (
+          <div className="story-grid">
+            {posts.slice(0, 6).map((post) => (
+              <PostCard key={post.id} post={post} />
+            ))}
+          </div>
+        ) : (
+          <div className="empty-editorial">
+            <BookOpen
+              size={30}
+              className="mx-auto text-primary"
+              aria-hidden="true"
+            />
+            <h3 className="font-editorial-headline text-3xl mt-4">
+              A new chapter is on its way.
+            </h3>
+            <p>Our first stories will appear here soon.</p>
+          </div>
+        )}
+      </section>
+    );
+  if (section.type === "quote")
+    return (
+      <section className="home-section">
+        <Reveal>
+          <div className="brand-panel">
+            <div>
+              <p className="eyebrow mb-5">A note from the Journal</p>
+              <h2>{section.title}</h2>
+              <p className="muted mt-5 max-w-xl text-sm leading-7">
+                {section.body}
+              </p>
+            </div>
+            <BookOpen
+              size={48}
+              strokeWidth={1}
+              className="text-primary"
+              aria-hidden="true"
+            />
+          </div>
+        </Reveal>
+      </section>
+    );
+  if (section.type === "cta")
+    return (
+      <section className="home-section">
+        <div className="section-heading">
+          <div>
+            <p className="eyebrow">Keep exploring</p>
+            <h2>{section.title}</h2>
+            <p>{section.body}</p>
+          </div>
+          {section.href && (
+            <Link href={section.href} className="editorial-button">
+              {section.label || "Explore"}
+              <ArrowUpRight size={18} aria-hidden="true" />
+            </Link>
+          )}
+        </div>
+      </section>
+    );
+  if (section.type === "image")
+    return (
+      <section className="home-section">
+        <figure>
+          {section.mediaIds[0] && (
+            <MediaImage
+              id={section.mediaIds[0]}
+              className="w-full max-h-[760px] object-cover"
+            />
+          )}
+          {section.title && (
+            <h2 className="font-editorial-headline text-4xl mt-6">
+              {section.title}
+            </h2>
+          )}
+          {section.body && (
+            <figcaption className="muted mt-4 whitespace-pre-line text-sm leading-7 max-w-2xl">
+              {section.body}
+            </figcaption>
+          )}
+        </figure>
+      </section>
+    );
+  if (section.type === "split")
+    return (
+      <section className="home-section about-grid">
+        {section.mediaIds[0] && (
+          <MediaImage
+            id={section.mediaIds[0]}
+            className="aspect-[4/5] w-full object-cover"
+            sizes="(max-width: 768px) 100vw, 50vw"
+          />
+        )}
+        <div>
+          <p className="eyebrow">From the journal</p>
+          <h2 className="font-editorial-headline text-4xl sm:text-5xl mt-5">
+            {section.title}
+          </h2>
+          <p className="muted mt-6 whitespace-pre-line leading-8">
+            {section.body}
+          </p>
+        </div>
+      </section>
+    );
+  return (
+    <section className="home-section">
+      <h2 className="font-editorial-headline text-4xl">{section.title}</h2>
+      <p className="muted my-6 text-sm leading-7">{section.body}</p>
+      <div className="story-grid">
+        {section.mediaIds.map((id) => (
+          <MediaImage
+            id={id}
+            key={id}
+            className="aspect-square w-full object-cover"
+            sizes="(max-width: 768px) 100vw, 33vw"
+          />
+        ))}
+      </div>
+    </section>
+  );
+}
+
 export function Landing({
   config,
   posts,
   featured: chosen,
+  counts = {},
 }: {
   config: SiteConfig;
   posts: PostSummary[];
-  featured?: PostSummary | null;
+  featured?: (PostSummary & { content?: string }) | null;
+  counts?: Record<string, number>;
 }) {
   const featured =
-    chosen || posts.find((p) => p.id === config.featuredPostId) || posts[0];
+    chosen ||
+    posts.find((post) => post.id === config.featuredPostId) ||
+    posts.find((post) => post.category !== "World News") ||
+    posts[0];
+  const seen = new Set<string>(
+    featured?.cover_image_url ? [featured.cover_image_url.split("?")[0]] : [],
+  );
+  const supporting = posts
+    .filter((post) => {
+      if (post.id === featured?.id) return false;
+      const image = post.cover_image_url?.split("?")[0];
+      if (image && seen.has(image)) return false;
+      if (image) seen.add(image);
+      return true;
+    })
+    .slice(0, 3);
+  const latest = [...posts].sort(
+    (a, b) =>
+      (b.published_at || "").localeCompare(a.published_at || "") ||
+      b.id.localeCompare(a.id),
+  );
+  const secondaryFeature =
+    supporting.find((post) => post.category === "Technology") || supporting[0];
   return (
-    <main
-      id="main-content"
-      className="mx-auto w-full max-w-[1280px] px-6 pb-16 sm:px-10 sm:pb-24"
-    >
-      <div className="flex flex-wrap items-center justify-between gap-3 py-5 text-[10px] uppercase tracking-[.18em] sm:text-xs">
-        <span>Independent writing. Open minds.</span>
-        <span className="flex items-center gap-2">
-          <span className="h-1.5 w-1.5 rounded-full bg-primary" />
-          Technology · Culture · Craft
-        </span>
-      </div>
-      <section className="grid items-center gap-10 border-b border-current/20 pb-12 pt-7 lg:grid-cols-[1.08fr_1fr] lg:gap-14 lg:pb-16 lg:pt-12">
+    <main id="main-content" className="journal-container pb-8">
+      <section className="home-intro">
         <div>
           <p className="eyebrow">{config.eyebrow}</p>
-          <h1 className="mt-6 max-w-2xl font-editorial-headline text-[clamp(3.1rem,5.8vw,5.7rem)] leading-[.99] tracking-[-.055em]">
-            {config.headline}
-            <br />
-            <span className="italic text-primary">{config.emphasis}</span>
+          <h1>
+            {config.headline} <em>{config.emphasis}</em>
           </h1>
-          <p className="mt-7 max-w-md text-sm leading-7 sm:text-base sm:leading-8">
-            {config.description}
-          </p>
-          <div className="mt-8 flex flex-wrap items-center gap-6">
-            <Link href="/blog" className="editorial-button">
-              Enter the reading room <span aria-hidden="true">↗</span>
-            </Link>
-            <span className="max-w-32 text-xs leading-5">
-              Thoughtful reads.
-              <br />
-              No endless scroll.
-            </span>
-          </div>
-          <div className="mt-10 flex items-center gap-3 text-xs">
-            <span className="h-px w-9 bg-current" />A place to pause. An
-            invitation to think.
-          </div>
         </div>
-        <div className="relative">
-          {config.heroMediaId ? (
-            <div className="overflow-hidden rounded-t-[45%]">
-              <MediaImage
-                id={config.heroMediaId}
-                priority
-                className="aspect-[.95] w-full object-cover"
-                sizes="(max-width: 1024px) 100vw, 48vw"
-              />
-            </div>
-          ) : (
-            <EditorialArtwork />
-          )}
-          <div className="mt-4 flex justify-between text-[10px] uppercase tracking-[.14em]">
-            <span>A fresh perspective</span>
-            <span>Made of ideas, not noise</span>
-          </div>
+        <div>
+          <p>{config.description}</p>
+          <Link href="/blog" className="text-link">
+            Enter the reading room <ArrowUpRight size={18} aria-hidden="true" />
+          </Link>
         </div>
       </section>
-      <nav
-        aria-label="Browse categories"
-        className="flex flex-wrap items-center gap-x-6 gap-y-3 border-b border-current/20 py-6 text-xs"
-      >
-        <span className="font-semibold">Explore a little</span>
-        {categories.map((category) => (
-          <Link
-            href={`/blog?category=${encodeURIComponent(category)}`}
-            key={category}
-            className="underline-offset-4 hover:underline"
-          >
-            {category}{" "}
-            <span aria-hidden="true" className="ml-1 text-primary">
-              ↗
-            </span>
-          </Link>
-        ))}
-      </nav>
-      {featured && posts.length > 1 && (
-        <section className="grid gap-7 border-b border-current/20 py-10 sm:grid-cols-[160px_1fr] sm:py-12">
-          <div>
-            <p className="eyebrow">The editor’s pick</p>
-            <p
-              className="mt-4 font-editorial-headline text-6xl italic text-primary"
+      {featured ? (
+        <section className="feature-grid" aria-label="Featured reading">
+          <article className="feature-lead">
+            <Link
+              href={`/blog/${featured.slug}`}
+              className="card-image-link"
+              tabIndex={-1}
               aria-hidden="true"
             >
-              01<span className="text-3xl"> /</span>
-            </p>
-          </div>
-          <div className="grid gap-7 md:grid-cols-[1fr_240px]">
-            <div>
-              <p className="text-xs text-secondary">{featured.category}</p>
-              <h2 className="mt-3 max-w-2xl font-editorial-headline text-3xl leading-tight tracking-tight sm:text-4xl">
-                <Link
-                  href={`/blog/${featured.slug}`}
-                  className="hover:text-primary"
-                >
-                  {featured.title}
-                </Link>
-              </h2>
-              <p className="mt-4 max-w-xl text-sm leading-7">
-                {featured.excerpt}
-              </p>
+              <PostCover
+                post={featured}
+                priority
+                sizes="(max-width: 800px) 100vw, 65vw"
+              />
+            </Link>
+            <span className="feature-label">
+              <span className="h-1.5 w-1.5 bg-primary rounded-full" />
+              {config.featuredPostId === featured.id
+                ? "Featured story"
+                : "Start here"}
+            </span>
+            <div className="article-kicker">
               <Link
-                href={`/blog/${featured.slug}`}
-                className="mt-5 inline-block text-xs font-semibold text-primary underline underline-offset-4"
+                href={`/blog?category=${encodeURIComponent(featured.category)}`}
               >
-                Read the story ↗
+                {featured.category}
               </Link>
-            </div>
-            {featured.cover_image_url && (
-              <Link
-                href={`/blog/${featured.slug}`}
-                tabIndex={-1}
-                aria-hidden="true"
-              >
-                {mediaIdFromUrl(featured.cover_image_url) ? (
-                  <MediaImage
-                    id={mediaIdFromUrl(featured.cover_image_url)!}
-                    alt=""
-                    className="aspect-[4/3] w-full object-cover"
-                    sizes="240px"
-                  />
-                ) : (
-                  <Image
-                    src={featured.cover_image_url}
-                    alt=""
-                    width={480}
-                    height={360}
-                    sizes="240px"
-                    className="aspect-[4/3] w-full object-cover"
-                  />
+              {featured.published_at && (
+                <time dateTime={featured.published_at}>
+                  {articleDate(featured.published_at)}
+                </time>
+              )}
+              {"content" in featured &&
+                typeof featured.content === "string" && (
+                  <span>{readingMinutes(featured.content)} min read</span>
                 )}
-              </Link>
-            )}
-          </div>
+            </div>
+            <h2>
+              <Link href={`/blog/${featured.slug}`}>{featured.title}</Link>
+            </h2>
+            <p className="feature-excerpt">{featured.excerpt}</p>
+            <Link href={`/blog/${featured.slug}`} className="text-link">
+              Read the story
+              <ArrowUpRight size={18} aria-hidden="true" />
+            </Link>
+          </article>
+          <aside className="feature-side">
+            <p className="eyebrow">A little further afield</p>
+            {supporting.map((post) => (
+              <PostCard key={post.id} post={post} compact />
+            ))}
+            <Link href="/about" className="text-link mt-5">
+              The idea behind the Journal{" "}
+              <ArrowUpRight size={16} aria-hidden="true" />
+            </Link>
+          </aside>
+        </section>
+      ) : (
+        <section className="empty-editorial">
+          <CategoryArtwork
+            category="Personal Notes"
+            className="max-w-sm mx-auto"
+          />
+          <h2>A new chapter is on its way.</h2>
+          <p>Our first stories will appear here soon.</p>
         </section>
       )}
+      {config.heroMediaId && (
+        <figure className="home-section">
+          <MediaImage
+            id={config.heroMediaId}
+            className="w-full max-h-[700px] object-cover"
+            sizes="(max-width: 1360px) 100vw, 1360px"
+          />
+          <figcaption className="muted mt-3 text-xs">
+            The Journal / A visual notebook
+          </figcaption>
+        </figure>
+      )}
       {config.sections
-        .filter((s) => s.visible)
+        .filter((section) => section.visible)
         .map((section) => (
-          <section
-            key={section.id}
-            className={`landing-section landing-section-${section.type}`}
-          >
-            {section.type === "latest" ? (
-              <>
-                <div className="mb-8 flex flex-wrap items-end justify-between gap-6">
-                  <div>
-                    <p className="eyebrow">Stay a little longer</p>
-                    <h2 className="mt-3 font-editorial-headline text-4xl tracking-tight sm:text-5xl">
-                      {section.title}
-                    </h2>
-                    <p className="mt-4 max-w-lg text-sm leading-7">
-                      {section.body}
-                    </p>
-                  </div>
-                  <Link
-                    href="/blog"
-                    className="text-xs font-semibold text-primary underline underline-offset-4"
-                  >
-                    View all stories ↗
-                  </Link>
-                </div>
-                {posts.length ? (
-                  <div
-                    className={
-                      posts.length === 1
-                        ? "grid gap-8"
-                        : "grid gap-x-8 gap-y-10 sm:grid-cols-2 lg:grid-cols-3"
-                    }
-                  >
-                    {posts.slice(0, 6).map((post) => (
-                      <PostCard
-                        post={post}
-                        key={post.id}
-                        wide={posts.length === 1}
-                      />
-                    ))}
-                  </div>
-                ) : (
-                  <div className="border-y border-current/20 py-12">
-                    <h3 className="font-editorial-headline text-3xl">
-                      A new chapter is on its way.
-                    </h3>
-                    <p className="mt-3 text-sm">
-                      Our first stories will appear here soon.
-                    </p>
-                  </div>
-                )}
-              </>
-            ) : null}
-            {section.type === "quote" && (
-              <div className="mx-auto max-w-3xl text-center">
-                <span
-                  className="font-editorial-headline text-7xl text-primary"
-                  aria-hidden="true"
-                >
-                  “
-                </span>
-                <h2 className="font-editorial-headline text-4xl leading-tight tracking-tight sm:text-6xl">
-                  {section.title}
-                </h2>
-                <p className="mx-auto mt-6 max-w-lg text-sm leading-7">
-                  {section.body}
-                </p>
-                <span className="mx-auto mt-8 block h-px w-12 bg-primary" />
-              </div>
-            )}
-            {section.type === "cta" && (
-              <div className="flex flex-wrap items-end justify-between gap-8 border-y border-current/20 py-10">
-                <div>
-                  <p className="eyebrow">Keep exploring</p>
-                  <h2 className="mt-4 font-editorial-headline text-4xl tracking-tight sm:text-5xl">
-                    {section.title}
-                  </h2>
-                  <p className="mt-4 max-w-lg text-sm leading-7">
-                    {section.body}
-                  </p>
-                </div>
-                {section.href && (
-                  <Link href={section.href} className="editorial-button">
-                    {section.label || "Explore"} ↗
-                  </Link>
-                )}
-              </div>
-            )}
-            {section.type === "image" && (
-              <figure>
-                {section.mediaIds[0] && (
-                  <MediaImage
-                    id={section.mediaIds[0]}
-                    className="max-h-[800px] w-full object-cover"
-                  />
-                )}
-                {section.title && (
-                  <h2 className="mt-6 font-editorial-headline text-3xl">
-                    {section.title}
-                  </h2>
-                )}
-                {section.body && (
-                  <figcaption className="mt-3 max-w-2xl whitespace-pre-line text-sm leading-7">
-                    {section.body}
-                  </figcaption>
-                )}
-              </figure>
-            )}
-            {section.type === "split" && (
-              <div className="grid items-center gap-10 md:grid-cols-2">
-                {section.mediaIds[0] && (
-                  <MediaImage
-                    id={section.mediaIds[0]}
-                    className="aspect-[4/5] w-full object-cover"
-                    sizes="(max-width: 768px) 100vw, 50vw"
-                  />
-                )}
-                <div>
-                  <p className="eyebrow">From the journal</p>
-                  <h2 className="mt-5 font-editorial-headline text-4xl tracking-tight sm:text-5xl">
-                    {section.title}
-                  </h2>
-                  <p className="mt-6 whitespace-pre-line text-base leading-8">
-                    {section.body}
-                  </p>
-                </div>
-              </div>
-            )}
-            {section.type === "gallery" && (
-              <>
-                <h2 className="font-editorial-headline text-4xl">
-                  {section.title}
-                </h2>
-                <p className="mb-8 mt-4 text-sm leading-7">{section.body}</p>
-                <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
-                  {section.mediaIds.map((id) => (
-                    <MediaImage
-                      id={id}
-                      key={id}
-                      className="aspect-square w-full object-cover"
-                      sizes="(max-width: 768px) 100vw, 33vw"
-                    />
-                  ))}
-                </div>
-              </>
-            )}
-          </section>
+          <CustomSection key={section.id} section={section} posts={latest} />
         ))}
+      {secondaryFeature && (
+        <Reveal>
+          <section className="editorial-feature">
+            <PostCover
+              post={secondaryFeature}
+              sizes="(max-width: 800px) 100vw, 50vw"
+            />
+            <div className="editorial-feature-copy">
+              <p className="eyebrow">
+                From another perspective / {secondaryFeature.category}
+              </p>
+              <h2>
+                <Link href={`/blog/${secondaryFeature.slug}`}>
+                  {secondaryFeature.title}
+                </Link>
+              </h2>
+              <p>{secondaryFeature.excerpt}</p>
+              <Link
+                href={`/blog/${secondaryFeature.slug}`}
+                className="text-link"
+              >
+                Take a closer look
+                <ArrowUpRight size={18} aria-hidden="true" />
+              </Link>
+            </div>
+          </section>
+        </Reveal>
+      )}
+      <section className="home-section">
+        <SectionHeading
+          eyebrow="Follow a thread"
+          title="Many ways to be curious."
+          label="Explore the archive"
+        />
+        <div className="category-grid">
+          {editorialCategories.map((category) => (
+            <article key={category} className="category-tile">
+              <CategoryArtwork category={category} />
+              <div className="category-tile-copy">
+                <h3>
+                  <Link href={`/blog?category=${encodeURIComponent(category)}`}>
+                    {category}
+                  </Link>
+                </h3>
+                <p>{categoryDetails[category].description}</p>
+                <div className="category-count">
+                  <span>
+                    {counts[category] ?? 0}{" "}
+                    {(counts[category] ?? 0) === 1 ? "story" : "stories"}
+                  </span>
+                  <ArrowUpRight size={17} aria-hidden="true" />
+                </div>
+              </div>
+            </article>
+          ))}
+        </div>
+      </section>
     </main>
   );
 }

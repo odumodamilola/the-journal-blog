@@ -9,6 +9,21 @@ export function Markdown({ content }: { content: string }) {
       <ReactMarkdown
         skipHtml
         components={{
+          h1({ children, node }) {
+            return (
+              <h2 id={`heading-${node?.position?.start.line}`}>{children}</h2>
+            );
+          },
+          h2({ children, node }) {
+            return (
+              <h2 id={`heading-${node?.position?.start.line}`}>{children}</h2>
+            );
+          },
+          h3({ children, node }) {
+            return (
+              <h3 id={`heading-${node?.position?.start.line}`}>{children}</h3>
+            );
+          },
           img({ src, alt }) {
             if (typeof src !== "string") return null;
             if (mediaIdFromUrl(src)) {
