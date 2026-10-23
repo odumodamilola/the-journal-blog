@@ -12,6 +12,7 @@ export const site = {
 };
 
 export const categories = [
+  "World News",
   "Technology",
   "Software Engineering",
   "Tutorials",

@@ -17,6 +17,9 @@ const valid = {
   cover_image_url: "",
   cover_image_alt: "",
 };
+test("world news remains editable and publishable in the CMS", () => {
+  assert.deepEqual(validatePost({ ...valid, category: "World News" }).errors, {});
+});
 test("publishing requires title and body, while incomplete drafts remain saveable", () => {
   assert.deepEqual(validatePost(valid).errors, {});
   const missing = validatePost({ ...valid, title: " ", content: " " }).errors;
