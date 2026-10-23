@@ -81,6 +81,12 @@ export default async function Admin({
           <Link href="/admin/account" className="button-secondary">
             Account security
           </Link>
+          <Link href="/admin/media" className="button-secondary">
+            Media library
+          </Link>
+          <Link href="/admin/site" className="button-secondary">
+            Website & appearance
+          </Link>
           <form action={signOut}>
             <button className="button-secondary">Sign out</button>
           </form>

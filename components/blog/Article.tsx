@@ -3,6 +3,9 @@ import Link from "next/link";
 import type { Post } from "@/lib/posts/queries";
 import { site } from "@/lib/site";
 import { Markdown } from "./Markdown";
+import { RichContent } from "../cms/RichContent";
+import { MediaImage } from "../cms/MediaImage";
+import { mediaIdFromUrl } from "@/lib/cms/content";
 export function Article({
   post,
   preview = false,
@@ -54,18 +57,32 @@ export function Article({
           </span>
         </div>
       </header>
-      {post.cover_image_url && (
-        <Image
-          src={post.cover_image_url}
+      {mediaIdFromUrl(post.cover_image_url) ? (
+        <MediaImage
+          id={mediaIdFromUrl(post.cover_image_url)!}
           alt={post.cover_image_alt}
-          width={1500}
-          height={1000}
-          sizes="(max-width: 768px) 100vw, 768px"
           priority
           className="mb-12 h-auto w-full rounded-xl"
+          sizes="(max-width: 768px) 100vw, 768px"
         />
+      ) : (
+        post.cover_image_url && (
+          <Image
+            src={post.cover_image_url}
+            alt={post.cover_image_alt}
+            width={1500}
+            height={1000}
+            sizes="(max-width: 768px) 100vw, 768px"
+            priority
+            className="mb-12 h-auto w-full rounded-xl"
+          />
+        )
       )}
-      <Markdown content={post.content} />
+      {post.content_format === "rich" ? (
+        <RichContent document={post.content_document} />
+      ) : (
+        <Markdown content={post.content} />
+      )}
       <div className="mt-16 border-t pt-8 text-sm text-primary">
         <Link href={preview ? "/admin" : "/blog"}>
           {preview ? "Return to studio" : "Continue exploring →"}

@@ -68,14 +68,19 @@ export function validatePost(input: unknown): {
   }
   if (data.cover_image_url) {
     try {
-      const url = new URL(data.cover_image_url);
+      const managed =
+        /^\/media\/[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}\/master\.webp$/i.test(
+          data.cover_image_url,
+        );
+      const url = new URL(data.cover_image_url, "https://managed.invalid");
       if (
-        url.protocol !== "https:" ||
-        !coverHosts.includes(url.hostname) ||
-        url.username ||
-        url.password ||
-        url.port ||
-        data.cover_image_url.length > 2048
+        !managed &&
+        (url.protocol !== "https:" ||
+          !coverHosts.includes(url.hostname) ||
+          url.username ||
+          url.password ||
+          url.port ||
+          data.cover_image_url.length > 2048)
       )
         throw new Error();
     } catch {

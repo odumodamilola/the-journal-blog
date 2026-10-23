@@ -29,16 +29,105 @@ export type Database = {
         };
         Relationships: [];
       };
+      media_assets: {
+        Row: {
+          alt: string;
+          caption: string;
+          created_at: string;
+          deleted_at: string | null;
+          filename: string;
+          height: number | null;
+          id: string;
+          lease_token: string | null;
+          mime_type: string;
+          original_bytes: number;
+          owner_id: string;
+          status: string;
+          updated_at: string;
+          variants: Json;
+          width: number | null;
+        };
+        Insert: {
+          alt?: string;
+          caption?: string;
+          created_at?: string;
+          deleted_at?: string | null;
+          filename: string;
+          height?: number | null;
+          id?: string;
+          lease_token?: string | null;
+          mime_type: string;
+          original_bytes: number;
+          owner_id: string;
+          status?: string;
+          updated_at?: string;
+          variants?: Json;
+          width?: number | null;
+        };
+        Update: {
+          alt?: string;
+          caption?: string;
+          created_at?: string;
+          deleted_at?: string | null;
+          filename?: string;
+          height?: number | null;
+          id?: string;
+          lease_token?: string | null;
+          mime_type?: string;
+          original_bytes?: number;
+          owner_id?: string;
+          status?: string;
+          updated_at?: string;
+          variants?: Json;
+          width?: number | null;
+        };
+        Relationships: [];
+      };
+      post_revisions: {
+        Row: {
+          created_at: string;
+          data: Json;
+          id: string;
+          post_id: string;
+          version: number;
+        };
+        Insert: {
+          created_at?: string;
+          data: Json;
+          id?: string;
+          post_id: string;
+          version: number;
+        };
+        Update: {
+          created_at?: string;
+          data?: Json;
+          id?: string;
+          post_id?: string;
+          version?: number;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "post_revisions_post_id_fkey";
+            columns: ["post_id"];
+            isOneToOne: false;
+            referencedRelation: "posts";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
       posts: {
         Row: {
           author_id: string;
           category: string;
           content: string;
+          content_document: Json | null;
+          content_format: string;
           cover_image_alt: string;
           cover_image_url: string | null;
           created_at: string;
           excerpt: string;
           id: string;
+          media_ids: string[];
           published_at: string | null;
           slug: string;
           status: string;
@@ -50,11 +139,14 @@ export type Database = {
           author_id: string;
           category?: string;
           content?: string;
+          content_document?: Json | null;
+          content_format?: string;
           cover_image_alt?: string;
           cover_image_url?: string | null;
           created_at?: string;
           excerpt?: string;
           id?: string;
+          media_ids?: string[];
           published_at?: string | null;
           slug: string;
           status?: string;
@@ -66,11 +158,14 @@ export type Database = {
           author_id?: string;
           category?: string;
           content?: string;
+          content_document?: Json | null;
+          content_format?: string;
           cover_image_alt?: string;
           cover_image_url?: string | null;
           created_at?: string;
           excerpt?: string;
           id?: string;
+          media_ids?: string[];
           published_at?: string | null;
           slug?: string;
           status?: string;
@@ -80,12 +175,115 @@ export type Database = {
         };
         Relationships: [];
       };
+      site_drafts: {
+        Row: {
+          config: Json;
+          media_ids: string[];
+          singleton: boolean;
+          updated_at: string;
+          version: number;
+        };
+        Insert: {
+          config?: Json;
+          media_ids?: string[];
+          singleton?: boolean;
+          updated_at?: string;
+          version?: number;
+        };
+        Update: {
+          config?: Json;
+          media_ids?: string[];
+          singleton?: boolean;
+          updated_at?: string;
+          version?: number;
+        };
+        Relationships: [];
+      };
+      site_publications: {
+        Row: {
+          config: Json;
+          media_ids: string[];
+          published_at: string;
+          singleton: boolean;
+          version: number;
+        };
+        Insert: {
+          config?: Json;
+          media_ids?: string[];
+          published_at?: string;
+          singleton?: boolean;
+          version?: number;
+        };
+        Update: {
+          config?: Json;
+          media_ids?: string[];
+          published_at?: string;
+          singleton?: boolean;
+          version?: number;
+        };
+        Relationships: [];
+      };
+      site_revisions: {
+        Row: {
+          config: Json;
+          created_at: string;
+          id: string;
+          version: number;
+        };
+        Insert: {
+          config: Json;
+          created_at?: string;
+          id?: string;
+          version: number;
+        };
+        Update: {
+          config?: Json;
+          created_at?: string;
+          id?: string;
+          version?: number;
+        };
+        Relationships: [];
+      };
     };
     Views: {
       [_ in never]: never;
     };
     Functions: {
-      [_ in never]: never;
+      claim_media_job: {
+        Args: { p_id: string };
+        Returns: {
+          alt: string;
+          caption: string;
+          created_at: string;
+          deleted_at: string | null;
+          filename: string;
+          height: number | null;
+          id: string;
+          lease_token: string | null;
+          mime_type: string;
+          original_bytes: number;
+          owner_id: string;
+          status: string;
+          updated_at: string;
+          variants: Json;
+          width: number | null;
+        }[];
+        SetofOptions: {
+          from: "*";
+          to: "media_assets";
+          isOneToOne: false;
+          isSetofReturn: true;
+        };
+      };
+      save_site_document: {
+        Args: {
+          p_config: Json;
+          p_expected_version: number;
+          p_media_ids: string[];
+          p_publish: boolean;
+        };
+        Returns: number;
+      };
     };
     Enums: {
       [_ in never]: never;
@@ -107,12 +305,12 @@ export type Tables<
   DefaultSchemaTableNameOrOptions extends
     | keyof (DefaultSchema["Tables"] & DefaultSchema["Views"])
     | { schema: keyof DatabaseWithoutInternals },
-  TableName extends DefaultSchemaTableNameOrOptions extends {
+  TableName extends (DefaultSchemaTableNameOrOptions extends {
     schema: keyof DatabaseWithoutInternals;
   }
     ? keyof (DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"] &
         DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Views"])
-    : never = never,
+    : never) = never,
 > = DefaultSchemaTableNameOrOptions extends {
   schema: keyof DatabaseWithoutInternals;
 }
@@ -134,13 +332,12 @@ export type Tables<
 
 export type TablesInsert<
   DefaultSchemaTableNameOrOptions extends
-    | keyof DefaultSchema["Tables"]
-    | { schema: keyof DatabaseWithoutInternals },
-  TableName extends DefaultSchemaTableNameOrOptions extends {
+    keyof DefaultSchema["Tables"] | { schema: keyof DatabaseWithoutInternals },
+  TableName extends (DefaultSchemaTableNameOrOptions extends {
     schema: keyof DatabaseWithoutInternals;
   }
     ? keyof DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"]
-    : never = never,
+    : never) = never,
 > = DefaultSchemaTableNameOrOptions extends {
   schema: keyof DatabaseWithoutInternals;
 }
@@ -159,13 +356,12 @@ export type TablesInsert<
 
 export type TablesUpdate<
   DefaultSchemaTableNameOrOptions extends
-    | keyof DefaultSchema["Tables"]
-    | { schema: keyof DatabaseWithoutInternals },
-  TableName extends DefaultSchemaTableNameOrOptions extends {
+    keyof DefaultSchema["Tables"] | { schema: keyof DatabaseWithoutInternals },
+  TableName extends (DefaultSchemaTableNameOrOptions extends {
     schema: keyof DatabaseWithoutInternals;
   }
     ? keyof DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"]
-    : never = never,
+    : never) = never,
 > = DefaultSchemaTableNameOrOptions extends {
   schema: keyof DatabaseWithoutInternals;
 }
@@ -184,13 +380,12 @@ export type TablesUpdate<
 
 export type Enums<
   DefaultSchemaEnumNameOrOptions extends
-    | keyof DefaultSchema["Enums"]
-    | { schema: keyof DatabaseWithoutInternals },
-  EnumName extends DefaultSchemaEnumNameOrOptions extends {
+    keyof DefaultSchema["Enums"] | { schema: keyof DatabaseWithoutInternals },
+  EnumName extends (DefaultSchemaEnumNameOrOptions extends {
     schema: keyof DatabaseWithoutInternals;
   }
     ? keyof DatabaseWithoutInternals[DefaultSchemaEnumNameOrOptions["schema"]]["Enums"]
-    : never = never,
+    : never) = never,
 > = DefaultSchemaEnumNameOrOptions extends {
   schema: keyof DatabaseWithoutInternals;
 }
@@ -203,11 +398,11 @@ export type CompositeTypes<
   PublicCompositeTypeNameOrOptions extends
     | keyof DefaultSchema["CompositeTypes"]
     | { schema: keyof DatabaseWithoutInternals },
-  CompositeTypeName extends PublicCompositeTypeNameOrOptions extends {
+  CompositeTypeName extends (PublicCompositeTypeNameOrOptions extends {
     schema: keyof DatabaseWithoutInternals;
   }
     ? keyof DatabaseWithoutInternals[PublicCompositeTypeNameOrOptions["schema"]]["CompositeTypes"]
-    : never = never,
+    : never) = never,
 > = PublicCompositeTypeNameOrOptions extends {
   schema: keyof DatabaseWithoutInternals;
 }

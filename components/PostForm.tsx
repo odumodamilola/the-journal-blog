@@ -7,6 +7,13 @@ import { categories } from "@/lib/site";
 import { slugify } from "@/lib/posts/validation";
 import type { Database } from "@/lib/types/database";
 import { Markdown } from "@/components/blog/Markdown";
+import dynamic from "next/dynamic";
+import { emptyDocument, mediaUrl, type RichNode } from "@/lib/cms/content";
+import { MediaPicker } from "@/components/cms/MediaLibrary";
+const RichEditor = dynamic(
+  () => import("@/components/cms/RichEditor").then((m) => m.RichEditor),
+  { ssr: false, loading: () => <p className="p-6">Loading editor…</p> },
+);
 
 type Post = Database["public"]["Tables"]["posts"]["Row"];
 export function PostForm({ post, newId }: { post?: Post; newId?: string }) {
@@ -15,6 +22,13 @@ export function PostForm({ post, newId }: { post?: Post; newId?: string }) {
   const [slug, setSlug] = useState(post?.slug || "");
   const [slugEdited, setSlugEdited] = useState(!!post);
   const [content, setContent] = useState(post?.content || "");
+  const [format, setFormat] = useState(post?.content_format || "rich");
+  const [document, setDocument] = useState<RichNode>(
+    (post?.content_document as RichNode | null) || emptyDocument,
+  );
+  const [coverPicker, setCoverPicker] = useState(false);
+  const [inlinePicker, setInlinePicker] = useState(false);
+  const [conversionMessage, setConversionMessage] = useState("");
   const [excerpt, setExcerpt] = useState(post?.excerpt || "");
   const [category, setCategory] = useState(post?.category || "Personal Notes");
   const [cover, setCover] = useState(post?.cover_image_url || "");
@@ -84,6 +98,17 @@ export function PostForm({ post, newId }: { post?: Post; newId?: string }) {
         <input type="hidden" name="id" value={post?.id || newId} />
         <input type="hidden" name="version" value={post?.version || 1} />
         <input type="hidden" name="mode" value={post ? "edit" : "create"} />
+        <input type="hidden" name="content_format" value={format} />
+        {format === "rich" && (
+          <>
+            <input type="hidden" name="content" value={content} />
+            <input
+              type="hidden"
+              name="content_document"
+              value={JSON.stringify(document)}
+            />
+          </>
+        )}
         {state.message && (
           <p
             role="alert"
@@ -171,36 +196,122 @@ export function PostForm({ post, newId }: { post?: Post; newId?: string }) {
               <label htmlFor="content" className="text-sm font-medium">
                 Article content
               </label>
-              <button
-                type="button"
-                aria-pressed={preview}
-                className="text-sm text-primary underline"
-                onClick={() => setPreview(!preview)}
-              >
-                {preview ? "Continue editing" : "Preview Markdown"}
-              </button>
+              {format === "markdown" && (
+                <button
+                  type="button"
+                  aria-pressed={preview}
+                  className="text-sm text-primary underline"
+                  onClick={() => setPreview(!preview)}
+                >
+                  {preview ? "Continue editing" : "Preview Markdown"}
+                </button>
+              )}
             </div>
-            <textarea
-              id="content"
-              name="content"
-              value={content}
-              onChange={(event) => setContent(event.target.value)}
-              rows={20}
-              hidden={preview}
-              className="field min-h-96 font-mono text-sm"
-              placeholder="Write your story using Markdown…"
-              {...invalid("content")}
-            />
-            {preview && (
+            <div className="mb-3 flex flex-wrap gap-3 text-xs">
+              <span>
+                {format === "rich" ? "Visual editor" : "Legacy Markdown editor"}
+              </span>
+              {format === "markdown" && (
+                <button
+                  type="button"
+                  className="text-primary underline"
+                  onClick={() => setInlinePicker(true)}
+                >
+                  Insert uploaded image
+                </button>
+              )}
+              {!content.trim() && (
+                <button
+                  type="button"
+                  className="text-primary underline"
+                  onClick={() =>
+                    setFormat(format === "rich" ? "markdown" : "rich")
+                  }
+                >
+                  Use {format === "rich" ? "Markdown" : "visual editor"}
+                </button>
+              )}
+              {format === "markdown" && !!content.trim() && (
+                <span className="text-secondary">
+                  Existing Markdown is preserved until you explicitly convert
+                  it.
+                </span>
+              )}
+              {format === "markdown" && !!content.trim() && (
+                <button
+                  type="button"
+                  className="text-primary underline"
+                  onClick={async () => {
+                    if (
+                      !window.confirm(
+                        "Convert this article to visual editing? Review the result before saving. Heading levels will be normalized, and the previous saved Markdown remains in revision history when you save.",
+                      )
+                    )
+                      return;
+                    try {
+                      const { convertMarkdown } =
+                        await import("@/lib/cms/convert-markdown");
+                      const converted = convertMarkdown(content);
+                      setDocument(converted.document);
+                      setContent(converted.text);
+                      setFormat("rich");
+                      setDirty(true);
+                      setConversionMessage(
+                        "Converted in the editor only. Review before saving; the prior saved version remains in history.",
+                      );
+                    } catch (error) {
+                      setConversionMessage(
+                        error instanceof Error
+                          ? error.message
+                          : "Conversion failed. Your Markdown is unchanged.",
+                      );
+                    }
+                  }}
+                >
+                  Convert to visual editor
+                </button>
+              )}
+            </div>
+            {conversionMessage && (
+              <p role="status" className="mb-4 text-sm text-primary">
+                {conversionMessage}
+              </p>
+            )}
+            {format === "rich" ? (
+              <RichEditor
+                value={document}
+                disabled={pending}
+                onChange={(doc, text) => {
+                  setDocument(doc);
+                  setContent(text);
+                  setDirty(true);
+                }}
+              />
+            ) : (
+              <textarea
+                id="content"
+                name="content"
+                value={content}
+                onChange={(event) => setContent(event.target.value)}
+                rows={20}
+                hidden={preview}
+                className="field min-h-96 font-mono text-sm"
+                placeholder="Write your story using Markdown…"
+                {...invalid("content")}
+              />
+            )}
+            {format === "markdown" && preview && (
               <div className="min-h-96 rounded-xl border bg-white p-6">
                 <Markdown content={content || "*Nothing to preview yet.*"} />
               </div>
             )}
             {error("content")}
-            <p className="mt-2 text-xs text-on-surface-variant">
-              Markdown supports headings, lists, links, and code. Raw HTML is
-              disabled.
-            </p>
+            {format === "markdown" && (
+              <p className="mt-2 text-xs text-on-surface-variant">
+                Markdown supports headings, lists, links, and code. Raw HTML is
+                disabled.
+              </p>
+            )}
           </div>
           <details
             className="rounded-xl border p-5"
@@ -212,11 +323,18 @@ export function PostForm({ post, newId }: { post?: Post; newId?: string }) {
               Cover image (optional)
             </summary>
             <div className="mt-4 space-y-4">
+              <button
+                type="button"
+                className="button-secondary"
+                onClick={() => setCoverPicker(true)}
+              >
+                Choose or upload cover image
+              </button>
               <label className="block text-sm font-medium">
                 HTTPS image URL
                 <input
                   name="cover_image_url"
-                  type="url"
+                  type="text"
                   value={cover}
                   onChange={(event) => setCover(event.target.value)}
                   maxLength={2048}
@@ -226,8 +344,8 @@ export function PostForm({ post, newId }: { post?: Post; newId?: string }) {
                 {error("cover_image_url")}
               </label>
               <p className="text-xs text-on-surface-variant">
-                Use Unsplash, Picsum, Googleusercontent, or this project’s
-                public Supabase Storage.
+                Choose an optimized image from your library, or use an approved
+                external HTTPS image.
               </p>
               <label className="block text-sm font-medium">
                 Image description
@@ -274,6 +392,30 @@ export function PostForm({ post, newId }: { post?: Post; newId?: string }) {
           {pending ? "Saving article" : ""}
         </p>
       </form>
+      {coverPicker && (
+        <MediaPicker
+          onClose={() => setCoverPicker(false)}
+          onChoose={(asset) => {
+            setCover(mediaUrl(asset.id));
+            setAlt(asset.alt);
+            setDirty(true);
+            setCoverPicker(false);
+          }}
+        />
+      )}
+      {inlinePicker && (
+        <MediaPicker
+          onClose={() => setInlinePicker(false)}
+          onChoose={(asset) => {
+            setContent(
+              (old) =>
+                `${old}\n\n![${asset.alt.replace(/[\[\]\\]/g, "")}](${mediaUrl(asset.id)})\n\n`,
+            );
+            setDirty(true);
+            setInlinePicker(false);
+          }}
+        />
+      )}
     </>
   );
 }

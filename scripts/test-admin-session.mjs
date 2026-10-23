@@ -4,6 +4,7 @@ import { mkdir, mkdtemp, writeFile, rm } from "node:fs/promises";
 import path from "node:path";
 import nextEnv from "@next/env";
 import { createServerClient } from "@supabase/ssr";
+import { backupMedia } from "./backup-media.mjs";
 
 nextEnv.loadEnvConfig(process.cwd(), false, { info() {}, error() {} });
 const root = path.resolve(".test-auth");
@@ -47,16 +48,31 @@ try {
     }),
     { mode: 0o600 },
   );
-  const result = spawnSync(
-    process.execPath,
-    ["node_modules/@playwright/test/cli.js", "test", ...process.argv.slice(2)],
-    {
-      env: { ...process.env, JOURNAL_TEST_STORAGE_STATE: file },
-      windowsHide: true,
-      stdio: "inherit",
-    },
-  );
-  process.exitCode = result.status || (result.error ? 1 : 0);
+  if (process.argv.includes("--backup-only")) {
+    await backupMedia({ sessionFile: file });
+  } else {
+    const result = spawnSync(
+      process.execPath,
+      [
+        "node_modules/@playwright/test/cli.js",
+        "test",
+        `--output=${path.join(directory, "results")}`,
+        ...process.argv.slice(2).filter((arg) => arg !== "--backup-media"),
+      ],
+      {
+        env: {
+          ...process.env,
+          JOURNAL_TEST_STORAGE_STATE: file,
+          JOURNAL_BACKUP_MEDIA: process.argv.includes("--backup-media")
+            ? "1"
+            : "0",
+        },
+        windowsHide: true,
+        stdio: "inherit",
+      },
+    );
+    process.exitCode = result.status || (result.error ? 1 : 0);
+  }
 } finally {
   await browser.close();
   if (storage) {

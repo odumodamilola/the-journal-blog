@@ -3,6 +3,8 @@
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { requireAdmin } from "@/lib/auth/require-admin";
+import { validateDocument, mediaIdFromUrl } from "@/lib/cms/content";
+import type { Json } from "@/lib/types/database";
 import {
   validatePost,
   validId,
@@ -22,7 +24,53 @@ export async function savePost(
   const version = Number(form.get("version"));
   if (!validId(id) || !positiveInteger(version))
     return { message: "Invalid article. Reload the editor and try again." };
-  const { data, errors } = validatePost(Object.fromEntries(form.entries()));
+  const source = Object.fromEntries(form.entries());
+  let contentDocument: Json | null = null;
+  let mediaIds: string[] = [];
+  const format = form.get("content_format") === "rich" ? "rich" : "markdown";
+  if (format === "rich") {
+    try {
+      const parsed = validateDocument(
+        JSON.parse(String(form.get("content_document"))),
+      );
+      contentDocument = parsed.document as unknown as Json;
+      source.content = parsed.text;
+      mediaIds = parsed.mediaIds;
+    } catch (error) {
+      return {
+        message:
+          error instanceof Error ? error.message : "Invalid article content.",
+        errors: {
+          content: "Check the article formatting and image descriptions.",
+        },
+      };
+    }
+  }
+  const { data, errors } = validatePost(source);
+  if (format === "markdown")
+    for (const match of data.content.matchAll(
+      /\/media\/([0-9a-f-]{36})\/master\.webp/gi,
+    ))
+      if (validId(match[1])) mediaIds.push(match[1]);
+  const coverId = mediaIdFromUrl(data.cover_image_url);
+  if (coverId) mediaIds.push(coverId);
+  mediaIds = [...new Set(mediaIds)];
+  if (mediaIds.length > 100)
+    return { message: "Use at most 100 distinct library images per article." };
+  if (mediaIds.length) {
+    const media = await supabase
+      .from("media_assets")
+      .select("id")
+      .in("id", mediaIds)
+      .eq("status", "ready")
+      .eq("owner_id", user.id)
+      .is("deleted_at", null);
+    if (media.error || media.data?.length !== mediaIds.length)
+      return {
+        message:
+          "An image is unavailable. Choose ready images from your media library.",
+      };
+  }
   if (Object.keys(errors).length)
     return {
       message: "Check the highlighted fields. Your writing has been kept.",
@@ -53,7 +101,13 @@ export async function savePost(
       errors: { slug: "Published URLs cannot change. Keep the original slug." },
     };
 
-  const payload = { ...data, author_id: user.id };
+  const payload = {
+    ...data,
+    author_id: user.id,
+    content_format: format,
+    content_document: contentDocument,
+    media_ids: mediaIds,
+  };
   try {
     const result = editing
       ? await supabase
