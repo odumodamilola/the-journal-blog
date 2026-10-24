@@ -5,12 +5,20 @@ import { PublicFrame } from "./PublicFrame";
 export async function PublicShell({
   children,
   config,
+  magazine = false,
+  headlines = [],
 }: {
   children: ReactNode;
   config?: SiteConfig;
+  magazine?: boolean;
+  headlines?: { title: string; slug: string; published_at: string | null }[];
 }) {
   return (
-    <PublicFrame config={config || (await publishedSite())}>
+    <PublicFrame
+      config={config || (await publishedSite())}
+      magazine={magazine}
+      headlines={headlines}
+    >
       {children}
     </PublicFrame>
   );

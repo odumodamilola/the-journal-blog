@@ -289,8 +289,12 @@ test("real administrator can save, preview, publish, edit, unpublish and delete"
   await page
     .getByRole("button", { name: "Delete Updated CMS acceptance story" })
     .click();
-  await page.getByLabel("Type DELETE to confirm").fill("DELETE");
-  await page
+  const confirmation = page.getByRole("dialog", {
+    name: "Delete this story?",
+    exact: true,
+  });
+  await confirmation.getByLabel("Type DELETE to confirm").fill("DELETE");
+  await confirmation
     .getByRole("button", { name: "Delete permanently", exact: true })
     .click();
   await expect(

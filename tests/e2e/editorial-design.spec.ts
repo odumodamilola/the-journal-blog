@@ -99,7 +99,7 @@ test("reduced motion keeps server-rendered editorial content visible", async ({
     .first()
     .scrollIntoViewIfNeeded();
   await expect(
-    page.getByRole("heading", { name: "Many ways to be curious." }),
+    page.getByRole("heading", { name: "From the archive", exact: true }),
   ).toBeVisible();
 });
 test("contact errors are accessible and never pretend a failed save succeeded", async ({
