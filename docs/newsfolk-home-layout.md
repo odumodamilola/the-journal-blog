@@ -38,3 +38,11 @@ Screenshots are generated in ignored `test-results` by the homepage browser test
 Final local functional coverage: 25 distinct public browser checks passed (24 in the interrupted suite, plus its one affected navigation test in an isolated successful rerun); two authenticated workflows remain skipped. The first CI run independently passed 24 browser tests but exposed a race in the new mobile test: it read `boundingBox().height` before the streamed hero was visible. The test now explicitly waits for the hero and retries the 370px computed-height assertion rather than dereferencing a nullable box.
 
 The Windows-local simulated-mobile performance audit failed the existing gate: home 34 (LCP 6.50s, TBT 3985ms), archive 77 (LCP 3.51s, TBT 409ms), login 80 (LCP 3.35s, TBT 485ms). Accessibility/best-practices were 100 on all three, public SEO 100, login SEO 63 because it is intentionally noindex; CLS was 0.000133. This is not hidden or treated as release-ready performance. Independent CI measurements are recorded on the PR when available.
+
+## Follow-up: lighter homepage
+
+Removed the homepage's optional Motion reveal wrappers, replacing them with identical static server-rendered wrappers. The small brand-banner entrance effect no longer pulls an animation runtime into the homepage or private site preview. Hero selection, navigation/search, CMS text, image behavior and layout are unchanged; other pages retain their existing effects.
+
+The production build reports homepage and private-preview first-load JavaScript at **118KB instead of 157KB** (39KB, about 25% less). A new public browser test also checks that the initial story, banner and reading-room navigation work with JavaScript disabled. No dependency versions, database queries, caching behavior or security controls changed.
+
+The Lighthouse numbers above describe the previous build, not this optimization. Fresh functional and performance results for the follow-up are recorded on PR #3; lower JavaScript size alone is not proof of meeting the 2.5-second mobile LCP target.

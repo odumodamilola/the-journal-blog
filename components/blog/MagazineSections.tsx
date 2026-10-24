@@ -19,7 +19,6 @@ import {
 import { CategoryArtwork } from "./CategoryArtwork";
 import { CategoryIcon } from "./CategoryIcon";
 import { PostCover } from "./PostCover";
-import { Reveal } from "./Reveal";
 
 function Label({
   title,
@@ -169,7 +168,7 @@ export function MagazineNewsColumns({
 }
 export function MagazineBrandBanner({ section }: { section: SiteSection }) {
   return (
-    <Reveal>
+    <div>
       <section className="magazine-brand-banner">
         <div>
           <p className="eyebrow">An independent journal of ideas</p>
@@ -180,7 +179,7 @@ export function MagazineBrandBanner({ section }: { section: SiteSection }) {
           Enter the reading room <ArrowUpRight size={22} aria-hidden="true" />
         </Link>
       </section>
-    </Reveal>
+    </div>
   );
 }
 export function MagazineCategoryRows({

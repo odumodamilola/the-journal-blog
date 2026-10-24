@@ -14,7 +14,6 @@ import {
 import { PostCard } from "./PostCard";
 import { PostCover } from "./PostCover";
 import { CategoryArtwork } from "./CategoryArtwork";
-import { Reveal } from "./Reveal";
 import { MediaImage } from "../cms/MediaImage";
 
 function SectionHeading({
@@ -78,7 +77,7 @@ function CustomSection({
   if (section.type === "quote")
     return (
       <section className="home-section">
-        <Reveal>
+        <div>
           <div className="brand-panel">
             <div>
               <p className="eyebrow mb-5">A note from the Journal</p>
@@ -94,7 +93,7 @@ function CustomSection({
               aria-hidden="true"
             />
           </div>
-        </Reveal>
+        </div>
       </section>
     );
   if (section.type === "cta")

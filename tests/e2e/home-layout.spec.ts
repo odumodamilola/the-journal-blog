@@ -1,4 +1,28 @@
 import { test, expect } from "@playwright/test";
+
+test("homepage stories and reading-room link work without JavaScript", async ({
+  browser,
+  baseURL,
+}) => {
+  const context = await browser.newContext({
+    javaScriptEnabled: false,
+    baseURL,
+  });
+  try {
+    const page = await context.newPage();
+    expect((await page.goto("/"))?.status()).toBe(200);
+    await expect(page.locator(".magazine-hero h1 a")).toBeVisible();
+    await expect(page.locator(".magazine-brand-banner h2")).toBeVisible();
+    await page
+      .getByRole("link", { name: "Enter the reading room", exact: true })
+      .click();
+    await expect(page).toHaveURL(/\/blog$/);
+    await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
+  } finally {
+    await context.close();
+  }
+});
+
 test("reference-style masthead, hero selector and desktop news columns work with real stories", async ({
   page,
 }, testInfo) => {
