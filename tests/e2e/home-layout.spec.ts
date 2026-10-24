@@ -61,8 +61,9 @@ test("mobile homepage keeps four compact thumbnail controls and stacks the story
 }, testInfo) => {
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto("/");
-  const stage = await page.locator(".magazine-hero-stage").boundingBox();
-  expect(stage!.height).toBe(370);
+  const stage = page.locator(".magazine-hero-stage");
+  await expect(stage).toBeVisible();
+  await expect(stage).toHaveCSS("height", "370px");
   await expect(
     page.locator(".magazine-thumbnail-title").first(),
   ).not.toBeVisible();
