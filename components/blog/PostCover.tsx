@@ -6,11 +6,13 @@ import { CategoryArtwork } from "./CategoryArtwork";
 export function PostCover({
   post,
   priority = false,
+  cachePriority = false,
   sizes = "(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw",
   className = "",
 }: {
   post: PostSummary;
   priority?: boolean;
+  cachePriority?: boolean;
   sizes?: string;
   className?: string;
 }) {
@@ -33,6 +35,7 @@ export function PostCover({
           alt={post.cover_image_alt}
           category={post.category}
           priority={priority}
+          cachePriority={cachePriority}
           sizes={sizes}
         />
       )}

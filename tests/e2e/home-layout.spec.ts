@@ -1,6 +1,26 @@
 import { test, expect } from "@playwright/test";
 import AxeBuilder from "@axe-core/playwright";
 
+test("homepage cover retries its CDN when first-party encoding fails", async ({
+  page,
+}) => {
+  await page.route("**/_next/image?**", (route) => route.abort());
+  await page.goto("/");
+  const image = page.locator(".magazine-hero-image img");
+  await expect(image).toHaveAttribute(
+    "src",
+    /^https:\/\/images\.unsplash\.com\//,
+  );
+  await expect
+    .poll(() =>
+      image.evaluate((element) => {
+        const cover = element as HTMLImageElement;
+        return cover.complete && cover.naturalWidth > 0;
+      }),
+    )
+    .toBe(true);
+});
+
 test("hero controls remain accessible when cover photographs fail", async ({
   page,
 }) => {
@@ -48,7 +68,12 @@ test("reference-style masthead, hero selector and desktop news columns work with
   await expect(page.locator(".magazine-hero")).toBeVisible();
   const priorityCover = page.locator(".magazine-hero-image img[data-nimg]");
   if (await priorityCover.count()) {
-    await expect(priorityCover).toHaveAttribute("src", /^\/_next\/image\?/);
+    const source = new URL(
+      (await priorityCover.getAttribute("src"))!,
+      page.url(),
+    );
+    expect(source.origin).toBe(new URL(page.url()).origin);
+    expect(source.pathname).toBe("/_next/image");
     await expect
       .poll(() =>
         priorityCover.evaluate((element) => {

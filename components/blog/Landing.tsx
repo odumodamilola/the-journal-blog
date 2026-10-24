@@ -257,6 +257,7 @@ export function Landing({
               key={post.id}
               post={post}
               priority={index === 0}
+              cachePriority={index === 0}
               sizes="(max-width:600px) 100vw, (max-width:1400px) 92vw, 1280px"
             />
           ))}
