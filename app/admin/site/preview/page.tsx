@@ -1,18 +1,19 @@
 import Link from "next/link";
 import { requireAdmin } from "@/lib/auth/require-admin";
 import { readSite } from "@/lib/cms/site-config";
-import { listPublished, summaryColumns } from "@/lib/posts/queries";
+import { categoryCounts, homePosts, summaryColumns } from "@/lib/posts/queries";
 import { PublicShell } from "@/components/blog/PublicShell";
 import { Landing } from "@/components/blog/Landing";
 export default async function SitePreview() {
   const { supabase } = await requireAdmin();
-  const [draft, { posts }] = await Promise.all([
+  const [draft, posts, counts] = await Promise.all([
     supabase
       .from("site_drafts")
       .select("config")
       .eq("singleton", true)
       .single(),
-    listPublished(),
+    homePosts(),
+    categoryCounts(),
   ]);
   if (draft.error) throw new Error("Unable to load website draft.");
   const config = readSite(draft.data.config);
@@ -34,8 +35,21 @@ export default async function SitePreview() {
           Back to website editor
         </Link>
       </div>
-      <PublicShell config={config}>
-        <Landing config={config} posts={posts} featured={featured} />
+      <PublicShell
+        config={config}
+        magazine
+        headlines={posts.slice(0, 6).map(({ title, slug, published_at }) => ({
+          title,
+          slug,
+          published_at,
+        }))}
+      >
+        <Landing
+          config={config}
+          posts={posts}
+          featured={featured}
+          counts={counts}
+        />
       </PublicShell>
     </>
   );

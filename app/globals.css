@@ -1,5 +1,6 @@
 @import "tailwindcss";
 @import "./editorial.css";
+@import "./magazine.css";
 @plugin "@tailwindcss/typography";
 
 @theme {
