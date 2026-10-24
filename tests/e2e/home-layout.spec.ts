@@ -46,6 +46,18 @@ test("reference-style masthead, hero selector and desktop news columns work with
   await page.goto("/");
   await expect(page.locator(".magazine-home")).toBeVisible();
   await expect(page.locator(".magazine-hero")).toBeVisible();
+  const priorityCover = page.locator(".magazine-hero-image img[data-nimg]");
+  if (await priorityCover.count()) {
+    await expect(priorityCover).toHaveAttribute("src", /^\/_next\/image\?/);
+    await expect
+      .poll(() =>
+        priorityCover.evaluate((element) => {
+          const image = element as HTMLImageElement;
+          return image.complete && image.naturalWidth > 0;
+        }),
+      )
+      .toBe(true);
+  }
   await page.screenshot({
     path: testInfo.outputPath("journal-home-desktop-hero.png"),
   });

@@ -4,8 +4,8 @@ import Image, { type ImageLoaderProps } from "next/image";
 import { useState } from "react";
 import { CategoryArtwork } from "./CategoryArtwork";
 
-// Unsplash already supplies responsive encodings. Avoid fetching a 2400px master
-// on our server just to recompress it into a 160px card thumbnail.
+// Keep small thumbnails on Unsplash's responsive CDN. Priority covers use Next's
+// first-party cached optimizer so an extra cross-origin connection does not gate LCP.
 function unsplashLoader({ src, width, quality }: ImageLoaderProps) {
   const url = new URL(src);
   if (url.hostname !== "images.unsplash.com")
@@ -37,7 +37,7 @@ export function ExternalPostCover({
   return (
     <Image
       loader={
-        new URL(src).hostname === "images.unsplash.com"
+        !priority && new URL(src).hostname === "images.unsplash.com"
           ? unsplashLoader
           : undefined
       }
