@@ -59,6 +59,38 @@ test("homepage stories and reading-room link work without JavaScript", async ({
   }
 });
 
+test("deferred homepage sections remain readable when scrolling, focusing and printing", async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto("/");
+  const sections = page.locator(
+    ".magazine-news-columns > section, .magazine-brand-banner, .magazine-desk, .magazine-archive-board",
+  );
+  expect(await sections.count()).toBeGreaterThan(5);
+  for (const section of await sections.all()) {
+    await section.scrollIntoViewIfNeeded();
+    await expect(section).toBeInViewport();
+    await expect(section.getByRole("heading").first()).toBeVisible();
+    expect(
+      await section.evaluate((element) => element.scrollHeight),
+    ).toBeGreaterThan(0);
+  }
+  const archiveLink = page.locator(".magazine-archive-cards h3 a").first();
+  await page.evaluate(() => window.scrollTo(0, 0));
+  await archiveLink.focus();
+  await expect(archiveLink).toBeFocused();
+  await expect(archiveLink).toBeInViewport();
+  await page.emulateMedia({ media: "print" });
+  for (const section of await sections.all()) {
+    await expect(section).toHaveCSS("content-visibility", "visible");
+  }
+  await page.emulateMedia({ media: "screen" });
+  await archiveLink.press("Enter");
+  await expect(page).toHaveURL(/\/blog\/[^/?]+$/);
+  await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
+});
+
 test("reference-style masthead, hero selector and desktop news columns work with real stories", async ({
   page,
 }, testInfo) => {

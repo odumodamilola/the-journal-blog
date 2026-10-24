@@ -8,6 +8,26 @@
 .magazine-home .journal-container {
   width: min(100% - 6rem, 1280px);
 }
+/* Keep server-rendered stories searchable and accessible while allowing the
+   browser to defer layout and painting until each section nears the viewport. */
+@supports (content-visibility: auto) {
+  .magazine-home .magazine-news-columns > section,
+  .magazine-home .magazine-brand-banner,
+  .magazine-home .magazine-desk,
+  .magazine-home .magazine-archive-board {
+    content-visibility: auto;
+    contain-intrinsic-block-size: auto 800px;
+  }
+}
+@media print {
+  .magazine-home .magazine-news-columns > section,
+  .magazine-home .magazine-brand-banner,
+  .magazine-home .magazine-desk,
+  .magazine-home .magazine-archive-board {
+    content-visibility: visible;
+    contain-intrinsic-block-size: none;
+  }
+}
 .magazine-home .site-header {
   position: relative;
   top: auto;
@@ -726,6 +746,10 @@
 }
 .magazine-sidebar-cta > svg {
   color: var(--color-primary);
+}
+.magazine-sidebar-cta > .text-link {
+  /* Explicit backing keeps the link readable during offscreen containment. */
+  background-color: var(--color-background);
 }
 .magazine-visual-notebook {
   margin-top: 36px;
