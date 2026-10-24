@@ -65,7 +65,7 @@ test("deferred homepage sections remain readable when scrolling, focusing and pr
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto("/");
   const sections = page.locator(
-    ".magazine-news-columns > section, .magazine-brand-banner, .magazine-desk, .magazine-archive-board",
+    ".magazine-news-columns > section, .magazine-brand-banner, .magazine-desk",
   );
   expect(await sections.count()).toBeGreaterThan(5);
   for (const section of await sections.all()) {
@@ -76,17 +76,17 @@ test("deferred homepage sections remain readable when scrolling, focusing and pr
       await section.evaluate((element) => element.scrollHeight),
     ).toBeGreaterThan(0);
   }
-  const archiveLink = page.locator(".magazine-archive-cards h3 a").first();
+  const deskLink = page.locator(".magazine-desk-copy h3 a").first();
   await page.evaluate(() => window.scrollTo(0, 0));
-  await archiveLink.focus();
-  await expect(archiveLink).toBeFocused();
-  await expect(archiveLink).toBeInViewport();
+  await deskLink.focus();
+  await expect(deskLink).toBeFocused();
+  await expect(deskLink).toBeInViewport();
   await page.emulateMedia({ media: "print" });
   for (const section of await sections.all()) {
     await expect(section).toHaveCSS("content-visibility", "visible");
   }
   await page.emulateMedia({ media: "screen" });
-  await archiveLink.press("Enter");
+  await deskLink.press("Enter");
   await expect(page).toHaveURL(/\/blog\/[^/?]+$/);
   await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
 });

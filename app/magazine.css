@@ -13,8 +13,7 @@
 @supports (content-visibility: auto) {
   .magazine-home .magazine-news-columns > section,
   .magazine-home .magazine-brand-banner,
-  .magazine-home .magazine-desk,
-  .magazine-home .magazine-archive-board {
+  .magazine-home .magazine-desk {
     content-visibility: auto;
     contain-intrinsic-block-size: auto 800px;
   }
@@ -22,8 +21,7 @@
 @media print {
   .magazine-home .magazine-news-columns > section,
   .magazine-home .magazine-brand-banner,
-  .magazine-home .magazine-desk,
-  .magazine-home .magazine-archive-board {
+  .magazine-home .magazine-desk {
     content-visibility: visible;
     contain-intrinsic-block-size: none;
   }
@@ -746,10 +744,6 @@
 }
 .magazine-sidebar-cta > svg {
   color: var(--color-primary);
-}
-.magazine-sidebar-cta > .text-link {
-  /* Explicit backing keeps the link readable during offscreen containment. */
-  background-color: var(--color-background);
 }
 .magazine-visual-notebook {
   margin-top: 36px;
