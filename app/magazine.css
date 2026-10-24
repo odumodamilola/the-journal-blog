@@ -291,6 +291,9 @@
   line-height: 1.16;
   font-weight: 500;
 }
+.magazine-hero-thumbnails .category-art > span {
+  display: none;
+}
 .magazine-section-label {
   display: flex;
   align-items: center;

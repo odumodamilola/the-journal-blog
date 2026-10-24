@@ -1,4 +1,20 @@
 import { test, expect } from "@playwright/test";
+import AxeBuilder from "@axe-core/playwright";
+
+test("hero controls remain accessible when cover photographs fail", async ({
+  page,
+}) => {
+  await page.route("https://images.unsplash.com/**", (route) => route.abort());
+  await page.goto("/");
+  await expect(
+    page.locator(".magazine-hero-thumbnails .category-art"),
+  ).toHaveCount(4);
+  const results = await new AxeBuilder({ page })
+    .include(".magazine-hero-thumbnails")
+    .withTags(["wcag2a", "wcag2aa", "wcag21aa", "wcag22aa"])
+    .analyze();
+  expect(results.violations).toEqual([]);
+});
 
 test("homepage stories and reading-room link work without JavaScript", async ({
   browser,
