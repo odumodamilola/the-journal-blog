@@ -2,16 +2,18 @@ import Link from "next/link";
 import { ArrowUpRight, BookOpen } from "lucide-react";
 import type { PostSummary } from "@/lib/posts/queries";
 import type { SiteConfig, SiteSection } from "@/lib/cms/site-config";
+import { Fragment } from "react";
+import { homeComposition } from "@/lib/home-layout";
+import { MagazineHero } from "./MagazineHero";
 import {
-  editorialCategories,
-  categoryDetails,
-  articleDate,
-  readingMinutes,
-} from "@/lib/editorial";
+  MagazineArchiveBoard,
+  MagazineBrandBanner,
+  MagazineCategoryRows,
+  MagazineNewsColumns,
+} from "./MagazineSections";
 import { PostCard } from "./PostCard";
 import { PostCover } from "./PostCover";
 import { CategoryArtwork } from "./CategoryArtwork";
-import { Reveal } from "./Reveal";
 import { MediaImage } from "../cms/MediaImage";
 
 function SectionHeading({
@@ -75,7 +77,7 @@ function CustomSection({
   if (section.type === "quote")
     return (
       <section className="home-section">
-        <Reveal>
+        <div>
           <div className="brand-panel">
             <div>
               <p className="eyebrow mb-5">A note from the Journal</p>
@@ -91,7 +93,7 @@ function CustomSection({
               aria-hidden="true"
             />
           </div>
-        </Reveal>
+        </div>
       </section>
     );
   if (section.type === "cta")
@@ -185,187 +187,114 @@ export function Landing({
   featured?: (PostSummary & { content?: string }) | null;
   counts?: Record<string, number>;
 }) {
-  const featured =
-    chosen ||
-    posts.find((post) => post.id === config.featuredPostId) ||
-    posts.find((post) => post.category !== "World News") ||
-    posts[0];
-  const seen = new Set<string>(
-    featured?.cover_image_url ? [featured.cover_image_url.split("?")[0]] : [],
-  );
-  const supporting = posts
-    .filter((post) => {
-      if (post.id === featured?.id) return false;
-      const image = post.cover_image_url?.split("?")[0];
-      if (image && seen.has(image)) return false;
-      if (image) seen.add(image);
-      return true;
-    })
-    .slice(0, 3);
-  const latest = [...posts].sort(
-    (a, b) =>
-      (b.published_at || "").localeCompare(a.published_at || "") ||
-      b.id.localeCompare(a.id),
-  );
-  const secondaryFeature =
-    supporting.find((post) => post.category === "Technology") || supporting[0];
-  return (
-    <main id="main-content" className="journal-container pb-8">
-      <section className="home-intro">
-        <div>
-          <p className="eyebrow">{config.eyebrow}</p>
-          <h1>
-            {config.headline} <em>{config.emphasis}</em>
-          </h1>
-        </div>
-        <div>
-          <p>{config.description}</p>
-          <Link href="/blog" className="text-link">
-            Enter the reading room <ArrowUpRight size={18} aria-hidden="true" />
-          </Link>
-        </div>
-      </section>
-      {featured ? (
-        <section className="feature-grid" aria-label="Featured reading">
-          <article className="feature-lead">
-            <Link
-              href={`/blog/${featured.slug}`}
-              className="card-image-link"
-              tabIndex={-1}
-              aria-hidden="true"
-            >
-              <PostCover
-                post={featured}
-                priority
-                sizes="(max-width: 800px) 100vw, 65vw"
+  const lead =
+    chosen || posts.find((post) => post.id === config.featuredPostId);
+  const composition = homeComposition(posts, lead);
+  let desksPlaced = false,
+    archivePlaced = false;
+  const sections = config.sections
+    .filter((section) => section.visible)
+    .map((section) => {
+      if (section.type === "latest")
+        return (
+          <MagazineNewsColumns
+            key={section.id}
+            section={section}
+            recent={composition.recent}
+            worth={composition.worth}
+            selected={composition.selected}
+          />
+        );
+      if (section.type === "quote")
+        return <MagazineBrandBanner key={section.id} section={section} />;
+      if (section.type === "cta" && !archivePlaced) {
+        const addDesks = !desksPlaced;
+        desksPlaced = true;
+        archivePlaced = true;
+        return (
+          <Fragment key={section.id}>
+            {addDesks && (
+              <MagazineCategoryRows
+                posts={composition.latest}
+                counts={counts}
               />
-            </Link>
-            <span className="feature-label">
-              <span className="h-1.5 w-1.5 bg-primary rounded-full" />
-              {config.featuredPostId === featured.id
-                ? "Featured story"
-                : "Start here"}
-            </span>
-            <div className="article-kicker">
-              <Link
-                href={`/blog?category=${encodeURIComponent(featured.category)}`}
-              >
-                {featured.category}
-              </Link>
-              {featured.published_at && (
-                <time dateTime={featured.published_at}>
-                  {articleDate(featured.published_at)}
-                </time>
-              )}
-              {"content" in featured &&
-                typeof featured.content === "string" && (
-                  <span>{readingMinutes(featured.content)} min read</span>
-                )}
-            </div>
-            <h2>
-              <Link href={`/blog/${featured.slug}`}>{featured.title}</Link>
-            </h2>
-            <p className="feature-excerpt">{featured.excerpt}</p>
-            <Link href={`/blog/${featured.slug}`} className="text-link">
-              Read the story
-              <ArrowUpRight size={18} aria-hidden="true" />
-            </Link>
-          </article>
-          <aside className="feature-side">
-            <p className="eyebrow">A little further afield</p>
-            {supporting.map((post) => (
-              <PostCard key={post.id} post={post} compact />
-            ))}
-            <Link href="/about" className="text-link mt-5">
-              The idea behind the Journal{" "}
-              <ArrowUpRight size={16} aria-hidden="true" />
-            </Link>
-          </aside>
-        </section>
+            )}
+            <MagazineArchiveBoard
+              posts={composition.archive}
+              counts={counts}
+              config={config}
+              section={section}
+            />
+          </Fragment>
+        );
+      }
+      return (
+        <CustomSection
+          key={section.id}
+          section={section}
+          posts={composition.latest}
+        />
+      );
+    });
+  return (
+    <main id="main-content" className="journal-container magazine-main">
+      {composition.hero.length ? (
+        <MagazineHero
+          stories={composition.hero.map(
+            ({ id, title, slug, category, published_at }) => ({
+              id,
+              title,
+              slug,
+              category,
+              published_at,
+            }),
+          )}
+          headline={config.headline}
+          emphasis={config.emphasis}
+          featuredId={config.featuredPostId}
+          covers={composition.hero.map((post, index) => (
+            <PostCover
+              key={post.id}
+              post={post}
+              priority={index === 0}
+              cachePriority={index === 0}
+              sizes="(max-width:600px) 100vw, (max-width:1400px) 92vw, 1280px"
+            />
+          ))}
+          thumbnails={composition.hero.map((post) => (
+            <PostCover
+              key={post.id}
+              post={post}
+              sizes="(max-width:600px) 90px, 300px"
+            />
+          ))}
+        />
       ) : (
         <section className="empty-editorial">
           <CategoryArtwork
             category="Personal Notes"
             className="max-w-sm mx-auto"
           />
-          <h2>A new chapter is on its way.</h2>
+          <h1 className="display-title">
+            {config.headline} <em>{config.emphasis}</em>
+          </h1>
           <p>Our first stories will appear here soon.</p>
         </section>
       )}
       {config.heroMediaId && (
-        <figure className="home-section">
+        <figure className="magazine-visual-notebook">
           <MediaImage
             id={config.heroMediaId}
             className="w-full max-h-[700px] object-cover"
-            sizes="(max-width: 1360px) 100vw, 1360px"
+            sizes="(max-width:1280px) 100vw, 1280px"
           />
-          <figcaption className="muted mt-3 text-xs">
-            The Journal / A visual notebook
-          </figcaption>
+          <figcaption>The Journal / A visual notebook</figcaption>
         </figure>
       )}
-      {config.sections
-        .filter((section) => section.visible)
-        .map((section) => (
-          <CustomSection key={section.id} section={section} posts={latest} />
-        ))}
-      {secondaryFeature && (
-        <Reveal>
-          <section className="editorial-feature">
-            <PostCover
-              post={secondaryFeature}
-              sizes="(max-width: 800px) 100vw, 50vw"
-            />
-            <div className="editorial-feature-copy">
-              <p className="eyebrow">
-                From another perspective / {secondaryFeature.category}
-              </p>
-              <h2>
-                <Link href={`/blog/${secondaryFeature.slug}`}>
-                  {secondaryFeature.title}
-                </Link>
-              </h2>
-              <p>{secondaryFeature.excerpt}</p>
-              <Link
-                href={`/blog/${secondaryFeature.slug}`}
-                className="text-link"
-              >
-                Take a closer look
-                <ArrowUpRight size={18} aria-hidden="true" />
-              </Link>
-            </div>
-          </section>
-        </Reveal>
+      {sections}
+      {!desksPlaced && (
+        <MagazineCategoryRows posts={composition.latest} counts={counts} />
       )}
-      <section className="home-section">
-        <SectionHeading
-          eyebrow="Follow a thread"
-          title="Many ways to be curious."
-          label="Explore the archive"
-        />
-        <div className="category-grid">
-          {editorialCategories.map((category) => (
-            <article key={category} className="category-tile">
-              <CategoryArtwork category={category} />
-              <div className="category-tile-copy">
-                <h3>
-                  <Link href={`/blog?category=${encodeURIComponent(category)}`}>
-                    {category}
-                  </Link>
-                </h3>
-                <p>{categoryDetails[category].description}</p>
-                <div className="category-count">
-                  <span>
-                    {counts[category] ?? 0}{" "}
-                    {(counts[category] ?? 0) === 1 ? "story" : "stories"}
-                  </span>
-                  <ArrowUpRight size={17} aria-hidden="true" />
-                </div>
-              </div>
-            </article>
-          ))}
-        </div>
-      </section>
     </main>
   );
 }

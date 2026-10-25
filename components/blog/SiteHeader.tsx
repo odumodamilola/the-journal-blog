@@ -3,9 +3,18 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { ArrowUpRight, Menu, Search, X } from "lucide-react";
-import { editorialCategories } from "@/lib/editorial";
+import { articleDate, editorialCategories } from "@/lib/editorial";
+import { CategoryIcon } from "./CategoryIcon";
 
-export function SiteHeader({ name }: { name: string }) {
+export function SiteHeader({
+  name,
+  magazine = false,
+  headlines = [],
+}: {
+  name: string;
+  magazine?: boolean;
+  headlines?: { title: string; slug: string; published_at: string | null }[];
+}) {
   const pathname = usePathname();
   const dialog = useRef<HTMLDialogElement>(null);
   const [panel, setPanel] = useState<"search" | "menu">("menu");
@@ -37,10 +46,12 @@ export function SiteHeader({ name }: { name: string }) {
   };
   return (
     <>
-      <div className="publication-note journal-container">
-        <span>Independent writing. Open minds.</span>
-        <span>Thoughtful ideas, beautifully presented.</span>
-      </div>
+      {!magazine && (
+        <div className="publication-note journal-container">
+          <span>Independent writing. Open minds.</span>
+          <span>Thoughtful ideas, beautifully presented.</span>
+        </div>
+      )}
       <header className={`site-header ${scrolled ? "is-scrolled" : ""}`}>
         <div className="journal-container header-main">
           <Link href="/" className="wordmark" aria-label={`${name} home`}>
@@ -76,6 +87,9 @@ export function SiteHeader({ name }: { name: string }) {
               aria-haspopup="dialog"
             >
               <Search size={19} />
+              {magazine && (
+                <span className="magazine-search-label">Search articles</span>
+              )}
             </button>
             <Link href="/login" className="studio-link">
               Editorial studio <ArrowUpRight size={14} aria-hidden="true" />
@@ -95,16 +109,37 @@ export function SiteHeader({ name }: { name: string }) {
           aria-label="Categories"
           className="category-navigation journal-container"
         >
-          <Link href="/blog">All articles</Link>
+          {!magazine && <Link href="/blog">All articles</Link>}
           {editorialCategories.map((category) => (
             <Link
               key={category}
               href={`/blog?category=${encodeURIComponent(category)}`}
             >
+              {magazine && <CategoryIcon category={category} />}
               {category}
             </Link>
           ))}
         </nav>
+        {magazine && headlines.length > 0 && (
+          <div className="magazine-headline-strip journal-container">
+            <span>In the Journal</span>
+            <nav
+              aria-label="Article headlines"
+              className="magazine-headline-links"
+            >
+              {headlines.map((post) => (
+                <Link href={`/blog/${post.slug}`} key={post.slug}>
+                  {post.published_at && (
+                    <time dateTime={post.published_at}>
+                      {articleDate(post.published_at)}
+                    </time>
+                  )}
+                  <span>{post.title}</span>
+                </Link>
+              ))}
+            </nav>
+          </div>
+        )}
       </header>
       <dialog
         ref={dialog}

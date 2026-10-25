@@ -1,5 +1,6 @@
 @import "tailwindcss";
 @import "./editorial.css";
+@import "./magazine.css";
 @plugin "@tailwindcss/typography";
 
 @theme {
@@ -126,7 +127,8 @@
 }
 .button-primary:hover,
 .button-secondary:hover {
-  opacity: 0.85;
+  opacity: 1;
+  filter: brightness(0.94);
 }
 button:disabled {
   opacity: 0.55;

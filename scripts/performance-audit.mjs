@@ -56,7 +56,13 @@ try {
       ),
       result.report,
     );
-    evidence.push({ route, scores, metrics, failures });
+    const lcpBreakdown = (
+      report.audits["lcp-breakdown-insight"]?.details?.items || []
+    )
+      .filter((item) => item.type === "table")
+      .flatMap((item) => item.items || [])
+      .map(({ subpart, duration }) => ({ subpart, duration }));
+    evidence.push({ route, scores, metrics, lcpBreakdown, failures });
   }
 } finally {
   await chrome.kill();

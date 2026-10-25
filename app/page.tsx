@@ -1,10 +1,5 @@
 import type { Metadata } from "next";
-import {
-  homePosts,
-  categoryCounts,
-  summaryColumns,
-  publishedPost,
-} from "@/lib/posts/queries";
+import { homePosts, categoryCounts, summaryColumns } from "@/lib/posts/queries";
 import { publishedSite } from "@/lib/cms/queries";
 import { publicClient } from "@/lib/supabase/public";
 import { PublicShell } from "@/components/blog/PublicShell";
@@ -49,9 +44,16 @@ export default async function Home() {
     posts.find((post) => post.id === config.featuredPostId) ||
     posts.find((post) => post.category !== "World News") ||
     posts[0];
-  const fullLead = lead ? await publishedPost(lead.slug) : null;
   return (
-    <PublicShell config={config}>
+    <PublicShell
+      config={config}
+      magazine
+      headlines={posts.slice(0, 6).map(({ title, slug, published_at }) => ({
+        title,
+        slug,
+        published_at,
+      }))}
+    >
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
@@ -64,12 +66,7 @@ export default async function Home() {
           }),
         }}
       />
-      <Landing
-        config={config}
-        posts={posts}
-        featured={fullLead || lead}
-        counts={counts}
-      />
+      <Landing config={config} posts={posts} featured={lead} counts={counts} />
     </PublicShell>
   );
 }
