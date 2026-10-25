@@ -33,3 +33,6 @@ jobs:
             test-results/
             .audit-reports/
           retention-days: 7
+          # The audit directory is intentionally hidden; upload only the two
+          # explicit report paths above, including their contents.
+          include-hidden-files: true
