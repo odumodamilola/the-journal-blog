@@ -16,17 +16,23 @@ export function SiteHeader({
   headlines?: { title: string; slug: string; published_at: string | null }[];
 }) {
   const pathname = usePathname();
+  const previousPathname = useRef(pathname);
   const dialog = useRef<HTMLDialogElement>(null);
+  const [hydrated, setHydrated] = useState(false);
   const [panel, setPanel] = useState<"search" | "menu">("menu");
   const [scrolled, setScrolled] = useState(false);
   useEffect(() => {
+    setHydrated(true);
     const update = () => setScrolled(window.scrollY > 30);
     update();
     window.addEventListener("scroll", update, { passive: true });
     return () => window.removeEventListener("scroll", update);
   }, []);
   useEffect(() => {
-    dialog.current?.close();
+    if (previousPathname.current !== pathname) {
+      dialog.current?.close();
+      previousPathname.current = pathname;
+    }
   }, [pathname]);
   const open = (value: "search" | "menu") => {
     setPanel(value);
@@ -85,6 +91,7 @@ export function SiteHeader({
               onClick={() => open("search")}
               aria-label="Search articles"
               aria-haspopup="dialog"
+              disabled={!hydrated}
             >
               <Search size={19} />
               {magazine && (
@@ -100,6 +107,7 @@ export function SiteHeader({
               onClick={() => open("menu")}
               aria-label="Open navigation"
               aria-haspopup="dialog"
+              disabled={!hydrated}
             >
               <Menu size={22} />
             </button>

@@ -1,6 +1,43 @@
 import { test, expect } from "@playwright/test";
 import AxeBuilder from "@axe-core/playwright";
 
+test("navigation waits for hydration and opens on its first enabled activation", async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  let releaseScripts!: () => void;
+  const scriptsReady = new Promise<void>((resolve) => {
+    releaseScripts = resolve;
+  });
+  await page.route("**/_next/static/**/*.js", async (route) => {
+    await scriptsReady;
+    await route.continue();
+  });
+  try {
+    await page.goto("/", { waitUntil: "commit" });
+    const menu = page.getByRole("button", {
+      name: "Open navigation",
+      exact: true,
+    });
+    const search = page.getByRole("button", {
+      name: "Search articles",
+      exact: true,
+    });
+    await expect(menu).toBeDisabled({ timeout: 10000 });
+    await expect(search).toBeDisabled();
+    releaseScripts();
+    await expect(menu).toBeEnabled();
+    await menu.click();
+    await expect(page.getByRole("dialog")).toBeVisible();
+    await page.keyboard.press("Escape");
+    await expect(menu).toBeFocused();
+    await search.click();
+    await expect(page.getByRole("dialog").getByRole("searchbox")).toBeFocused();
+  } finally {
+    releaseScripts();
+  }
+});
+
 test("homepage cover retries its CDN when first-party encoding fails", async ({
   page,
 }) => {
